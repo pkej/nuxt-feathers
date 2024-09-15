@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.2
+
+[compare changes](https://github.com/GaborTorma/mwm-nuxt-module-template/compare/v0.0.1...v0.0.2)
+
+### 🩹 Fixes
+
+- Publish with public access ([fddce1d](https://github.com/GaborTorma/mwm-nuxt-module-template/commit/fddce1d))
+
+### ❤️ Contributors
+
+- Gábor Torma <gabor@torma.dev>
+
 ## v0.0.1
 
 
