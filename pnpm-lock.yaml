@@ -1443,20 +1443,20 @@ packages:
     resolution: {integrity: sha512-yTPqMnbAZJNy2Xq2XU8AdtOW9tJIr+UQb64aXB9f3B1498Zx9JorVgFJcZpEc9UBuCCrdzKID2RGAMkYcDtZOw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@unhead/dom@1.11.2':
-    resolution: {integrity: sha512-e5Ilqa1ktwGJGhFt3jEI78LywNuvqOR4GdEa+sV2OuKbldWBoS8DosCf7jzwEIPYgn2ubDQ0ygn9JH+m/x88gA==}
+  '@unhead/dom@1.11.3':
+    resolution: {integrity: sha512-tFPuZ+G5/QYwMLjn0ffYoPegtct0t+AJXEIaRwKAR5Kt0P5kxg0rReyKQE9ZKCTejLCGflg3yHRHMHb+PC5ilg==}
 
-  '@unhead/schema@1.11.2':
-    resolution: {integrity: sha512-ALyIIA0084JjGQJD6tJetQdqVNw/V6d2LaCC06jSm+JUqxsRWRZcSbNZUg5xr0T4xQPrefZYrGp76PbOdotPbQ==}
+  '@unhead/schema@1.11.3':
+    resolution: {integrity: sha512-bOF1K/hxrEX1iKCyVCThpQcrx/C/BLHvpUQidTTISdG8Yz8v8f+K001wqMaCVDOMLZrPv4XAcZ4dAR8mmRmKAg==}
 
-  '@unhead/shared@1.11.2':
-    resolution: {integrity: sha512-Zg56xBrqkr9f9m3/+G/2CzbLba6g3/M2myWmyuZtn/ncUk3K2IXvXvlZAzMHx4yO++Xeik2QUWpHEdXRh+PxAA==}
+  '@unhead/shared@1.11.3':
+    resolution: {integrity: sha512-mBBsYBLJI56V4Hun2y/TSgDnnJO+4AibYZpPuB6cE/KrK/LINm+HfC61W3xyz2Laa4Ba/0I9XERagc54zItVnA==}
 
-  '@unhead/ssr@1.11.2':
-    resolution: {integrity: sha512-Ilc+QmG4foMBr+f4u1GMSQjybSPjqi3vXfLTlqOVbr1voSlGtblYxJbZDw6KSCvfXu/s2YOPW+gCvvDLSZl3vg==}
+  '@unhead/ssr@1.11.3':
+    resolution: {integrity: sha512-2yFrnMEUOq6B2kkA4u3NRv8xLUAEziDuTdCzFlWRkluxLiG970MIG2b9jOSPTDgnAjse8BxQaVoOp61c8lsN1w==}
 
-  '@unhead/vue@1.11.2':
-    resolution: {integrity: sha512-m4GnwOd1ltXiSxp4ahIT6lziVyg6dgqKyLyWxrRWuPjZ8nXsPcpIOCjVwYB1MK0UBKMuIlgeuzVeDrTY9+APbA==}
+  '@unhead/vue@1.11.3':
+    resolution: {integrity: sha512-OYr+dLRJAvmZY2RaxT9gafu+jfIMEKIye9KCif6Xqpf2hDycoc/6+FvgWt3p0WAdrXBiVzJfH2/i6lykaV46xA==}
     peerDependencies:
       vue: '>=2.7 || >=3'
 
@@ -4362,8 +4362,8 @@ packages:
   unenv@1.10.0:
     resolution: {integrity: sha512-wY5bskBQFL9n3Eca5XnhH6KbUo/tfvkwm9OpcdCvLaeA7piBNbavbOKJySEwQ1V0RH6HvNlSAFRTpvTqgKRQXQ==}
 
-  unhead@1.11.2:
-    resolution: {integrity: sha512-k/MA5yzPh5M4pksDzOXf2GBJn0XV4quWao1q173NF7NL3Ji4RQ3ZxvZcwA/nGr7wu3+twJIRoKti3Otc4JMNyw==}
+  unhead@1.11.3:
+    resolution: {integrity: sha512-9nGw7pr8u/FOOPzHn1RRERquchnwt+MeojS0aU1bwJGITl/fbsGQIlOn7hc5wMLpkY4OLXEk14QLjeMFXp2Msw==}
 
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
@@ -6266,32 +6266,32 @@ snapshots:
       '@typescript-eslint/types': 8.5.0
       eslint-visitor-keys: 3.4.3
 
-  '@unhead/dom@1.11.2':
+  '@unhead/dom@1.11.3':
     dependencies:
-      '@unhead/schema': 1.11.2
-      '@unhead/shared': 1.11.2
+      '@unhead/schema': 1.11.3
+      '@unhead/shared': 1.11.3
 
-  '@unhead/schema@1.11.2':
+  '@unhead/schema@1.11.3':
     dependencies:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@unhead/shared@1.11.2':
+  '@unhead/shared@1.11.3':
     dependencies:
-      '@unhead/schema': 1.11.2
+      '@unhead/schema': 1.11.3
 
-  '@unhead/ssr@1.11.2':
+  '@unhead/ssr@1.11.3':
     dependencies:
-      '@unhead/schema': 1.11.2
-      '@unhead/shared': 1.11.2
+      '@unhead/schema': 1.11.3
+      '@unhead/shared': 1.11.3
 
-  '@unhead/vue@1.11.2(vue@3.5.5(typescript@5.6.2))':
+  '@unhead/vue@1.11.3(vue@3.5.5(typescript@5.6.2))':
     dependencies:
-      '@unhead/schema': 1.11.2
-      '@unhead/shared': 1.11.2
+      '@unhead/schema': 1.11.3
+      '@unhead/shared': 1.11.3
       defu: 6.1.4
       hookable: 5.5.3
-      unhead: 1.11.2
+      unhead: 1.11.3
       vue: 3.5.5(typescript@5.6.2)
 
   '@vercel/nft@0.26.5':
@@ -8721,9 +8721,9 @@ snapshots:
       '@nuxt/schema': 3.13.1(rollup@4.21.3)
       '@nuxt/telemetry': 2.6.0(magicast@0.3.5)(rollup@4.21.3)
       '@nuxt/vite-builder': 3.13.1(@types/node@22.5.5)(eslint@9.10.0(jiti@1.21.6))(magicast@0.3.5)(optionator@0.9.4)(rollup@4.21.3)(terser@5.32.0)(typescript@5.6.2)(vue-tsc@2.1.6(typescript@5.6.2))(vue@3.5.5(typescript@5.6.2))
-      '@unhead/dom': 1.11.2
-      '@unhead/ssr': 1.11.2
-      '@unhead/vue': 1.11.2(vue@3.5.5(typescript@5.6.2))
+      '@unhead/dom': 1.11.3
+      '@unhead/ssr': 1.11.3
+      '@unhead/vue': 1.11.3(vue@3.5.5(typescript@5.6.2))
       '@vue/shared': 3.5.5
       acorn: 8.12.1
       c12: 1.11.2(magicast@0.3.5)
@@ -9743,11 +9743,11 @@ snapshots:
       node-fetch-native: 1.6.4
       pathe: 1.1.2
 
-  unhead@1.11.2:
+  unhead@1.11.3:
     dependencies:
-      '@unhead/dom': 1.11.2
-      '@unhead/schema': 1.11.2
-      '@unhead/shared': 1.11.2
+      '@unhead/dom': 1.11.3
+      '@unhead/schema': 1.11.3
+      '@unhead/shared': 1.11.3
       hookable: 5.5.3
 
   unicorn-magic@0.1.0: {}
