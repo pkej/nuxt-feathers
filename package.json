@@ -1,11 +1,11 @@
 {
-  "name": "@gabortorma/my-module",
+  "name": "@gabortorma/mwm-nuxt-module-template",
   "type": "module",
   "version": "0.0.0",
   "description": "My new Nuxt module",
   "license": "MIT",
   "repository": {
-    "url": "git@github.com:GaborTorma/my-module.git"
+    "url": "git@github.com:GaborTorma/mwm-nuxt-module-template.git"
   },
   "exports": {
     ".": {
@@ -29,7 +29,8 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "postinstall": "nuxt-module-build prepare && nuxt-module-build prepare"
   },
   "dependencies": {
     "@nuxt/kit": "^3.13.1"
