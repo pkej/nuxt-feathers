@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.4
+
+[compare changes](https://github.com/GaborTorma/mwm-nuxt-module-template/compare/v0.0.3...v0.0.4)
+
+### 🩹 Fixes
+
+- Repository url ([817cdb2](https://github.com/GaborTorma/mwm-nuxt-module-template/commit/817cdb2))
+
+### ❤️ Contributors
+
+- Gábor Torma <gabor@torma.dev>
+
 ## v0.0.3
 
 [compare changes](https://github.com/GaborTorma/mwm-nuxt-module-template/compare/v0.0.2...v0.0.3)
