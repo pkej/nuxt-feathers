@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.0.5
+
+[compare changes](https://github.com/GaborTorma/mwm-nuxt-module-template/compare/v0.0.4...v0.0.5)
+
+### 🏡 Chore
+
+- Upgrade all deps. ([b6f57ae](https://github.com/GaborTorma/mwm-nuxt-module-template/commit/b6f57ae))
+
+### ❤️ Contributors
+
+- Gábor Torma <gabor@torma.dev>
+
 ## v0.0.4
 
 [compare changes](https://github.com/GaborTorma/mwm-nuxt-module-template/compare/v0.0.3...v0.0.4)
