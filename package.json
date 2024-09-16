@@ -6,6 +6,7 @@
   "description": "My new Nuxt module",
   "license": "MIT",
   "repository": {
+    "type": "github",
     "url": "git+ssh://git@github.com/GaborTorma/mwm-nuxt-module-template.git"
   },
   "exports": {
