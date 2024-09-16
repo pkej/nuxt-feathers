@@ -17,10 +17,13 @@ jobs:
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+
+      - name: Fix lockfile
+        run: npx pnpm@latest install --fix-lockfile
 
       - name: Install dependencies
-        run: npx nypm@latest i
+        run: npx pnpm@latest install
 
       - name: Lint
         run: npm run lint
@@ -33,13 +36,10 @@ jobs:
       - run: corepack enable
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install dependencies
-        run: npx nypm@latest i
-
-      - name: Playground prepare
-        run: npm run dev:prepare
+        run: npx pnpm@latest install
 
       - name: Test
         run: npm run test
