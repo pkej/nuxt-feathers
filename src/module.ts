@@ -5,8 +5,8 @@ export interface ModuleOptions {}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'my-module',
-    configKey: 'myModule',
+    name: 'mwm-nuxt-module-template',
+    configKey: 'mwmNuxtModuleTemplate',
   },
   // Default configuration options of the Nuxt module
   defaults: {},

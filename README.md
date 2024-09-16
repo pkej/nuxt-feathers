@@ -1,74 +1,46 @@
-<!--
-Get your module up and running quickly.
-
-Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: mwm-nuxt-module-template
-- Config name: myModule
-- Description: My new Nuxt module
--->
-
-# My Module
+# mwm-nuxt-module-template
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
-[![Nuxt][nuxt-src]][nuxt-href]
+[![code style][code-style-src]][code-style-href]
 
-My new Nuxt module for doing amazing things.
+_description_
 
-- [✨ &nbsp;Release Notes](/CHANGELOG.md)
-  <!-- - [🏀 Online playground](https://stackblitz.com/github/gabortorma/mwm-nuxt-module-template?file=playground%2Fapp.vue) -->
-  <!-- - [📖 &nbsp;Documentation](https://example.com) -->
+- [✨ Release Notes](/CHANGELOG.md)
+- [🏀 Online playground](https://stackblitz.com/github/gabortorma/mwm-nuxt-module-template?file=playground%2Fapp.vue)
 
-## Features
-
-<!-- Highlight some of the features your module provide here -->
-
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
-
-## Quick Setup
-
-Install the module to your Nuxt application with one command:
+## Install
 
 ```bash
-npx nuxi module add mwm-nuxt-module-template
+pnpm install add -D @gabortorma/mwm-nuxt-module-template
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+## Usage
 
-## Contribution
+### Nuxt
 
-<details>
-  <summary>Local development</summary>
+Add the plugin to your `nuxt.config.js`:
+
+```ts
+export default defineNuxtConfig({
+  modules: [
+    '@gabortorma/mwm-nuxt-module-template'
+  ],
+
+  mwmNuxtModuleTemplate: {
+    // your module options
+  }
+})
+```
+
+## Release
+
+Add your `GITHUB_TOKEN` to `.env` file or use web based login:
 
 ```bash
-# Install dependencies
-npm install
-
-# Generate type stubs
-npm run dev:prepare
-
-# Develop with the playground
-npm run dev
-
-# Build the playground
-npm run dev:build
-
-# Run ESLint
-npm run lint
-
-# Run Vitest
-npm run test
-npm run test:watch
-
-# Release new version
-npm run release
+GITHUB_TOKEN=your_token
 ```
-
-</details>
 
 <!-- Badges -->
 
@@ -78,5 +50,5 @@ npm run release
 [npm-downloads-href]: https://npmjs.com/package/@gabortorma/mwm-nuxt-module-template
 [license-src]: https://img.shields.io/npm/l/@gabortorma/mwm-nuxt-module-template.svg?style=flat&colorA=18181B&colorB=28CF8D
 [license-href]: https://npmjs.com/package/@gabortorma/mwm-nuxt-module-template
-[nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
-[nuxt-href]: https://nuxt.com
+[code-style-src]: https://antfu.me/badge-code-style.svg
+[code-style-href]: https://github.com/gabortorma/antfu-eslint-config
