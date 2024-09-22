@@ -9,5 +9,9 @@ export default defineNuxtConfig({
 
   mwmNuxtModuleTemplate: {},
 
+  watch: [
+    '../src/module.ts',
+  ],
+
   devtools: { enabled: true },
 })
