@@ -24,33 +24,32 @@
   "scripts": {
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "release": "npm run lint && npm run test && npm run prepack && dotenv release-it",
+    "build": "nuxi build playground",
+    "prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
-    "postinstall": "nuxt-module-build prepare && nuxi prepare playground"
+    "prerelease": "nr lint && nr test:types && nr test && nr prepack",
+    "release": "dotenv release-it"
   },
   "dependencies": {
     "@nuxt/kit": "^3.13.2"
   },
   "devDependencies": {
     "@gabortorma/mwm": "^0.8.8",
-    "@gabortorma/nuxt-eslint-layer": "^0.1.3",
-    "@nuxt/devtools": "^1.5.0",
+    "@gabortorma/nuxt-eslint-layer": "^0.2.0",
+    "@nuxt/devtools": "^1.5.1",
     "@nuxt/module-builder": "^0.8.4",
     "@nuxt/schema": "^3.13.2",
     "@nuxt/test-utils": "^3.14.2",
-    "@types/node": "^22.5.5",
+    "@types/node": "^22.6.1",
     "dotenv-cli": "^7.4.2",
     "nuxi": "^3.13.2",
     "nuxt": "^3.13.2",
     "release-it": "^17.6.0",
     "typescript": "^5.6.2",
-    "vitest": "^2.1.1",
-    "vue-tsc": "^2.1.6"
+    "vitest": "^2.1.1"
   }
 }
