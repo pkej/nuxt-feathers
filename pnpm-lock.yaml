@@ -13,11 +13,11 @@ importers:
         version: 3.13.2(magicast@0.3.5)(rollup@4.22.4)
     devDependencies:
       '@gabortorma/mwm':
-        specifier: ^0.8.8
+        specifier: ^0.8.10
         version: link:../..
       '@gabortorma/nuxt-eslint-layer':
-        specifier: ^0.2.0
-        version: 0.2.0(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.6.2))(@vue/compiler-sfc@3.5.8)(eslint@9.11.1(jiti@1.21.6))(jiti@1.21.6)(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.6.1)(eslint@9.11.1(jiti@1.21.6))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.22.4)(terser@5.33.0)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vue-tsc@2.1.6(typescript@5.6.2)))(rollup@4.22.4)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vitest@2.1.1(@types/node@22.6.1)(terser@5.33.0))(vue@3.5.8(typescript@5.6.2))
+        specifier: ^0.2.1
+        version: 0.2.1(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.6.2))(@vue/compiler-sfc@3.5.8)(eslint@9.11.1(jiti@1.21.6))(jiti@1.21.6)(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.6.1)(eslint@9.11.1(jiti@1.21.6))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.22.4)(terser@5.33.0)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vue-tsc@2.1.6(typescript@5.6.2)))(rollup@4.22.4)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vitest@2.1.1(@types/node@22.6.1)(terser@5.33.0))(vue@3.5.8(typescript@5.6.2))
       '@nuxt/devtools':
         specifier: ^1.5.1
         version: 1.5.1(rollup@4.22.4)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vue@3.5.8(typescript@5.6.2))
@@ -912,8 +912,8 @@ packages:
   '@gabortorma/antfu-eslint-config@2.0.4':
     resolution: {integrity: sha512-onjAVRes2DZEmnsyEgj3c4LG1I2CZATNcW+sCsEMwQtYJsHnRtlUlRVr8zBVxIJuXnuS+SFwkB1TChX9ZourwQ==}
 
-  '@gabortorma/nuxt-eslint-layer@0.2.0':
-    resolution: {integrity: sha512-htEK9BqMkpSiwGShsJSfdkGUiXnPRU99aO53kFPlUYxi+eyZRNdIA2Jjpez0vr4MxvgGpKMW2l47ZkBggr7ooQ==}
+  '@gabortorma/nuxt-eslint-layer@0.2.1':
+    resolution: {integrity: sha512-Lgzldv1SIN3GSnWkANws02LLjEnAtlLKUBkVHal6wpuOEh9OBnCwbv76/x1BxXlgF/INy7alS4HdYsUsMSpcJw==}
     peerDependencies:
       nuxt: ^3.12.0
       vue: ^3.4.0
@@ -6090,7 +6090,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@gabortorma/nuxt-eslint-layer@0.2.0(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.6.2))(@vue/compiler-sfc@3.5.8)(eslint@9.11.1(jiti@1.21.6))(jiti@1.21.6)(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.6.1)(eslint@9.11.1(jiti@1.21.6))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.22.4)(terser@5.33.0)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vue-tsc@2.1.6(typescript@5.6.2)))(rollup@4.22.4)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vitest@2.1.1(@types/node@22.6.1)(terser@5.33.0))(vue@3.5.8(typescript@5.6.2))':
+  '@gabortorma/nuxt-eslint-layer@0.2.1(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.6.2))(@vue/compiler-sfc@3.5.8)(eslint@9.11.1(jiti@1.21.6))(jiti@1.21.6)(magicast@0.3.5)(nuxt@3.13.2(@parcel/watcher@2.4.1)(@types/node@22.6.1)(eslint@9.11.1(jiti@1.21.6))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.22.4)(terser@5.33.0)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vue-tsc@2.1.6(typescript@5.6.2)))(rollup@4.22.4)(typescript@5.6.2)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))(vitest@2.1.1(@types/node@22.6.1)(terser@5.33.0))(vue@3.5.8(typescript@5.6.2))':
     dependencies:
       '@gabortorma/antfu-eslint-config': 2.0.4(@typescript-eslint/utils@8.7.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.6.2))(@vue/compiler-sfc@3.5.8)(jiti@1.21.6)(typescript@5.6.2)(vitest@2.1.1(@types/node@22.6.1)(terser@5.33.0))
       '@nuxt/eslint': 0.5.7(eslint@9.11.1(jiti@1.21.6))(magicast@0.3.5)(rollup@4.22.4)(typescript@5.6.2)(vite-plugin-eslint2@4.4.1(eslint@9.11.1(jiti@1.21.6))(rollup@4.22.4)(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0)))(vite@5.4.7(@types/node@22.6.1)(terser@5.33.0))
