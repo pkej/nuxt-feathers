@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     '@gabortorma/nuxt-feathers'
   ],
 
-  nuxtFeathers: {
+  feathers: {
     // your module options
   }
 })

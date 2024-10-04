@@ -1,17 +1,25 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-09-14',
+  compatibilityDate: '2024-04-03',
 
-  extends: ['@gabortorma/nuxt-eslint-layer'],
+  extends: [
+    '@gabortorma/nuxt-eslint-layer',
+  ],
+
+  imports: {
+    autoImport: true,
+  },
 
   modules: [
     '../src/module',
   ],
 
-  nuxtFeathers: {},
+  feathers: {
+    transports: ['rest', 'websockets'],
+    framework: 'express',
+  },
 
-  watch: [
-    '../src/module.ts',
-  ],
+  ssr: true,
 
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 })

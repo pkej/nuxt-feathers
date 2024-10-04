@@ -36,21 +36,37 @@
     "release": "dotenv release-it"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.13.2"
+    "@feathersjs/generators": "^5.0.30",
+    "@gabortorma/feathers-nitro-adapter": "^0.2.9",
+    "@nuxt/kit": "^3.13.2",
+    "defu": "^6.1.4"
   },
   "devDependencies": {
     "@antfu/ni": "^0.23.0",
+    "@feathersjs/authentication": "^5.0.30",
+    "@feathersjs/authentication-client": "^5.0.30",
+    "@feathersjs/authentication-local": "^5.0.30",
+    "@feathersjs/configuration": "^5.0.30",
+    "@feathersjs/memory": "^5.0.30",
+    "@feathersjs/rest-client": "^5.0.30",
+    "@feathersjs/socketio-client": "^5.0.30",
+    "@feathersjs/typebox": "^5.0.30",
     "@gabortorma/mwm": "^0.8.12",
     "@gabortorma/nuxt-eslint-layer": "^0.2.1",
     "@nuxt/devtools": "^1.5.1",
     "@nuxt/module-builder": "^0.8.4",
     "@nuxt/schema": "^3.13.2",
     "@nuxt/test-utils": "^3.14.2",
+    "@pinia/nuxt": "^0.5.5",
     "@types/node": "^22.7.2",
     "dotenv-cli": "^7.4.2",
+    "feathers-pinia": "^4.5.4",
     "nuxi": "^3.14.0",
     "nuxt": "^3.13.2",
+    "nuxt-feathers-pinia": "^0.1.0",
+    "pinia": "^2.2.3",
     "release-it": "^17.6.0",
+    "socket.io-client": "^4.8.0",
     "typescript": "^5.6.2",
     "vitest": "^2.1.1"
   }

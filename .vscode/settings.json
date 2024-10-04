@@ -55,5 +55,8 @@
     "scss",
     "pcss",
     "postcss"
+  ],
+  "cSpell.words": [
+    "websockets"
   ]
 }
