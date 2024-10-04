@@ -7,7 +7,7 @@ export default defineNuxtConfig({
     '../src/module',
   ],
 
-  mwmNuxtModuleTemplate: {},
+  nuxtFeathers: {},
 
   watch: [
     '../src/module.ts',

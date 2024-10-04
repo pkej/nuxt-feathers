@@ -1,14 +1,14 @@
 import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin({
-  name: 'mwm-nuxt-module-template-plugin',
+  name: 'nuxt-feathers-plugin',
   // eslint-disable-next-line unused-imports/no-unused-vars
   setup: (nuxtApp) => {
-    console.log('mwm-nuxt-module-template-plugin setup')
+    console.log('nuxt-feathers-plugin setup')
   },
   hooks: {
     'app:created'() {
-      console.log('mwm-nuxt-module-template-plugin app:created')
+      console.log('nuxt-feathers-plugin app:created')
     },
   },
 })

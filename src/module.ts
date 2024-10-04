@@ -5,8 +5,8 @@ export interface ModuleOptions {}
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'mwm-nuxt-module-template',
-    configKey: 'mwmNuxtModuleTemplate',
+    name: 'nuxt-feathers',
+    configKey: 'nuxtFeathers',
     compatibility: {
       nuxt: '^3.0.0',
     },
