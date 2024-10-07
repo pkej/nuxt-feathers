@@ -1,17 +1,16 @@
 import type { NitroApp } from 'nitropack'
 import type { Application } from '../../../declarations'
-import { defineNitroPlugin, useRuntimeConfig } from '#imports'
-// import { sorter } from '@feathersjs/adapter-commons'
+import { useRuntimeConfig } from '#imports'
 import configuration from '@feathersjs/configuration'
 import { feathers } from '@feathersjs/feathers'
 import socketio from '@feathersjs/socketio'
-import { createExpressRouter, createKoaRouter, createSocketIoRouter, setup } from '@gabortorma/feathers-nitro-adapter'
+import { createKoaRouter, createSocketIoRouter, setup } from '@gabortorma/feathers-nitro-adapter'
+import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
 import { authentication } from '../../../authentication'
 import { channels } from '../../../channels'
 import { dummy } from '../../../dummy'
 import { services } from '../../../services/index'
-import { createFeathersExpressApp } from './express'
-import { app as koaApp } from './koa'
+import { createFeathersKoaApp } from './koa'
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   let app: Application
@@ -19,12 +18,10 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
   const { transports, framework } = useRuntimeConfig().feathers
   console.log('Feathers plugin started', transports, framework)
 
-  if (transports?.includes('rest') && framework === 'express')
-    app = createFeathersExpressApp()
-  else if (transports?.includes('rest') && framework === 'koa')
-    app = koaApp
+  if (transports?.includes('rest'))
+    app = createFeathersKoaApp()
   else if (transports?.includes('websockets'))
-    app = feathers()
+    app = feathers() as Application
   else
     throw new Error('Undefined transport or framework')
 
@@ -47,10 +44,7 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
 
   nitroApp.hooks.hook('feathers:afterSetup', async () => {
     if (transports?.includes('rest')) {
-      if (framework === 'express')
-        createExpressRouter(app)
-      else if (framework === 'koa')
-        createKoaRouter(app)
+      createKoaRouter(app)
     }
     if (transports?.includes('websockets')) {
       await createSocketIoRouter(app)

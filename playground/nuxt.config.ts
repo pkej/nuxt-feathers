@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 
   feathers: {
     transports: ['rest', 'websockets'],
-    framework: 'express',
+    framework: 'koa',
   },
 
   ssr: true,

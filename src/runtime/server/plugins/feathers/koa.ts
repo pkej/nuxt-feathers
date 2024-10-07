@@ -1,11 +1,19 @@
+import type { AuthenticationSettings } from '@feathersjs/koa'
 import type { Application } from '../../../declarations'
+
 import { feathers } from '@feathersjs/feathers'
-import { bodyParser, koa as feathersKoa, rest, serveStatic } from '@feathersjs/koa'
+import { bodyParser, koa as feathersKoa, parseAuthentication, rest, serveStatic } from '@feathersjs/koa'
 
-export const app: Application = feathersKoa(feathers())
+export function createFeathersKoaApp(authenticate?: AuthenticationSettings | false): Application {
+  const app: Application = feathersKoa(feathers())
 
-app.use(bodyParser())
+  app.use(bodyParser())
 
-app.use(serveStatic('./test/fixtures/public'))
+  app.use(serveStatic('./test/fixtures/public'))
 
-app.configure(rest())
+  app.use(parseAuthentication())
+
+  app.configure(rest())
+
+  return app
+}
