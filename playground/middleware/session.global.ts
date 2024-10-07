@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async (to, _from) => {
-  /* const auth = useAuthStore()
+  const auth = useAuthStore()
 
   await auth.getPromise()
 
@@ -12,5 +12,5 @@ export default defineNuxtRouteMiddleware(async (to, _from) => {
   if (!auth.isAuthenticated || !auth.user) {
     if (!publicRoutes.includes(to.path))
       return navigateTo('/')
-  } */
+  }
 })
