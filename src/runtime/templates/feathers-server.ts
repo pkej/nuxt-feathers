@@ -16,7 +16,7 @@ ${modules.map(module => `import _${hash(module)} from '${module}';`).join('\n')}
   
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   nitroApp.hooks.hook('feathers:beforeSetup', async (app: Application) => {
-    ${modules.map(module => `_${hash(module)}(app)`).join('\n    ')}
+    ${modules.map(module => `app.configure(_${hash(module)})`).join('\n    ')}
   })
 })`
 }
