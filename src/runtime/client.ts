@@ -1,6 +1,7 @@
+// For more information about this file see https://dove.feathersjs.com/guides/cli/client.html
+
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 import type { Application, TransportConnection } from '@feathersjs/feathers'
-// For more information about this file see https://dove.feathersjs.com/guides/cli/client.html
 import authenticationClient from '@feathersjs/authentication-client'
 
 import { feathers } from '@feathersjs/feathers'

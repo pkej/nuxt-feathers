@@ -1,11 +1,11 @@
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { readFileSync } from 'node:fs'
 import process from 'node:process'
-import { addImports, addServerImports, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import { addImports, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
-import { getFeathersContents } from './runtime/templates/feathers'
+import { templates } from './runtime/templates'
 
-export * from './runtime/declarations'
+export type { Application, HookContext, ServiceTypes } from './runtime/declarations'
 
 export interface FeathersAppInfo {
   transports?: Array<'rest' | 'websockets'>
@@ -21,7 +21,6 @@ export interface ModuleOptions extends FeathersAppInfo {
 }
 
 declare module '@nuxt/schema' {
-
   interface NuxtConfig {
     feathers?: ModuleOptions
   }
@@ -85,15 +84,15 @@ export default defineNuxtModule<ModuleOptions>({
       addImports({ from: composables, name: 'useFeathers' })
       const stores = resolver.resolve('./runtime/stores/index')
       addImports({ from: stores, name: 'useAuthStore' })
+    }
 
-      /* addTemplate({
-        filename: 'dist/server/feathers.mjs',
-        getContents: getFeathersContents,
-        write: true,
-      }) */
+    for (const template of templates) {
+      addTemplate(template)
+      addServerPlugin(resolver.resolve(nuxt.options.buildDir, template.filename))
     }
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
+    // addPlugin(resolver.resolve('./runtime/plugins/f'))
     addServerPlugin(resolver.resolve('./runtime/server/plugins/feathers/index'))
   },
 })
