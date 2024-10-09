@@ -1,24 +1,13 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/client.html
 
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
-import type { Application, TransportConnection } from '@feathersjs/feathers'
+import type { TransportConnection } from '@feathersjs/feathers'
+import type { ClientApplication, ServiceTypes } from './declarations/client'
+
 import authenticationClient from '@feathersjs/authentication-client'
 
 import { feathers } from '@feathersjs/feathers'
-
-import { messageClient } from './services/messages/messages.shared'
-import { userClient } from './services/users/users.shared'
-
-export type { Message, MessageData, MessagePatch, MessageQuery } from './services/messages/messages.shared'
-export type { User, UserData, UserPatch, UserQuery } from './services/users/users.shared'
-
-export interface Configuration {
-  connection: TransportConnection<ServiceTypes>
-}
-
-export interface ServiceTypes {}
-
-export type ClientApplication = Application<ServiceTypes, Configuration>
+import { services } from './services/client'
 
 /**
  * Returns a typed client for the feathers-api app.
@@ -38,7 +27,6 @@ export function createClient<Configuration = any>(
   client.configure(authenticationClient(authenticationOptions))
   client.set('connection', connection)
 
-  client.configure(messageClient)
-  client.configure(userClient)
+  client.configure(services)
   return client
 }

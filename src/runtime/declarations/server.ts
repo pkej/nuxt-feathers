@@ -2,9 +2,7 @@
 
 import type { HookContext as FeathersHookContext, NextFunction } from '@feathersjs/feathers'
 import type { Application as FeathersKoaApplication } from '@feathersjs/koa'
-import type { User } from './services/users/users'
-
-export * from '@gabortorma/feathers-nitro-adapter'
+import type { User } from '../services/users/users'
 
 export type { NextFunction }
 

@@ -1,4 +1,4 @@
-import type { Application, HookContext, NextFunction } from './declarations'
+import type { Application, HookContext, NextFunction } from './declarations/server'
 
 export function dummy(app: Application) {
   app.hooks({

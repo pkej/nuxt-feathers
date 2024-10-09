@@ -1,6 +1,6 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/application.html#configure-functions
 
-import type { Application } from '../declarations'
+import type { Application } from '../declarations/server'
 import { message } from './messages/messages'
 import { user } from './users/users'
 

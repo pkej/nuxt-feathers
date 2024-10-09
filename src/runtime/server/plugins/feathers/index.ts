@@ -1,5 +1,5 @@
 import type { NitroApp } from 'nitropack'
-import type { Application } from '../../../declarations'
+import type { Application } from '../../../declarations/server'
 import { useRuntimeConfig } from '#imports'
 import configuration from '@feathersjs/configuration'
 import { feathers } from '@feathersjs/feathers'
@@ -10,7 +10,7 @@ import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
 import { authentication } from '../../../authentication'
 import { channels } from '../../../channels'
 import { dummy } from '../../../dummy'
-import { services } from '../../../services/index'
+import { services } from '../../../services/server'
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   let app: Application

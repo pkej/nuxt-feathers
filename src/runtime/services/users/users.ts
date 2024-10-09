@@ -1,10 +1,10 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
-import type { Application } from '../../declarations'
+import type { Application } from '../../declarations/server'
 import { authenticate } from '@feathersjs/authentication'
 import { hooks as schemaHooks } from '@feathersjs/schema'
-import { getOptions, UserService } from './users.class'
 import {
+  type User,
   userDataResolver,
   userDataValidator,
   userExternalResolver,
@@ -13,7 +13,8 @@ import {
   userQueryResolver,
   userQueryValidator,
   userResolver,
-} from './users.schema'
+} from './users'
+import { getOptions, UserService } from './users.class'
 import { userMethods, userPath } from './users.shared'
 
 export * from './users.class'
@@ -57,7 +58,7 @@ export function user(app: Application) {
 }
 
 // Add this service to the service type index
-declare module '../../declarations' {
+declare module '../../declarations/server' {
   interface ServiceTypes {
     [userPath]: UserService
   }

@@ -5,7 +5,7 @@ import { addImports, addPlugin, addServerPlugin, addTemplate, createResolver, de
 import defu from 'defu'
 import { templates } from './runtime/templates'
 
-export type { Application, HookContext, NextFunction, ServiceTypes } from './runtime/declarations'
+export * from '@gabortorma/feathers-nitro-adapter'
 
 export interface FeathersAppInfo {
   transports?: Array<'rest' | 'websockets'>

@@ -1,6 +1,6 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/channels.html
 import type { RealTimeConnection } from '@feathersjs/feathers'
-import type { Application, HookContext } from './declarations'
+import type { Application, HookContext } from './declarations/server'
 import '@feathersjs/transport-commons'
 
 export function channels(app: Application) {

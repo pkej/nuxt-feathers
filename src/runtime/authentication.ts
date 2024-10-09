@@ -1,11 +1,11 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/authentication.html
 
-import type { Application } from './declarations'
+import type { Application } from './declarations/server'
 import { AuthenticationService, JWTStrategy } from '@feathersjs/authentication'
 
 import { LocalStrategy } from '@feathersjs/authentication-local'
 
-declare module './declarations' {
+declare module './declarations/server' {
   interface ServiceTypes {
     authentication: AuthenticationService
   }
