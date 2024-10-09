@@ -4,7 +4,6 @@ import type { Application } from '@gabortorma/nuxt-feathers/declarations/server'
 import { authenticate } from '@feathersjs/authentication'
 import { hooks as schemaHooks } from '@feathersjs/schema'
 import {
-  type User,
   userDataResolver,
   userDataValidator,
   userExternalResolver,

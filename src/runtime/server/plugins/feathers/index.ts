@@ -7,8 +7,6 @@ import { bodyParser, koa as feathersKoa, parseAuthentication, rest } from '@feat
 import socketio from '@feathersjs/socketio'
 import { createKoaRouter, createSocketIoRouter, setup } from '@gabortorma/feathers-nitro-adapter'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
-import { authentication } from '../../../authentication'
-import { channels } from '../../../channels'
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   let app: Application
@@ -30,20 +28,15 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
     throw new Error('Undefined transport or framework')
   }
 
-  app.configure(configuration())
+  app.configure(configuration()) // TODO: Move to Nuxt config
 
-  nitroApp.hooks.hook('feathers:beforeSetup', async () => {
-    if (transports?.includes('websockets')) {
-      app.configure(
-        socketio({
-          transports: ['websocket'],
-        }),
-      )
-      app.configure(channels)
-    }
-
-    app?.configure(authentication)
-  })
+  if (transports?.includes('websockets')) {
+    app.configure(
+      socketio({
+        transports: ['websocket'],
+      }),
+    )
+  }
 
   nitroApp.hooks.hook('feathers:afterSetup', async () => {
     if (transports?.includes('rest')) {

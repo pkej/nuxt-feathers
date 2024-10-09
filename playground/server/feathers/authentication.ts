@@ -1,17 +1,17 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/authentication.html
 
-import type { Application } from './declarations/server'
+import type { Application } from '@gabortorma/nuxt-feathers/declarations/server'
 import { AuthenticationService, JWTStrategy } from '@feathersjs/authentication'
 
 import { LocalStrategy } from '@feathersjs/authentication-local'
 
-declare module './declarations/server' {
+declare module '@gabortorma/nuxt-feathers/declarations/server' {
   interface ServiceTypes {
     authentication: AuthenticationService
   }
 }
 
-export function authentication(app: Application) {
+export default function authentication(app: Application) {
   const authentication = new AuthenticationService(app)
 
   authentication.register('jwt', new JWTStrategy())
