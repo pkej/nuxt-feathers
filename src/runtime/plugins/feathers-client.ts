@@ -25,11 +25,11 @@ export default defineNuxtPlugin(async (nuxt) => {
 
   // Use Rest for the SSR Server and socket.io for the browser
   const connection = import.meta.server
-    ? rest(`/api`).fetch($fetch, OFetch)
+    ? rest(`/feathers`).fetch($fetch, OFetch)
     : socketioClient(io({ transports: ['websocket'] }))
   // */
 
-  // const connection = rest(`${host}/api`).fetch($fetch, OFetch) // uncomment for only rest connection
+  // const connection = rest(`${host}/feathers`).fetch($fetch, OFetch) // uncomment for only rest connection
   // const connection = socketioClient(io(host, { transports: ['websocket'] })) // uncomment for only socket.io connection
 
   // create the feathers client

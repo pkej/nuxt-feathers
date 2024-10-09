@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@feathersjs/generators": "^5.0.30",
-    "@gabortorma/feathers-nitro-adapter": "^0.2.12",
+    "@gabortorma/feathers-nitro-adapter": "^0.3.0",
     "@nuxt/kit": "^3.13.2",
     "@pinia/nuxt": "^0.5.5",
     "defu": "^6.1.4",

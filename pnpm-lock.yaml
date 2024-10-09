@@ -12,8 +12,8 @@ importers:
         specifier: ^5.0.30
         version: 5.0.30
       '@gabortorma/feathers-nitro-adapter':
-        specifier: ^0.2.12
-        version: 0.2.12(magicast@0.3.5)(typescript@5.6.2)
+        specifier: ^0.3.0
+        version: 0.3.0(magicast@0.3.5)(typescript@5.6.2)
       '@nuxt/kit':
         specifier: ^3.13.2
         version: 3.13.2(magicast@0.3.5)(rollup@3.29.5)
@@ -1117,8 +1117,8 @@ packages:
   '@gabortorma/antfu-eslint-config@2.0.7':
     resolution: {integrity: sha512-Gf9GvqzpsaRCGnDXHI/MLRrUuR/w1XDhmMi6tU/709zSHE0If0bH6bt/R4s0BtwcAuGJOXk6MHYHLuQ8nqiRtw==}
 
-  '@gabortorma/feathers-nitro-adapter@0.2.12':
-    resolution: {integrity: sha512-cYYHyBy1+jBll/nMXfiiP1ml8TxWscG6go5kDZ5B2HErafdlQoCipTAtxw5ddH1Js5kSqC+o+GQfGQdMeprz3Q==}
+  '@gabortorma/feathers-nitro-adapter@0.3.0':
+    resolution: {integrity: sha512-Y3mGCLeOABZdSQMC2ENNISF9N3phMmqMSqSmZ6hniEgyI+3c72W3jhD4i0xtuVBwxWRpf6I8F00S/AtstiX+MA==}
 
   '@gabortorma/mwm@0.8.12':
     resolution: {integrity: sha512-C7G0J6Yxg1UUd7XhBJMSrYayTNPpL0i/JymS1PlbVaIxQ0dNg3Me7i/3ldLFx8c5Sn0b7Dok64T9u+X6TofqMg==}
@@ -7079,7 +7079,7 @@ snapshots:
       - typescript
       - vitest
 
-  '@gabortorma/feathers-nitro-adapter@0.2.12(magicast@0.3.5)(typescript@5.6.2)':
+  '@gabortorma/feathers-nitro-adapter@0.3.0(magicast@0.3.5)(typescript@5.6.2)':
     dependencies:
       '@feathersjs/express': 5.0.30(typescript@5.6.2)
       '@feathersjs/feathers': 5.0.30
