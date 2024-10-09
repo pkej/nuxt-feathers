@@ -1,11 +1,11 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 
 import type { Static } from '@feathersjs/typebox'
-import type { HookContext } from '../../declarations/server'
+import type { HookContext } from '@gabortorma/nuxt-feathers/declarations/server'
 import type { MessageService } from './messages.class'
 import { resolve } from '@feathersjs/schema'
 import { getValidator, querySyntax, Type } from '@feathersjs/typebox'
-import { dataValidator, queryValidator } from '../../validators'
+import { dataValidator, queryValidator } from '../validators'
 
 // Main data model schema
 export const messageSchema = Type.Object(

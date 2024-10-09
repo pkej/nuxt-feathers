@@ -9,7 +9,7 @@ export function getFeathersServerContents({ nuxt }: GetContentsDataType): string
 
   return `import type { NitroApp } from 'nitropack'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
-import type { Application } from '@gabortorma/nuxt-feathers'
+import type { Application } from '@gabortorma/nuxt-feathers/declarations/server'
 ${modules.map(module => `import _${hash(module)} from '${module}';`).join('\n')}
   
 export default defineNitroPlugin((nitroApp: NitroApp) => {

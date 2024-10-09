@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.shared.html
 
 import type { Params } from '@feathersjs/feathers'
-import type { ClientApplication } from '../../declarations/client'
+import type { ClientApplication } from '@gabortorma/nuxt-feathers/declarations/client'
 import type { Message, MessageData, MessagePatch, MessageQuery, MessageService } from './messages.class'
 
 export type { Message, MessageData, MessagePatch, MessageQuery }
@@ -21,7 +21,7 @@ export function messageClient(client: ClientApplication) {
 }
 
 // Add this service to the client service type index
-declare module '../../declarations/client' {
+declare module '@gabortorma/nuxt-feathers/declarations/client' {
   interface ServiceTypes {
     [messagePath]: MessageClientService
   }

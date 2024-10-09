@@ -4,6 +4,7 @@ import socketioClient from '@feathersjs/socketio-client'
 import { createPiniaClient, OFetch } from 'feathers-pinia'
 import { $fetch } from 'ofetch'
 import { io } from 'socket.io-client'
+import { services } from '../../../playground/services/client'
 import { createClient } from '../client'
 
 /**
@@ -34,6 +35,8 @@ export default defineNuxtPlugin(async (nuxt) => {
 
   // create the feathers client
   const feathersClient = createClient(connection, { storage, storageKey })
+
+  services(feathersClient)
 
   // wrap the feathers client
   const api = createPiniaClient(feathersClient, {

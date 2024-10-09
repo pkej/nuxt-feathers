@@ -9,8 +9,6 @@ import { createKoaRouter, createSocketIoRouter, setup } from '@gabortorma/feathe
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
 import { authentication } from '../../../authentication'
 import { channels } from '../../../channels'
-import { dummy } from '../../../dummy'
-import { services } from '../../../services/server'
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   let app: Application
@@ -43,8 +41,6 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
       )
       app.configure(channels)
     }
-    app?.configure(services)
-    app?.configure(dummy)
 
     app?.configure(authentication)
   })

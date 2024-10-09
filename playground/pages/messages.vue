@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Message } from '../../src/runtime/services/messages/messages'
+import type { Message } from '~/services/messages/messages'
 
 const { api } = useFeathers()
 

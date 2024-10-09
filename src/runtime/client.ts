@@ -2,12 +2,14 @@
 
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 import type { TransportConnection } from '@feathersjs/feathers'
-import type { ClientApplication, ServiceTypes } from './declarations/client'
+// ! TODO: Fix this import
+// eslint-disable-next-line antfu/no-import-dist
+import type { ClientApplication, ServiceTypes } from '../../dist/runtime/declarations/client'
+// ! TODO: Fix this import
 
 import authenticationClient from '@feathersjs/authentication-client'
 
 import { feathers } from '@feathersjs/feathers'
-import { services } from './services/client'
 
 /**
  * Returns a typed client for the feathers-api app.
@@ -20,13 +22,12 @@ import { services } from './services/client'
 export function createClient<Configuration = any>(
   connection: TransportConnection<ServiceTypes>,
   authenticationOptions: Partial<AuthenticationClientOptions> = {},
-) {
+): ClientApplication {
   const client: ClientApplication = feathers()
 
   client.configure(connection)
   client.configure(authenticationClient(authenticationOptions))
   client.set('connection', connection)
 
-  client.configure(services)
   return client
 }

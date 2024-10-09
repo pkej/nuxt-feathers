@@ -1,6 +1,6 @@
-import type { Application, HookContext, NextFunction } from './declarations/server'
+import type { Application, HookContext, NextFunction } from '@gabortorma/nuxt-feathers/declarations/server'
 
-export function dummy(app: Application) {
+export default function (app: Application) {
   app.hooks({
     setup: [
       async (context: HookContext, next: NextFunction) => {
