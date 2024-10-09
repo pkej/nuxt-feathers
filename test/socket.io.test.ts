@@ -1,12 +1,15 @@
 import type { Socket } from 'socket.io-client'
-import type { ClientApplication } from '../src/runtime/declarations/client'
-import type { Message } from '../src/runtime/services/messages/messages'
+import type { Message } from './services/messages/messages'
 import { fileURLToPath } from 'node:url'
 import socketio from '@feathersjs/socketio-client'
 import { setup } from '@nuxt/test-utils/e2e'
 import ioc from 'socket.io-client'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createClient } from '../src/runtime/client'
+// ! TODO: Fix this import
+// eslint-disable-next-line antfu/no-import-dist
+import type { ClientApplication } from '../dist/runtime/declarations/client'
+// ! TODO: Fix this import
 
 const PORT = 3030
 
