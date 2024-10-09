@@ -1,9 +1,10 @@
+import { defineNuxtPlugin, useCookie } from '#app'
 import rest from '@feathersjs/rest-client'
 import socketioClient from '@feathersjs/socketio-client'
 import { createPiniaClient, OFetch } from 'feathers-pinia'
 import { $fetch } from 'ofetch'
 import { io } from 'socket.io-client'
-import { createClient } from '../../src/runtime/client'
+import { createClient } from '../client'
 
 /**
  * Creates a Feathers Rest client for the SSR server and a Socket.io client for the browser.
@@ -11,7 +12,7 @@ import { createClient } from '../../src/runtime/client'
  */
 export default defineNuxtPlugin(async (nuxt) => {
   // const host = import.meta.env.VITE_MYAPP_API_URL as string || 'http://localhost:3030' // uncomment for independently started feathers-api server
-  const host = import.meta.env.VITE_MYAPP_API_URL as string || 'http://localhost:3000' // uncomment for feathers-api server run by Nuxt
+  // const host = import.meta.env.VITE_MYAPP_API_URL as string || 'http://localhost:3000' // uncomment for feathers-api server run by Nuxt
 
   // Store JWT in a cookie for SSR.
   const storageKey = 'feathers-jwt'
@@ -24,8 +25,8 @@ export default defineNuxtPlugin(async (nuxt) => {
 
   // Use Rest for the SSR Server and socket.io for the browser
   const connection = import.meta.server
-    ? rest(`${host}/api`).fetch($fetch, OFetch)
-    : socketioClient(io(host, { transports: ['websocket'] }))
+    ? rest(`/api`).fetch($fetch, OFetch)
+    : socketioClient(io({ transports: ['websocket'] }))
   // */
 
   // const connection = rest(`${host}/api`).fetch($fetch, OFetch) // uncomment for only rest connection

@@ -1,11 +1,11 @@
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { readFileSync } from 'node:fs'
 import process from 'node:process'
-import { addImports, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import { addImports, addPlugin, addPluginTemplate, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
 import { templates } from './runtime/templates'
 
-export type { Application, HookContext, ServiceTypes } from './runtime/declarations'
+export type { Application, HookContext, NextFunction, ServiceTypes } from './runtime/declarations'
 
 export interface FeathersAppInfo {
   transports?: Array<'rest' | 'websockets'>
@@ -17,6 +17,9 @@ export interface FeathersAppInfo {
 // Module options TypeScript interface definition
 export interface ModuleOptions extends FeathersAppInfo {
   // A list of all chosen transports
+  /* rest?: boolean
+  websocket?: boolean
+  authentication?: boolean */
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
 }
 
@@ -79,11 +82,16 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.hook('vite:extendConfig', (config) => {
         config.optimizeDeps?.include?.push('feathers-pinia')
       })
+      const plugins = resolver.resolve('./runtime/plugins')
+      addPlugin({ order: 0, src: resolver.resolve(plugins, 'feathers-client') })
+      addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
 
       const composables = resolver.resolve('./runtime/composables/index')
-      addImports({ from: composables, name: 'useFeathers' })
       const stores = resolver.resolve('./runtime/stores/index')
-      addImports({ from: stores, name: 'useAuthStore' })
+      addImports([
+        { from: composables, name: 'useFeathers' },
+        { from: stores, name: 'useAuthStore' },
+      ])
     }
 
     for (const template of templates) {
