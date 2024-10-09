@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   ],
 
   feathers: {
+    servicesDir: '../../services',
     transports: ['websockets'],
     framework: false,
   },

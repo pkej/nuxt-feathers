@@ -20,6 +20,7 @@ export interface ModuleOptions extends FeathersAppInfo {
   /* rest?: boolean
   websocket?: boolean
   authentication?: boolean */
+  servicesDir?: string
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
 }
 
@@ -53,6 +54,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     framework: pkg.feathers?.framework ?? 'koa',
     schema: pkg.feathers?.schema ?? 'typebox',
+    servicesDir: 'services',
     pinia: true,
   },
   async setup(options, nuxt) {
@@ -95,7 +97,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     for (const template of templates) {
-      addTemplate(template)
+      addTemplate({ ...template, options })
       addServerPlugin(resolver.resolve(nuxt.options.buildDir, template.filename))
     }
 

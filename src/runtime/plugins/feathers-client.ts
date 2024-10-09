@@ -36,6 +36,8 @@ export default defineNuxtPlugin(async (nuxt) => {
   // create the feathers client
   const feathersClient = createClient(connection, { storage, storageKey })
 
+  // await nuxt.hooks.callHook('feathers:beforeSetup', feathersClient)
+
   services(feathersClient)
 
   // wrap the feathers client
@@ -48,6 +50,8 @@ export default defineNuxtPlugin(async (nuxt) => {
     skipGetIfExists: true,
     customSiftOperators: {},
   })
+
+  // await nuxt.hooks.callHook('feathers:afterSetup', feathersClient)
 
   return { provide: { api } }
 })
