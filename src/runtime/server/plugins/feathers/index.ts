@@ -3,6 +3,7 @@ import type { Application } from '../../../declarations'
 import { useRuntimeConfig } from '#imports'
 import configuration from '@feathersjs/configuration'
 import { feathers } from '@feathersjs/feathers'
+import { bodyParser, koa as feathersKoa, parseAuthentication, rest } from '@feathersjs/koa'
 import socketio from '@feathersjs/socketio'
 import { createKoaRouter, createSocketIoRouter, setup } from '@gabortorma/feathers-nitro-adapter'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
@@ -10,7 +11,6 @@ import { authentication } from '../../../authentication'
 import { channels } from '../../../channels'
 import { dummy } from '../../../dummy'
 import { services } from '../../../services/index'
-import { createFeathersKoaApp } from './koa'
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   let app: Application
@@ -18,12 +18,19 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
   const { transports, framework } = useRuntimeConfig().feathers
   console.log('Feathers plugin started', transports, framework)
 
-  if (transports?.includes('rest'))
-    app = createFeathersKoaApp()
-  else if (transports?.includes('websockets'))
+  if (transports?.includes('rest')) {
+    app = feathersKoa(feathers())
+
+    app.use(bodyParser())
+    app.use(parseAuthentication())
+    app.configure(rest())
+  }
+  else if (transports?.includes('websockets')) {
     app = feathers() as Application
-  else
+  }
+  else {
     throw new Error('Undefined transport or framework')
+  }
 
   app.configure(configuration())
 
