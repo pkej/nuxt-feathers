@@ -4,9 +4,7 @@ import { globSync } from 'glob'
 import { hash } from 'ohash'
 
 export function getFeathersServerContents({ nuxt }: GetContentsDataType): string {
-  const resolver = createResolver(import.meta.url)
-  const path = resolver.resolve(nuxt.options.serverDir, './feathers/*.ts')
-  const modules = globSync(path)
+  const modules = globSync(createResolver(nuxt.options.serverDir).resolve('feathers/*.ts'))
   console.log('modules', modules)
 
   return `import type { NitroApp } from 'nitropack'
