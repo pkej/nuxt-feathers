@@ -19,8 +19,3 @@ export default defineNuxtPlugin((nuxtApp) => {
   })
 })`
 }
-
-/*
-export type { Message, MessageData, MessagePatch, MessageQuery } from './messages/messages.shared'
-export type { User, UserData, UserPatch, UserQuery } from './users/users.shared'
-*/

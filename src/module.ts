@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import process from 'node:process'
 import { addImports, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
+import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
 import { serverTemplates } from './runtime/templates/server'
 
@@ -70,6 +71,7 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     const resolver = createResolver(import.meta.url)
+    const services = resolver.resolve(nuxt.options.srcDir, options.servicesDir || '')
 
     if (options.pinia) {
       if (!hasNuxtModule('@pinia/nuxt')) {
@@ -96,6 +98,17 @@ export default defineNuxtModule<ModuleOptions>({
         { from: stores, name: 'useAuthStore' },
       ])
     }
+    await addServicesImports(services)
+
+    // const services = resolver.resolve(nuxt.options.srcDir, options.servicesDir || '', '*/*.shared.ts')
+    // addImportsDir(services)
+    /* const declarations = resolver.resolve('./runtime/declarations')
+    addImports({ from: resolver.resolve(declarations, 'client'), name: 'ClientApplication' })
+    addServerImports([{ from: resolver.resolve(declarations, 'server'), name: 'Application' }]) */
+    // const exports = await scanDirExports(services, { filePatterns: ['*/*.shared.ts'] })
+    /* const typeExports = exports.filter(({ type }) => type)
+      console.log('typeExports', typeExports)
+      addImports(typeExports) */
 
     for (const clientTemplate of clientTemplates) {
       addTemplate({ ...clientTemplate, options })
