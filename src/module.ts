@@ -3,7 +3,8 @@ import { readFileSync } from 'node:fs'
 import process from 'node:process'
 import { addImports, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
-import { templates } from './runtime/templates'
+import { clientTemplates } from './runtime/templates/client'
+import { serverTemplates } from './runtime/templates/server'
 
 export * from '@gabortorma/feathers-nitro-adapter'
 
@@ -96,13 +97,16 @@ export default defineNuxtModule<ModuleOptions>({
       ])
     }
 
-    for (const template of templates) {
-      addTemplate({ ...template, options })
-      addServerPlugin(resolver.resolve(nuxt.options.buildDir, template.filename))
+    for (const clientTemplate of clientTemplates) {
+      addTemplate({ ...clientTemplate, options })
+      addPlugin(resolver.resolve(nuxt.options.buildDir, clientTemplate.filename))
+    }
+    for (const serverTemplate of serverTemplates) {
+      addTemplate({ ...serverTemplate, options })
+      addServerPlugin(resolver.resolve(nuxt.options.buildDir, serverTemplate.filename))
     }
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    // addPlugin(resolver.resolve('./runtime/plugins/f'))
     addServerPlugin(resolver.resolve('./runtime/server/plugins/feathers/index'))
   },
 })

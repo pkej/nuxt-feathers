@@ -15,7 +15,6 @@
     "@feathersjs/feathers": "^5.0.30",
     "@feathersjs/rest-client": "^5.0.30",
     "@feathersjs/socketio-client": "^5.0.30",
-    "@gabortorma/nuxt-feathers": "workspace:*",
     "@pinia/nuxt": "^0.5.5",
     "feathers-pinia": "^4.5.4",
     "nuxt": "^3.13.2",

@@ -2,7 +2,7 @@
 
 import type { Params } from '@feathersjs/feathers'
 import type { MemoryServiceOptions } from '@feathersjs/memory'
-import type { Application } from '@gabortorma/nuxt-feathers/declarations/server'
+import type { Application } from 'nuxt-feathers/runtime/declarations/server'
 import type { User, UserData, UserPatch, UserQuery } from './users.schema'
 import { MemoryService } from '@feathersjs/memory'
 

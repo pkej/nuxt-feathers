@@ -1,18 +1,31 @@
+import type { ClientApplication } from '../declarations/client'
 import { defineNuxtPlugin, useCookie } from '#app'
+import authenticationClient from '@feathersjs/authentication-client'
+import { feathers } from '@feathersjs/feathers'
 import rest from '@feathersjs/rest-client'
 import socketioClient from '@feathersjs/socketio-client'
 import { createPiniaClient, OFetch } from 'feathers-pinia'
 import { $fetch } from 'ofetch'
 import { io } from 'socket.io-client'
-import { services } from '../../../playground/services/client'
-import { createClient } from '../client'
+
+/*
+declare module '#app' {
+  interface NuxtApp {
+    $api: ClientApplication
+  }
+}
+
+declare module '@vue/runtime-core' {
+  interface ComponentCustomProperties {
+    $api: ClientApplication
+  }
+} */
 
 /**
  * Creates a Feathers Rest client for the SSR server and a Socket.io client for the browser.
  * Also provides a cookie-storage adapter for JWT SSR using Nuxt APIs.
  */
 export default defineNuxtPlugin(async (nuxt) => {
-  // const host = import.meta.env.VITE_MYAPP_API_URL as string || 'http://localhost:3030' // uncomment for independently started feathers-api server
   // const host = import.meta.env.VITE_MYAPP_API_URL as string || 'http://localhost:3000' // uncomment for feathers-api server run by Nuxt
 
   // Store JWT in a cookie for SSR.
@@ -34,11 +47,13 @@ export default defineNuxtPlugin(async (nuxt) => {
   // const connection = socketioClient(io(host, { transports: ['websocket'] })) // uncomment for only socket.io connection
 
   // create the feathers client
-  const feathersClient = createClient(connection, { storage, storageKey })
+  const feathersClient: ClientApplication = feathers()
 
-  // await nuxt.hooks.callHook('feathers:beforeSetup', feathersClient)
+  feathersClient.configure(connection)
+  feathersClient.configure(authenticationClient({ storage, storageKey }))
+  feathersClient.set('connection', connection)
 
-  services(feathersClient)
+  await nuxt.hooks.callHook('feathers:beforeSetup', feathersClient)
 
   // wrap the feathers client
   const api = createPiniaClient(feathersClient, {

@@ -1,4 +1,4 @@
-import type { Application } from '@gabortorma/nuxt-feathers/declarations/server'
+import type { Application } from 'nuxt-feathers/runtime/declarations/server'
 import { serveStatic } from '@feathersjs/koa'
 
 export default function koa(app: Application): void {

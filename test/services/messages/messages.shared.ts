@@ -12,7 +12,7 @@ export const messagePath = 'messages'
 
 export const messageMethods: Array<keyof MessageService> = ['find', 'get', 'create', 'patch', 'remove']
 
-export function messageClient(client: ClientApplication) {
+export default function messageClient(client: ClientApplication) {
   const connection = client.get('connection')
 
   client.use(messagePath, connection.service(messagePath), {

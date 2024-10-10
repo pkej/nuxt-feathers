@@ -1,11 +1,11 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/authentication.html
 
-import type { Application } from '@gabortorma/nuxt-feathers/declarations/server'
+import type { Application } from 'nuxt-feathers/runtime/declarations/server'
 import { AuthenticationService, JWTStrategy } from '@feathersjs/authentication'
 
 import { LocalStrategy } from '@feathersjs/authentication-local'
 
-declare module '@gabortorma/nuxt-feathers/declarations/server' {
+declare module 'nuxt-feathers/runtime/declarations/server' {
   interface ServiceTypes {
     authentication: AuthenticationService
   }

@@ -2,10 +2,7 @@
 
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 import type { TransportConnection } from '@feathersjs/feathers'
-// ! TODO: Fix this import
-// eslint-disable-next-line antfu/no-import-dist
-import type { ClientApplication, ServiceTypes } from '../../dist/runtime/declarations/client'
-// ! TODO: Fix this import
+import type { ClientApplication, ServiceTypes } from './declarations/client'
 
 import authenticationClient from '@feathersjs/authentication-client'
 

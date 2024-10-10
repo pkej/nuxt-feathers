@@ -1,4 +1,4 @@
-import type { Application, HookContext, NextFunction } from '@gabortorma/nuxt-feathers/declarations/server'
+import type { Application, HookContext, NextFunction } from 'nuxt-feathers/runtime/declarations/server'
 
 export default function dummy(app: Application) {
   app.hooks({

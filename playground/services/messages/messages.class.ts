@@ -2,7 +2,7 @@
 
 import type { Params } from '@feathersjs/feathers'
 import type { MemoryServiceOptions } from '@feathersjs/memory'
-import type { Application } from '@gabortorma/nuxt-feathers/declarations/server'
+import type { Application } from 'nuxt-feathers/runtime/declarations/server'
 import type { Message, MessageData, MessagePatch, MessageQuery } from './messages.schema'
 import { MemoryService } from '@feathersjs/memory'
 
