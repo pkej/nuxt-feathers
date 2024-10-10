@@ -1,6 +1,6 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/channels.html
 import type { RealTimeConnection } from '@feathersjs/feathers'
-import type { Application, HookContext } from '../../../../../src/runtime/declarations/server'
+import type { Application, HookContext } from 'nuxt-feathers/runtime/declarations/server'
 import '@feathersjs/transport-commons'
 
 export default function channels(app: Application) {

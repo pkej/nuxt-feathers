@@ -1,5 +1,5 @@
 import type { NitroApp } from 'nitropack'
-import type { Application } from '../../../declarations/server'
+import type { Application } from 'nuxt-feathers/runtime/declarations/server'
 import { useRuntimeConfig } from '#imports'
 import configuration from '@feathersjs/configuration'
 import { feathers } from '@feathersjs/feathers'

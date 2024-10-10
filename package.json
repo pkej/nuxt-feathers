@@ -16,12 +16,12 @@
       "import": "./dist/module.mjs",
       "require": "./dist/module.cjs"
     },
-    "./declarations/server": {
+    "./runtime/declarations/server": {
       "types": "./dist/runtime/declarations/server.d.ts",
       "import": "./dist/runtime/declarations/server.js",
       "require": "./dist/runtime/declarations/server.js"
     },
-    "./declarations/client": {
+    "./runtime/declarations/client": {
       "types": "./dist/runtime/declarations/client.d.ts",
       "import": "./dist/runtime/declarations/client.js",
       "require": "./dist/runtime/declarations/client.js"
@@ -31,7 +31,7 @@
   "types": "./dist/types.d.ts",
   "files": [
     "dist",
-    "dist/runtime/declarations-*"
+    "dist/runtime/declarations/*"
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",

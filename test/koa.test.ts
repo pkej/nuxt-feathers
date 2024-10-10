@@ -22,7 +22,7 @@ describe('koa', async () => {
   })
 
   it('get messages with $fetch', async () => {
-    const messages: Array<MessageData> = await $fetch('/feathers/messages')
+    const messages: MessageData[] = await $fetch('/feathers/messages')
     expect(messages.length).greaterThan(1)
   })
 })
