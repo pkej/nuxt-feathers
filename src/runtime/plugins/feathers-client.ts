@@ -8,19 +8,6 @@ import { createPiniaClient, OFetch } from 'feathers-pinia'
 import { $fetch } from 'ofetch'
 import { io } from 'socket.io-client'
 
-/*
-declare module '#app' {
-  interface NuxtApp {
-    $api: ClientApplication
-  }
-}
-
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $api: ClientApplication
-  }
-} */
-
 /**
  * Creates a Feathers Rest client for the SSR server and a Socket.io client for the browser.
  * Also provides a cookie-storage adapter for JWT SSR using Nuxt APIs.
@@ -53,7 +40,7 @@ export default defineNuxtPlugin(async (nuxt) => {
   feathersClient.configure(authenticationClient({ storage, storageKey }))
   feathersClient.set('connection', connection)
 
-  await nuxt.hooks.callHook('feathers:beforeSetup', feathersClient)
+  await nuxt.hooks.callHook('feathers:beforeCreate', feathersClient)
 
   // wrap the feathers client
   const api = createPiniaClient(feathersClient, {
@@ -66,7 +53,7 @@ export default defineNuxtPlugin(async (nuxt) => {
     customSiftOperators: {},
   })
 
-  // await nuxt.hooks.callHook('feathers:afterSetup', feathersClient)
+  await nuxt.hooks.callHook('feathers:afterCreate', feathersClient)
 
   return { provide: { api } }
 })

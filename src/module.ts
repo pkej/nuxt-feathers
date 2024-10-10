@@ -6,7 +6,7 @@ import defu from 'defu'
 import { clientTemplates } from './runtime/templates/client'
 import { serverTemplates } from './runtime/templates/server'
 
-export * from '@gabortorma/feathers-nitro-adapter'
+export * from './runtime/declarations/shared'
 
 export interface FeathersAppInfo {
   transports?: Array<'rest' | 'websockets'>

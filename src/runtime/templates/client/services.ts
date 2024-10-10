@@ -14,7 +14,7 @@ import type { ClientApplication } from 'nuxt-feathers/runtime/declarations/clien
 ${modules.map(module => `import _${hash(module)} from '${module.replace('.ts', '')}';`).join('\n')}
   
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.hooks.hook('feathers:beforeSetup', async (client: ClientApplication) => {
+  nuxtApp.hooks.hook('feathers:beforeCreate', async (client: ClientApplication) => {
     ${modules.map(module => `client.configure(_${hash(module)})`).join('\n    ')}
   })
 })`

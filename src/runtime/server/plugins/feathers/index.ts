@@ -5,7 +5,8 @@ import configuration from '@feathersjs/configuration'
 import { feathers } from '@feathersjs/feathers'
 import { bodyParser, koa as feathersKoa, parseAuthentication, rest } from '@feathersjs/koa'
 import socketio from '@feathersjs/socketio'
-import { createKoaRouter, createSocketIoRouter, setup } from '@gabortorma/feathers-nitro-adapter'
+import { createKoaRouter, createSocketIoRouter } from '@gabortorma/feathers-nitro-adapter/routers'
+import { setup } from '@gabortorma/feathers-nitro-adapter/setup'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {

@@ -11,11 +11,7 @@ export type ClientApplication = Application<ServiceTypes, Configuration>
 
 declare module '#app' {
   interface RuntimeNuxtHooks {
-    'feathers:beforeSetup'(feathersClient: ClientApplication): HookResult
-    'feathers:afterSetup'(feathersClient: ClientApplication): HookResult
+    'feathers:beforeCreate'(feathersClient: ClientApplication): HookResult
+    'feathers:afterCreate'(feathersClient: ClientApplication): HookResult
   }
-  /* interface NuxtHooks {
-    'feathers:beforeSetup'(): HookResult
-    'feathers:afterSetup'(): HookResult
-  } */
 }
