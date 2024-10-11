@@ -23,6 +23,7 @@ export interface ModuleOptions extends FeathersAppInfo {
   websocket?: boolean
   authentication?: boolean */
   servicesDir?: string
+  feathersDir?: string
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
 }
 
@@ -57,10 +58,14 @@ export default defineNuxtModule<ModuleOptions>({
     framework: pkg.feathers?.framework ?? 'koa',
     schema: pkg.feathers?.schema ?? 'typebox',
     servicesDir: 'services',
+    // feathersDir: nuxt.options.serverDir + 'feathers' // set in setup
     pinia: true,
   },
   async setup(options, nuxt) {
+    const resolver = createResolver(import.meta.url)
+
     options.transports = options.transports || pkg.feathers?.transports || ['rest', 'websockets']
+    options.feathersDir ||= resolver.resolve(nuxt.options.serverDir, 'feathers')
     nuxt.options.runtimeConfig.feathers = options
     console.log('options', nuxt.options.runtimeConfig.feathers)
 
@@ -70,7 +75,6 @@ export default defineNuxtModule<ModuleOptions>({
       })
     }
 
-    const resolver = createResolver(import.meta.url)
     const services = resolver.resolve(nuxt.options.srcDir, options.servicesDir || '')
 
     if (options.pinia) {
