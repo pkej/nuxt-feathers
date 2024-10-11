@@ -54,18 +54,19 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   // Default configuration options of the Nuxt module
-  defaults: {
-    framework: pkg.feathers?.framework ?? 'koa',
-    schema: pkg.feathers?.schema ?? 'typebox',
-    servicesDir: 'services',
-    // feathersDir: nuxt.options.serverDir + 'feathers' // set in setup
-    pinia: true,
+  defaults: (nuxt) => {
+    const resolver = createResolver(import.meta.url)
+    return {
+      framework: pkg.feathers?.framework ?? 'koa',
+      schema: pkg.feathers?.schema ?? 'typebox',
+      feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
+      servicesDir: resolver.resolve(nuxt.options.rootDir, './services'),
+      pinia: true,
+    }
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
-
     options.transports = options.transports || pkg.feathers?.transports || ['rest', 'websockets']
-    options.feathersDir ||= resolver.resolve(nuxt.options.serverDir, 'feathers')
     nuxt.options.runtimeConfig.feathers = options
     console.log('options', nuxt.options.runtimeConfig.feathers)
 
@@ -74,8 +75,6 @@ export default defineNuxtModule<ModuleOptions>({
         nitroConfig.experimental = defu(nitroConfig.experimental, { websocket: true })
       })
     }
-
-    const services = resolver.resolve(nuxt.options.srcDir, options.servicesDir || '')
 
     if (options.pinia) {
       if (!hasNuxtModule('@pinia/nuxt')) {
@@ -94,9 +93,9 @@ export default defineNuxtModule<ModuleOptions>({
       addPlugin({ order: 0, src: resolver.resolve(plugins, 'feathers-client') })
       addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
     }
-    await addServicesImports(services)
+    await addServicesImports(resolver.resolve(nuxt.options.rootDir, options.servicesDir!))
 
-    // const services = resolver.resolve(nuxt.options.srcDir, options.servicesDir || '', '*/*.shared.ts')
+    // const services = resolver.resolve(nuxt.options.rootDir, options.servicesDir || '', '*/*.shared.ts')
     // addImportsDir(services)
     /* const declarations = resolver.resolve('./runtime/declarations')
     addImports({ from: resolver.resolve(declarations, 'client'), name: 'ClientApplication' })

@@ -3,9 +3,10 @@ import { createResolver } from '@nuxt/kit'
 import { globSync } from 'glob'
 import { hash } from 'ohash'
 
-export function getServerContents({ options }: GetContentsDataType): string {
-  const modules = globSync(createResolver(options.feathersDir!).resolve('*.ts'))
-  console.log('modules', modules)
+export function getServerContents({ nuxt, options }: GetContentsDataType): string {
+  const resolver = createResolver(nuxt.options.rootDir)
+  const modules = globSync(resolver.resolve(options.feathersDir!, './*.ts'))
+  console.log('server modules', modules)
 
   return `import type { NitroApp } from 'nitropack'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'

@@ -4,10 +4,9 @@ import { globSync } from 'glob'
 import { hash } from 'ohash'
 
 export function getServicesContents({ nuxt, options }: GetContentsDataType): string {
-  const path = createResolver(nuxt.options.srcDir).resolve(`${options.servicesDir}/*/*.shared.ts`)
-  console.log(path)
-  const modules = globSync(path)
-  console.log('modules', modules)
+  const resolver = createResolver(nuxt.options.rootDir)
+  const modules = globSync(resolver.resolve(options.servicesDir!, './*/*.shared.ts'))
+  console.log('client services modules', modules)
 
   return `import { defineNuxtPlugin } from 'nuxt/app'
 import type { ClientApplication } from 'nuxt-feathers/runtime/declarations/client'
