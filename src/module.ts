@@ -1,7 +1,7 @@
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { readFileSync } from 'node:fs'
 import process from 'node:process'
-import { addImports, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import { addImports, addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
 import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
@@ -80,9 +80,8 @@ export default defineNuxtModule<ModuleOptions>({
         else if (typeof options.pinia === 'object')
           await installModule('@pinia/nuxt', options.pinia)
       }
-      if (!hasNuxtModule('nuxt-feathers-pinia')) {
-        await installModule('nuxt-feathers-pinia')
-      }
+      addImportsDir(resolver.resolve('./runtime/composables/*.ts'))
+      addImportsDir(resolver.resolve('./runtime/stores/*.ts'))
 
       nuxt.hook('vite:extendConfig', (config) => {
         config.optimizeDeps?.include?.push('feathers-pinia')
@@ -90,13 +89,6 @@ export default defineNuxtModule<ModuleOptions>({
       const plugins = resolver.resolve('./runtime/plugins')
       addPlugin({ order: 0, src: resolver.resolve(plugins, 'feathers-client') })
       addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
-
-      const composables = resolver.resolve('./runtime/composables/index')
-      const stores = resolver.resolve('./runtime/stores/index')
-      addImports([
-        { from: composables, name: 'useFeathers' },
-        { from: stores, name: 'useAuthStore' },
-      ])
     }
     await addServicesImports(services)
 
