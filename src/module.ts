@@ -1,7 +1,7 @@
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { readFileSync } from 'node:fs'
 import process from 'node:process'
-import { addImports, addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
 import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
