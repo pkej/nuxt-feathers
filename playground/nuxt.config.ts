@@ -6,10 +6,6 @@ export default defineNuxtConfig({
     '@gabortorma/nuxt-eslint-layer',
   ],
 
-  alias: {
-    'nuxt-feathers': '../../src/',
-  },
-
   imports: {
     autoImport: true,
   },
@@ -19,8 +15,7 @@ export default defineNuxtConfig({
   ],
 
   feathers: {
-    transports: ['rest', 'websockets'],
-    framework: 'koa',
+    servicesDir: 'services',
   },
 
   ssr: true,

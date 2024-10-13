@@ -1,6 +1,6 @@
-import type { Application } from 'nuxt-feathers/runtime/declarations/server'
+import type { Application } from 'nuxt-feathers/server'
 import { serveStatic } from '@feathersjs/koa'
 
 export default function (app: Application): void {
-  app.use(serveStatic('./public'))
+  void app.use(serveStatic('./public'))
 }

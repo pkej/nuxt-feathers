@@ -1,5 +1,6 @@
-import type { ClientApplication } from '../declarations/client'
-import { defineNuxtPlugin, useCookie } from '#app'
+import type { TransportConnection } from '@feathersjs/feathers'
+import type { ClientApplication, ServiceTypes } from '../declarations/client'
+import { defineNuxtPlugin, useCookie, useRuntimeConfig } from '#app'
 import authenticationClient from '@feathersjs/authentication-client'
 import { feathers } from '@feathersjs/feathers'
 import rest from '@feathersjs/rest-client'
@@ -15,6 +16,8 @@ import { io } from 'socket.io-client'
 export default defineNuxtPlugin(async (nuxt) => {
   // const host = import.meta.env.VITE_MYAPP_API_URL as string || 'http://localhost:3000' // uncomment for feathers-api server run by Nuxt
 
+  const { transports } = useRuntimeConfig().public
+
   // Store JWT in a cookie for SSR.
   const storageKey = 'feathers-jwt'
   const jwt = useCookie<string | null>(storageKey)
@@ -24,14 +27,14 @@ export default defineNuxtPlugin(async (nuxt) => {
     removeItem: () => (jwt.value = null),
   }
 
-  // Use Rest for the SSR Server and socket.io for the browser
-  const connection = import.meta.server
-    ? rest(`/feathers`).fetch($fetch, OFetch)
-    : socketioClient(io({ transports: ['websocket'] }))
-  // */
+  function getConnection(): TransportConnection<ServiceTypes> {
+    const connection = (import.meta.server || !transports?.websocket)
+      ? rest(`/feathers`).fetch($fetch, OFetch)
+      : socketioClient(io({ transports: ['websocket'] }))
+    return connection
+  }
 
-  // const connection = rest(`${host}/feathers`).fetch($fetch, OFetch) // uncomment for only rest connection
-  // const connection = socketioClient(io(host, { transports: ['websocket'] })) // uncomment for only socket.io connection
+  const connection = getConnection()
 
   // create the feathers client
   const feathersClient: ClientApplication = feathers()

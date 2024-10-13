@@ -16,11 +16,6 @@
       "import": "./dist/module.mjs",
       "require": "./dist/module.cjs"
     },
-    "./runtime/declarations/server": {
-      "types": "./dist/runtime/declarations/server.d.ts",
-      "import": "./dist/runtime/declarations/server.js",
-      "require": "./dist/runtime/declarations/server.js"
-    },
     "./runtime/declarations/client": {
       "types": "./dist/runtime/declarations/client.d.ts",
       "import": "./dist/runtime/declarations/client.js",
@@ -37,7 +32,7 @@
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
     "build": "nuxi build playground",
-    "prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
+    "prepare": "nuxt-module-build build && nuxt-module-build prepare",
     "lint": "eslint . && nr -r lint",
     "lint:fix": "eslint . --fix && nr -r lint:fix",
     "test": "vitest run",

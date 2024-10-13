@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 
 import type { Static } from '@feathersjs/typebox'
-import type { HookContext } from 'nuxt-feathers/runtime/declarations/server'
+import type { HookContext } from 'nuxt-feathers/server'
 import type { UserService } from './users.class'
 import { passwordHash } from '@feathersjs/authentication-local'
 import { resolve } from '@feathersjs/schema'

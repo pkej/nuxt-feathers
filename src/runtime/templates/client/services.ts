@@ -9,7 +9,7 @@ export function getServicesContents({ nuxt, options }: GetContentsDataType): str
   console.log('client services modules', modules)
 
   return `import { defineNuxtPlugin } from 'nuxt/app'
-import type { ClientApplication } from 'nuxt-feathers/runtime/declarations/client'
+import type { ClientApplication } from 'nuxt-feathers/client'
 ${modules.map(module => `import _${hash(module)} from '${module.replace('.ts', '')}';`).join('\n')}
   
 export default defineNuxtPlugin((nuxtApp) => {

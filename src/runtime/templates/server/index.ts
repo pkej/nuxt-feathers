@@ -1,16 +1,17 @@
 import type { Templates } from '../types'
+import { getServerDeclarationContents } from './declarations'
 import { getServerContents } from './server'
-import { getServicesContents } from './services'
 
 export const serverTemplates: Templates = [
   {
     filename: 'feathers/server/server.ts',
     getContents: getServerContents,
     write: true,
+    plugin: true,
   },
   {
-    filename: 'feathers/server/services.ts',
-    getContents: getServicesContents,
+    filename: 'feathers/server/declarations.ts',
+    getContents: getServerDeclarationContents,
     write: true,
   },
 ]

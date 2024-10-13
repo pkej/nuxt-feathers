@@ -1,27 +1,15 @@
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
-import { readFileSync } from 'node:fs'
-import process from 'node:process'
+import type { TransportsOptions } from './runtime/types'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
 import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
 import { serverTemplates } from './runtime/templates/server'
 
-export * from './runtime/declarations/shared'
-
-export interface FeathersAppInfo {
-  transports?: Array<'rest' | 'websockets'>
-  // The HTTP framework used
-  framework?: 'koa' | false
-  // The main schema definition format
-  schema?: 'typebox' | 'json' | false
-}
 // Module options TypeScript interface definition
-export interface ModuleOptions extends FeathersAppInfo {
-  // A list of all chosen transports
-  /* rest?: boolean
-  websocket?: boolean
-  authentication?: boolean */
+export interface ModuleOptions {
+  // authentication?: boolean
+  transports?: TransportsOptions
   servicesDir?: string
   feathersDir?: string
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
@@ -32,18 +20,10 @@ declare module '@nuxt/schema' {
     feathers?: ModuleOptions
   }
 
-  interface RuntimeConfig {
-    feathers: ModuleOptions
+  interface PublicRuntimeConfig {
+    transports: TransportsOptions
   }
 }
-
-interface AppPackageJson {
-  feathers?: FeathersAppInfo
-}
-
-const pkgJson = readFileSync(createResolver(process.cwd()).resolve('./package.json'), 'utf-8')
-const pkg = JSON.parse(pkgJson) as AppPackageJson
-// console.log(pkg.feathers)
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
@@ -57,8 +37,11 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: (nuxt) => {
     const resolver = createResolver(import.meta.url)
     return {
-      framework: pkg.feathers?.framework ?? 'koa',
-      schema: pkg.feathers?.schema ?? 'typebox',
+      transports: {
+        websocket: {
+          path: '/socket.io',
+        },
+      },
       feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
       servicesDir: resolver.resolve(nuxt.options.rootDir, './services'),
       pinia: true,
@@ -66,13 +49,24 @@ export default defineNuxtModule<ModuleOptions>({
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    options.transports = options.transports || pkg.feathers?.transports || ['rest', 'websockets']
-    nuxt.options.runtimeConfig.feathers = options
+
+    // Prepare the options
+    options.transports!.rest ??= (nuxt.options.ssr || options.transports!.websocket === false) ? { path: '/feathers', framework: 'koa' } : false
+    nuxt.options.runtimeConfig.public.transports = options.transports!
     console.log('options', nuxt.options.runtimeConfig.feathers)
 
-    if (options.transports.includes('websockets')) {
+    nuxt.options.alias = defu(nuxt.options.alias, {
+      'nuxt-feathers/server': resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations'),
+      'nuxt-feathers/client': resolver.resolve('./runtime/declarations/client'),
+    })
+    nuxt.options.typescript?.tsConfig?.include?.push(resolver.resolve(nuxt.options.rootDir, options.servicesDir!, '**/*.ts'))
+    if (options.transports!.websocket) {
       nuxt.hook('nitro:config', (nitroConfig) => {
         nitroConfig.experimental = defu(nitroConfig.experimental, { websocket: true })
+        nitroConfig.alias = defu(nitroConfig.alias, {
+          'nuxt-feathers/server': resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations'),
+        })
+        nitroConfig.typescript?.tsConfig?.include?.push(resolver.resolve(nuxt.options.rootDir, options.servicesDir!, '**/*.ts'))
       })
     }
 
@@ -95,26 +89,14 @@ export default defineNuxtModule<ModuleOptions>({
     }
     await addServicesImports(resolver.resolve(nuxt.options.rootDir, options.servicesDir!))
 
-    // const services = resolver.resolve(nuxt.options.rootDir, options.servicesDir || '', '*/*.shared.ts')
-    // addImportsDir(services)
-    /* const declarations = resolver.resolve('./runtime/declarations')
-    addImports({ from: resolver.resolve(declarations, 'client'), name: 'ClientApplication' })
-    addServerImports([{ from: resolver.resolve(declarations, 'server'), name: 'Application' }]) */
-    // const exports = await scanDirExports(services, { filePatterns: ['*/*.shared.ts'] })
-    /* const typeExports = exports.filter(({ type }) => type)
-      console.log('typeExports', typeExports)
-      addImports(typeExports) */
-
     for (const clientTemplate of clientTemplates) {
       addTemplate({ ...clientTemplate, options })
       addPlugin(resolver.resolve(nuxt.options.buildDir, clientTemplate.filename))
     }
     for (const serverTemplate of serverTemplates) {
       addTemplate({ ...serverTemplate, options })
-      addServerPlugin(resolver.resolve(nuxt.options.buildDir, serverTemplate.filename))
+      if (serverTemplate.plugin)
+        addServerPlugin(resolver.resolve(nuxt.options.buildDir, serverTemplate.filename))
     }
-
-    // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addServerPlugin(resolver.resolve('./runtime/server/plugins/feathers/index'))
   },
 })

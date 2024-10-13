@@ -1,7 +1,7 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.shared.html
 
 import type { Params } from '@feathersjs/feathers'
-import type { ClientApplication } from 'nuxt-feathers/runtime/declarations/client'
+import type { ClientApplication } from 'nuxt-feathers/client'
 import type { User, UserData, UserPatch, UserQuery, UserService } from './users.class'
 
 export type { User, UserData, UserPatch, UserQuery }
@@ -21,7 +21,7 @@ export default function userClient(client: ClientApplication) {
 }
 
 // Add this service to the client service type index
-declare module 'nuxt-feathers/runtime/declarations/client' {
+declare module 'nuxt-feathers/client' {
   interface ServiceTypes {
     [userPath]: UserClientService
   }
@@ -31,5 +31,12 @@ declare module 'nuxt-feathers/runtime/declarations/client' {
 declare module '@feathersjs/feathers' {
   interface Params {
     user?: User
+  }
+}
+
+// Add this service to the service type index
+declare module 'nuxt-feathers/client' {
+  interface ServiceTypes {
+    [userPath]: UserService
   }
 }

@@ -1,6 +1,6 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
-import type { Application } from 'nuxt-feathers/runtime/declarations/server'
+import type { Application } from 'nuxt-feathers/server'
 import { hooks as schemaHooks } from '@feathersjs/schema'
 import { getOptions, MessageService } from './messages.class'
 import {
@@ -62,7 +62,7 @@ export default function message(app: Application) {
 }
 
 // Add this service to the service type index
-declare module 'nuxt-feathers/runtime/declarations/server' {
+declare module 'nuxt-feathers/server' {
   interface ServiceTypes {
     [messagePath]: MessageService
   }

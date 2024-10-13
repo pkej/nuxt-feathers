@@ -1,3 +1,3 @@
 imports.autoImport = false
-alias.nuxt-feathers = ../src
+feathers.servicesDir = test/services
 typescript.tsConfig.include.0 = ../.release-it.ts
