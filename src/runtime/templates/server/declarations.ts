@@ -19,7 +19,7 @@ import type { NitroApp } from 'nitropack'
 export type { NextFunction }
 
 export interface Configuration {
-  framework?: 'express' | 'koa' | undefined
+  framework?: 'express' | 'koa'
   websocket?: boolean
 }
 
