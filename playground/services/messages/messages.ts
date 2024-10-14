@@ -19,7 +19,7 @@ export * from './messages.class'
 export * from './messages.schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export default function message(app: Application) {
+export function message(app: Application) {
   // Register our service on the Feathers application
   app.use(messagePath, new MessageService(getOptions(app)), {
     // A list of all methods this service exposes externally

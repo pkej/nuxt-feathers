@@ -5,7 +5,7 @@ import { AuthenticationService, JWTStrategy } from '@feathersjs/authentication'
 
 import { LocalStrategy } from '@feathersjs/authentication-local'
 
-export default function authentication(app: Application) {
+export function authentication(app: Application) {
   const authentication = new AuthenticationService(app)
 
   authentication.register('jwt', new JWTStrategy())

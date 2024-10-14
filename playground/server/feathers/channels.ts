@@ -3,7 +3,7 @@ import type { RealTimeConnection } from '@feathersjs/feathers'
 import type { Application, HookContext } from 'nuxt-feathers/server'
 import '@feathersjs/transport-commons'
 
-export default function channels(app: Application) {
+export function channels(app: Application) {
   if (app.get('websocket')) { // ! Only add real-time events if the websocket transport is enabled
     app.on('connection', (connection: RealTimeConnection) => {
     // On a new real-time connection, add it to the anonymous channel

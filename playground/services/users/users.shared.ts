@@ -12,7 +12,7 @@ export const userPath = 'users'
 
 export const userMethods: Array<keyof UserService> = ['find', 'get', 'create', 'patch', 'remove']
 
-export default function userClient(client: ClientApplication) {
+export function userClient(client: ClientApplication) {
   const connection = client.get('connection')
 
   client.use(userPath, connection.service(userPath), {

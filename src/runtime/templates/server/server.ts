@@ -1,16 +1,28 @@
+import type { Import } from 'unimport'
 import type { RestTransportOptions } from '../../types'
 import type { GetContentsDataType } from '../types'
+import path from 'node:path'
 import { createResolver } from '@nuxt/kit'
-import { globSync } from 'glob'
-import { hash } from 'ohash'
+import { scanDirExports } from 'unimport'
+
 import { put, puts } from '../utils'
 
-export function getServerContents({ nuxt, options }: GetContentsDataType): string {
+const filterExports = ({ name, from, as }: Import) => name === 'default' || new RegExp(`^${as}\w{0,2}`).test(path.basename(from, path.extname(from)))
+
+export async function getServerContents({ nuxt, options }: GetContentsDataType): Promise<string> {
   const resolver = createResolver(nuxt.options.rootDir)
-  const services = globSync(resolver.resolve(options.servicesDir!, './*/*.ts'), { ignore: ['**/*.*.ts'] })
-  console.log('server services', services)
-  const plugins = globSync(resolver.resolve(options.feathersDir!, './*.ts'))
-  console.log('server plugins', plugins)
+
+  const services = (await scanDirExports(resolver.resolve(options.servicesDir!), {
+    filePatterns: ['*/*.ts'],
+    types: false,
+  }))
+    .filter(({ from }) => !/\w+\.\w+\.ts$/.test(from)) // / !path.matchesGlob(from, '**/*.*.ts'), // path.matchesGlob is experimental
+    .filter(filterExports)
+
+  const plugins = (await scanDirExports(resolver.resolve(options.feathersDir!), {
+    filePatterns: ['*.ts'],
+    types: false,
+  })).filter(filterExports)
   const modules = [...services, ...plugins]
 
   const transports = options?.transports
@@ -32,7 +44,7 @@ ${puts([
 ])}
 import { ${routers.join(', ')} } from '@gabortorma/feathers-nitro-adapter/routers'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
-${modules.map(module => `import _${hash(module)} from '${module}';`).join('\n')}
+${modules.map(module => `import ${module.name === 'default' ? module.as : `{ ${module.as} }`} from '${module.from.replace('.ts', '')}'`).join('\n')}
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
   const app: Application = ${puts([
@@ -59,10 +71,10 @@ export default defineNitroPlugin((nitroApp: NitroApp) => {
   app.nitroApp = nitroApp;
 
   // Init services
-  ${services.map(service => `app.configure(_${hash(service)})`).join('\n  ')}
+  ${services.map(service => `app.configure(${service.as})`).join('\n  ')}
 
   // Init plugins
-  ${plugins.map(plugin => `app.configure(_${hash(plugin)})`).join('\n  ')}
+  ${plugins.map(plugin => `app.configure(${plugin.as})`).join('\n  ')}
 
   void app.setup().then(()=> { // TODO: make async in Nitro v3
     ${puts([
