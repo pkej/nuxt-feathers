@@ -1,10 +1,10 @@
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
-import type { TransportsOptions } from './runtime/types'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
 import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
 import { serverTemplates } from './runtime/templates/server'
+import { setTransportsDefaults, type TransportsOptions } from './runtime/transports'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -38,9 +38,7 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
     return {
       transports: {
-        websocket: {
-          path: '/socket.io',
-        },
+        websocket: true,
       },
       feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
       servicesDir: resolver.resolve(nuxt.options.rootDir, './services'),
@@ -51,9 +49,9 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     // Prepare the options
-    options.transports!.rest ??= (nuxt.options.ssr || options.transports!.websocket === false) ? { path: '/feathers', framework: 'koa' } : false
+    setTransportsDefaults(options.transports!, nuxt.options.ssr)
     nuxt.options.runtimeConfig.public.transports = options.transports!
-    console.log('options', nuxt.options.runtimeConfig.feathers)
+    console.log('options', options)
 
     nuxt.options.alias = defu(nuxt.options.alias, {
       'nuxt-feathers/server': resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations'),

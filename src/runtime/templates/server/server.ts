@@ -1,5 +1,5 @@
 import type { Import } from 'unimport'
-import type { RestTransportOptions } from '../../types'
+import type { RestTransportOptions } from '../../transports'
 import type { GetContentsDataType } from '../types'
 import path from 'node:path'
 import { createResolver } from '@nuxt/kit'

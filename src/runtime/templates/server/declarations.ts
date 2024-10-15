@@ -1,4 +1,4 @@
-import type { RestTransportOptions } from '../../types'
+import type { RestTransportOptions } from '../../transports'
 import type { GetContentsDataType } from '../types'
 import { puts } from '../utils'
 
