@@ -1,3 +1,4 @@
+import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
@@ -25,6 +26,34 @@ declare module '@nuxt/schema' {
   }
 }
 
+function setAliases(nuxt: Nuxt) {
+  const resolver = createResolver(import.meta.url)
+  const serverPath = resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations')
+  const clientPath = resolver.resolve('./runtime/declarations/client')
+
+  nuxt.options.alias = defu(nuxt.options.alias, {
+    'nuxt-feathers/server': serverPath,
+    'nuxt-feathers/client': clientPath,
+  })
+
+  nuxt.hook('nitro:config', (nitroConfig) => {
+    nitroConfig.alias = defu(nitroConfig.alias, {
+      'nuxt-feathers/server': serverPath,
+    })
+  })
+}
+
+function setTsIncludes(nuxt: Nuxt, options: ModuleOptions) {
+  const resolver = createResolver(import.meta.url)
+  const servicesPath = resolver.resolve(nuxt.options.rootDir, options.servicesDir!, '**/*.ts')
+
+  nuxt.options.typescript?.tsConfig?.include?.push(servicesPath)
+
+  nuxt.hook('nitro:config', (nitroConfig) => {
+    nitroConfig.typescript?.tsConfig?.include?.push(servicesPath)
+  })
+}
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-feathers',
@@ -50,19 +79,12 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Prepare the options
     setTransportsDefaults(options.transports!, nuxt)
+    setAliases(nuxt)
+    setTsIncludes(nuxt, options)
 
-    nuxt.options.alias = defu(nuxt.options.alias, {
-      'nuxt-feathers/server': resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations'),
-      'nuxt-feathers/client': resolver.resolve('./runtime/declarations/client'),
-    })
-    nuxt.options.typescript?.tsConfig?.include?.push(resolver.resolve(nuxt.options.rootDir, options.servicesDir!, '**/*.ts'))
     if (options.transports!.websocket) {
       nuxt.hook('nitro:config', (nitroConfig) => {
         nitroConfig.experimental = defu(nitroConfig.experimental, { websocket: true })
-        nitroConfig.alias = defu(nitroConfig.alias, {
-          'nuxt-feathers/server': resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations'),
-        })
-        nitroConfig.typescript?.tsConfig?.include?.push(resolver.resolve(nuxt.options.rootDir, options.servicesDir!, '**/*.ts'))
       })
     }
 
