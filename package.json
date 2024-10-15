@@ -42,6 +42,9 @@
     "release": "dotenv release-it"
   },
   "dependencies": {
+    "@feathersjs/authentication": "^5.0.30",
+    "@feathersjs/authentication-client": "^5.0.30",
+    "@feathersjs/authentication-local": "^5.0.30",
     "@feathersjs/generators": "^5.0.30",
     "@gabortorma/feathers-nitro-adapter": "^0.3.2",
     "@nuxt/kit": "^3.13.2",
@@ -52,9 +55,6 @@
   "devDependencies": {
     "@antfu/ni": "^0.23.0",
     "@feathersjs/adapter-commons": "^5.0.30",
-    "@feathersjs/authentication": "^5.0.30",
-    "@feathersjs/authentication-client": "^5.0.30",
-    "@feathersjs/authentication-local": "^5.0.30",
     "@feathersjs/configuration": "^5.0.30",
     "@feathersjs/memory": "^5.0.30",
     "@feathersjs/rest-client": "^5.0.30",

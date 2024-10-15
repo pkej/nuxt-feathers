@@ -1,19 +1,22 @@
+import type { AuthenticationConfiguration } from '@feathersjs/authentication'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
+import { type AuthOptions, setAuthDefaults } from './runtime/options/authentication'
+import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
 import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
 import { serverTemplates } from './runtime/templates/server'
-import { setTransportsDefaults, type TransportsOptions } from './runtime/transports'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
-  // authentication?: boolean
   transports?: TransportsOptions
   servicesDir?: string
   feathersDir?: string
+  auth?: AuthOptions
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
+  loadFeathersConfig?: boolean
 }
 
 declare module '@nuxt/schema' {
@@ -21,8 +24,13 @@ declare module '@nuxt/schema' {
     feathers?: ModuleOptions
   }
 
+  interface RuntimeConfig {
+    auth: AuthOptions
+  }
+
   interface PublicRuntimeConfig {
     transports: TransportsOptions
+    authStrategies: AuthenticationConfiguration['authStrategies']
   }
 }
 
@@ -72,6 +80,8 @@ export default defineNuxtModule<ModuleOptions>({
       feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
       servicesDir: resolver.resolve(nuxt.options.rootDir, './services'),
       pinia: true,
+      loadFeathersConfig: false,
+      auth: true,
     }
   },
   async setup(options, nuxt) {
@@ -79,6 +89,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Prepare the options
     setTransportsDefaults(options.transports!, nuxt)
+    setAuthDefaults(options, nuxt)
     setAliases(nuxt)
     setTsIncludes(nuxt, options)
 
