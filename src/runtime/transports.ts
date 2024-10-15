@@ -1,3 +1,4 @@
+import type { Nuxt } from '@nuxt/schema'
 import defu from 'defu'
 
 export interface CommonTransportOptions {
@@ -36,9 +37,9 @@ export const restDefaultOptions: RestTransportOptions = {
   framework: 'koa',
 }
 
-export function setTransportsDefaults(transports: TransportsOptions, ssr: boolean) {
+export function setTransportsDefaults(transports: TransportsOptions, nuxt: Nuxt) {
   if (transports.rest === true || transports.rest === undefined) {
-    if (ssr || transports.websocket === false)
+    if (nuxt.options.ssr || transports.websocket === false)
       transports.rest = restDefaultOptions
     else
       transports.rest = false
@@ -53,4 +54,6 @@ export function setTransportsDefaults(transports: TransportsOptions, ssr: boolea
   else if (transports.websocket !== false) {
     transports.websocket = defu(transports.websocket, websocketDefaultOptions)
   }
+
+  nuxt.options.runtimeConfig.public.transports = transports
 }

@@ -49,9 +49,7 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     // Prepare the options
-    setTransportsDefaults(options.transports!, nuxt.options.ssr)
-    nuxt.options.runtimeConfig.public.transports = options.transports!
-    console.log('options', options)
+    setTransportsDefaults(options.transports!, nuxt)
 
     nuxt.options.alias = defu(nuxt.options.alias, {
       'nuxt-feathers/server': resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations'),
