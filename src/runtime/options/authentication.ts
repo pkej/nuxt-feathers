@@ -1,6 +1,7 @@
 import type { AuthenticationConfiguration } from '@feathersjs/authentication'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../../module'
+import { sha256base64 } from 'ohash'
 
 export type DefaultAuthOptions = Partial<Pick<AuthenticationConfiguration, 'entity' | 'entityId' | 'service' | 'secret' | 'authStrategies' >>
 
@@ -20,7 +21,7 @@ export function setAuthDefaults(options: ModuleOptions, nuxt: Nuxt) {
     options.auth = {
       entity: 'user',
       service: 'users',
-      secret: 'N4mNOE1zdfQvaKRW2rWMrTTNweRzFG4R',
+      secret: sha256base64(nuxt.options.appDir),
       authStrategies: [
         'local',
         'jwt',
