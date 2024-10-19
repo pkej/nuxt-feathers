@@ -3,6 +3,7 @@ import type { Templates } from '../types'
 import { getAuthContents } from './authentication'
 import { getServerDeclarationContents } from './declarations'
 import { getServerContents } from './server'
+import { getServerValidatorContents } from './validators'
 
 export function getServerTemplates(options: ModuleOptions): Templates {
   const serverTemplates: Templates = [
@@ -15,6 +16,11 @@ export function getServerTemplates(options: ModuleOptions): Templates {
     {
       filename: 'feathers/server/declarations.ts',
       getContents: getServerDeclarationContents,
+      write: true,
+    },
+    {
+      filename: 'feathers/server/validators.ts',
+      getContents: getServerValidatorContents,
       write: true,
     },
   ]

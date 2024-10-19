@@ -5,7 +5,7 @@ import type { HookContext } from 'nuxt-feathers/server'
 import type { MessageService } from './messages.class'
 import { resolve } from '@feathersjs/schema'
 import { getValidator, querySyntax, Type } from '@feathersjs/typebox'
-import { dataValidator, queryValidator } from '../validators'
+import { dataValidator, queryValidator } from 'nuxt-feathers/validators'
 
 // Main data model schema
 export const messageSchema = Type.Object(

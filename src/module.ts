@@ -4,6 +4,7 @@ import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver,
 import defu from 'defu'
 import { type AuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
 import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
+import { setValidatorFormatsDefaults, type ValidatorOptions } from './runtime/options/validator'
 import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
 import { getServerTemplates } from './runtime/templates/server'
@@ -15,6 +16,7 @@ export interface ModuleOptions {
   feathersDir?: string
   auth?: AuthOptions | boolean
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
+  validator?: ValidatorOptions
   loadFeathersConfig?: boolean
 }
 
@@ -37,10 +39,12 @@ function setAliases(nuxt: Nuxt) {
   const resolver = createResolver(import.meta.url)
   const serverPath = resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations')
   const clientPath = resolver.resolve('./runtime/declarations/client')
+  const validatorsPath = resolver.resolve(nuxt.options.buildDir, './feathers/server/validators')
 
   nuxt.options.alias = defu(nuxt.options.alias, {
     'nuxt-feathers/server': serverPath,
     'nuxt-feathers/client': clientPath,
+    'nuxt-feathers/validators': validatorsPath,
   })
 
   nuxt.hook('nitro:config', (nitroConfig) => {
@@ -78,6 +82,10 @@ export default defineNuxtModule<ModuleOptions>({
       transports: {
         websocket: true,
       },
+      validator: {
+        formats: [],
+        extendDefaults: true,
+      },
       feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
       servicesDirs: [resolver.resolve(nuxt.options.rootDir, './services')],
       pinia: true,
@@ -91,6 +99,7 @@ export default defineNuxtModule<ModuleOptions>({
     // Prepare the options
     setTransportsDefaults(options.transports!, nuxt)
     setAuthDefaults(options, nuxt)
+    setValidatorFormatsDefaults(options.validator!, nuxt)
     setAliases(nuxt)
     setTsIncludes(nuxt, options)
 
