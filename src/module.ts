@@ -1,20 +1,19 @@
-import type { AuthenticationConfiguration } from '@feathersjs/authentication'
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
-import { type AuthOptions, setAuthDefaults } from './runtime/options/authentication'
+import { type AuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
 import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
 import { addServicesImports } from './runtime/services'
 import { clientTemplates } from './runtime/templates/client'
-import { serverTemplates } from './runtime/templates/server'
+import { getServerTemplates } from './runtime/templates/server'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
   transports?: TransportsOptions
   servicesDir?: string
   feathersDir?: string
-  auth?: AuthOptions
+  auth?: AuthOptions | boolean
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
   loadFeathersConfig?: boolean
 }
@@ -25,12 +24,12 @@ declare module '@nuxt/schema' {
   }
 
   interface RuntimeConfig {
-    auth: AuthOptions
+    auth: AuthOptions | boolean
   }
 
   interface PublicRuntimeConfig {
     transports: TransportsOptions
-    authStrategies: AuthenticationConfiguration['authStrategies']
+    auth: PublicAuthOptions | undefined
   }
 }
 
@@ -114,7 +113,8 @@ export default defineNuxtModule<ModuleOptions>({
       })
       const plugins = resolver.resolve('./runtime/plugins')
       addPlugin({ order: 0, src: resolver.resolve(plugins, 'feathers-client') })
-      addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
+      if (options.auth)
+        addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
     }
     await addServicesImports(resolver.resolve(nuxt.options.rootDir, options.servicesDir!))
 
@@ -122,7 +122,7 @@ export default defineNuxtModule<ModuleOptions>({
       addTemplate({ ...clientTemplate, options })
       addPlugin(resolver.resolve(nuxt.options.buildDir, clientTemplate.filename))
     }
-    for (const serverTemplate of serverTemplates) {
+    for (const serverTemplate of getServerTemplates(options)) {
       addTemplate({ ...serverTemplate, options })
       if (serverTemplate.plugin)
         addServerPlugin(resolver.resolve(nuxt.options.buildDir, serverTemplate.filename))
