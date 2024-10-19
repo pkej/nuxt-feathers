@@ -3,16 +3,7 @@
 import type { Application } from 'nuxt-feathers/server'
 import { authenticate } from '@feathersjs/authentication'
 import { hooks as schemaHooks } from '@feathersjs/schema'
-import {
-  userDataResolver,
-  userDataValidator,
-  userExternalResolver,
-  userPatchResolver,
-  userPatchValidator,
-  userQueryResolver,
-  userQueryValidator,
-  userResolver,
-} from './users'
+import { userDataResolver, userDataValidator, userExternalResolver, userPatchResolver, userPatchValidator, userQueryResolver, userQueryValidator, userResolver } from './users'
 import { getOptions, UserService } from './users.class'
 import { userMethods, userPath } from './users.shared'
 

@@ -3,16 +3,7 @@
 import type { Application } from 'nuxt-feathers/server'
 import { hooks as schemaHooks } from '@feathersjs/schema'
 import { getOptions, MessageService } from './messages.class'
-import {
-  messageDataResolver,
-  messageDataValidator,
-  messageExternalResolver,
-  messagePatchResolver,
-  messagePatchValidator,
-  messageQueryResolver,
-  messageQueryValidator,
-  messageResolver,
-} from './messages.schema'
+import { messageDataResolver, messageDataValidator, messageExternalResolver, messagePatchResolver, messagePatchValidator, messageQueryResolver, messageQueryValidator, messageResolver } from './messages.schema'
 import { messageMethods, messagePath } from './messages.shared'
 
 export * from './messages.class'
