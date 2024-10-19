@@ -32,7 +32,7 @@
     "prepack": "nuxt-module-build build",
     "dev": "nuxi dev playground",
     "build": "nuxi build playground",
-    "prepare": "nuxt-module-build build && nuxt-module-build prepare",
+    "prepare": "nuxt-module-build prepare && nuxt-module-build build",
     "lint": "eslint . && nr -r lint",
     "lint:fix": "eslint . --fix && nr -r lint:fix",
     "test": "vitest run",
