@@ -1,3 +1,2 @@
 imports.autoImport = false
-feathers.servicesDirs.0 = test/services
 typescript.tsConfig.include.0 = ../.release-it.ts

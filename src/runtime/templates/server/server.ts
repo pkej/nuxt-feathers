@@ -16,7 +16,7 @@ export async function getServerContents({ nuxt, options }: GetContentsDataType):
   const services = (await scanDirExports(
     options.servicesDirs!.map(dir => resolver.resolve(dir)),
     {
-      filePatterns: ['*/*.ts'],
+      filePatterns: ['**/*.ts'],
       types: false,
     },
   ))

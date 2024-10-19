@@ -7,7 +7,7 @@ export async function getServicesContents({ nuxt, options }: GetContentsDataType
   const services = await scanDirExports(
     options.servicesDirs!.map(dir => resolver.resolve(dir)),
     {
-      filePatterns: ['*/*.shared.ts'],
+      filePatterns: ['**/*.shared.ts'],
       fileFilter: file => /shared.ts$/.test(file),
       types: false,
     },

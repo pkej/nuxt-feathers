@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     '../../../src/module',
   ],
   feathers: {
-    servicesDirs: ['../../services'],
+    servicesDirs: ['../../../services/messages'],
     auth: false,
     transports: {
       websocket: false,
