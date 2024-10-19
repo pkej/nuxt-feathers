@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
   feathers: {
     auth: false,
-    servicesDir: '../../services',
+    servicesDirs: ['../../services'],
     transports: {
       rest: false,
     },

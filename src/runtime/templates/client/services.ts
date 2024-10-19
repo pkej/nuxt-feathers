@@ -4,11 +4,14 @@ import { scanDirExports } from 'unimport'
 
 export async function getServicesContents({ nuxt, options }: GetContentsDataType): Promise<string> {
   const resolver = createResolver(nuxt.options.rootDir)
-  const services = await scanDirExports(resolver.resolve(options.servicesDir!), {
-    filePatterns: ['*/*.shared.ts'],
-    fileFilter: file => /shared.ts$/.test(file),
-    types: false,
-  })
+  const services = await scanDirExports(
+    options.servicesDirs!.map(dir => resolver.resolve(dir)),
+    {
+      filePatterns: ['*/*.shared.ts'],
+      fileFilter: file => /shared.ts$/.test(file),
+      types: false,
+    },
+  )
   const modules = services.filter(({ name }) => /Client|default$/.test(name))
   console.log('client services modules', modules)
 

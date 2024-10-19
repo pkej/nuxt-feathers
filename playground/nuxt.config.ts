@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   ],
 
   feathers: {
-    servicesDir: 'services',
+    servicesDirs: ['services'],
   },
 
   ssr: true,

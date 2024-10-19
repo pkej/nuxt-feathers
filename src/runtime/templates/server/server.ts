@@ -13,10 +13,13 @@ const filterExports = ({ name, from, as }: Import) => name === 'default' || new 
 export async function getServerContents({ nuxt, options }: GetContentsDataType): Promise<string> {
   const resolver = createResolver(nuxt.options.rootDir)
 
-  const services = (await scanDirExports(resolver.resolve(options.servicesDir!), {
-    filePatterns: ['*/*.ts'],
-    types: false,
-  }))
+  const services = (await scanDirExports(
+    options.servicesDirs!.map(dir => resolver.resolve(dir)),
+    {
+      filePatterns: ['*/*.ts'],
+      types: false,
+    },
+  ))
     .filter(({ from }) => !/\w+\.\w+\.ts$/.test(from)) // / !path.matchesGlob(from, '**/*.*.ts'), // path.matchesGlob is experimental
     .filter(filterExports)
 

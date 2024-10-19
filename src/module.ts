@@ -11,7 +11,7 @@ import { getServerTemplates } from './runtime/templates/server'
 // Module options TypeScript interface definition
 export interface ModuleOptions {
   transports?: TransportsOptions
-  servicesDir?: string
+  servicesDirs?: string[]
   feathersDir?: string
   auth?: AuthOptions | boolean
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
@@ -52,12 +52,14 @@ function setAliases(nuxt: Nuxt) {
 
 function setTsIncludes(nuxt: Nuxt, options: ModuleOptions) {
   const resolver = createResolver(import.meta.url)
-  const servicesPath = resolver.resolve(nuxt.options.rootDir, options.servicesDir!, '**/*.ts')
+  const servicesDirs = options.servicesDirs!.map(
+    dir => resolver.resolve(nuxt.options.rootDir, dir, '**/*.ts'),
+  )
 
-  nuxt.options.typescript?.tsConfig?.include?.push(servicesPath)
+  nuxt.options.typescript?.tsConfig?.include?.push(...servicesDirs)
 
   nuxt.hook('nitro:config', (nitroConfig) => {
-    nitroConfig.typescript?.tsConfig?.include?.push(servicesPath)
+    nitroConfig.typescript?.tsConfig?.include?.push(...servicesDirs)
   })
 }
 
@@ -77,7 +79,7 @@ export default defineNuxtModule<ModuleOptions>({
         websocket: true,
       },
       feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
-      servicesDir: resolver.resolve(nuxt.options.rootDir, './services'),
+      servicesDirs: [resolver.resolve(nuxt.options.rootDir, './services')],
       pinia: true,
       loadFeathersConfig: false,
       auth: true,
@@ -116,7 +118,9 @@ export default defineNuxtModule<ModuleOptions>({
       if (options.auth)
         addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
     }
-    await addServicesImports(resolver.resolve(nuxt.options.rootDir, options.servicesDir!))
+    await addServicesImports(options.servicesDirs!.map(
+      dir => resolver.resolve(nuxt.options.rootDir, dir),
+    ))
 
     for (const clientTemplate of clientTemplates) {
       addTemplate({ ...clientTemplate, options })
