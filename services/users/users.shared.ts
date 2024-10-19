@@ -33,10 +33,3 @@ declare module '@feathersjs/feathers' {
     user?: User
   }
 }
-
-// Add this service to the service type index
-declare module 'nuxt-feathers/client' {
-  interface ServiceTypes {
-    [userPath]: UserService
-  }
-}
