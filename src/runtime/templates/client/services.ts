@@ -1,17 +1,13 @@
+import type { ServicesDirs } from '../../options/directories'
 import type { GetContentsDataType } from '../types'
-import { createResolver } from '@nuxt/kit'
 import { scanDirExports } from 'unimport'
 
-export async function getServicesContents({ nuxt, options }: GetContentsDataType): Promise<string> {
-  const resolver = createResolver(nuxt.options.rootDir)
-  const services = await scanDirExports(
-    options.servicesDirs!.map(dir => resolver.resolve(dir)),
-    {
-      filePatterns: ['**/*.shared.ts'],
-      fileFilter: file => /shared.ts$/.test(file),
-      types: false,
-    },
-  )
+export async function getServicesContents({ options }: GetContentsDataType): Promise<string> {
+  const services = await scanDirExports(options.servicesDirs as ServicesDirs, {
+    filePatterns: ['**/*.shared.ts'],
+    fileFilter: file => /shared.ts$/.test(file),
+    types: false,
+  })
   const modules = services.filter(({ name }) => /Client|default$/.test(name))
   console.log('client services modules', modules)
 

@@ -1,8 +1,9 @@
+import type { ServicesDirs } from './options/directories'
 import { addImports, addServerImports } from '@nuxt/kit'
 import { scanDirExports } from 'unimport'
 
-export async function addServicesImports(dirs: string[]) {
-  const exports = await scanDirExports(dirs, {
+export async function addServicesImports(servicesDirs: ServicesDirs) {
+  const exports = await scanDirExports(servicesDirs, {
     filePatterns: ['*/*.schema.ts'],
   })
   const typeExports = exports.filter(({ type }) => type)

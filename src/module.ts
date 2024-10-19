@@ -3,6 +3,7 @@ import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import defu from 'defu'
 import { type AuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
+import { type ServicesDir, type ServicesDirs, setDirectoriesDefaults } from './runtime/options/directories'
 import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
 import { setValidatorFormatsDefaults, type ValidatorOptions } from './runtime/options/validator'
 import { addServicesImports } from './runtime/services'
@@ -12,7 +13,7 @@ import { getServerTemplates } from './runtime/templates/server'
 // Module options TypeScript interface definition
 export interface ModuleOptions {
   transports?: TransportsOptions
-  servicesDirs?: string[]
+  servicesDirs?: ServicesDir | ServicesDirs
   feathersDir?: string
   auth?: AuthOptions | boolean
   pinia?: boolean | Pick<PiniaModuleOptions, 'storesDirs'>
@@ -50,15 +51,14 @@ function setAliases(nuxt: Nuxt) {
   nuxt.hook('nitro:config', (nitroConfig) => {
     nitroConfig.alias = defu(nitroConfig.alias, {
       'nuxt-feathers/server': serverPath,
+      'nuxt-feathers/validators': validatorsPath,
     })
   })
 }
 
 function setTsIncludes(nuxt: Nuxt, options: ModuleOptions) {
   const resolver = createResolver(import.meta.url)
-  const servicesDirs = options.servicesDirs!.map(
-    dir => resolver.resolve(nuxt.options.rootDir, dir, '**/*.ts'),
-  )
+  const servicesDirs = (options.servicesDirs as ServicesDirs).map(dir => resolver.resolve(dir, '**/*.ts'))
 
   nuxt.options.typescript?.tsConfig?.include?.push(...servicesDirs)
 
@@ -87,7 +87,7 @@ export default defineNuxtModule<ModuleOptions>({
         extendDefaults: true,
       },
       feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
-      servicesDirs: [resolver.resolve(nuxt.options.rootDir, './services')],
+      servicesDirs: [],
       pinia: true,
       loadFeathersConfig: false,
       auth: true,
@@ -97,6 +97,7 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     // Prepare the options
+    setDirectoriesDefaults(options, nuxt)
     setTransportsDefaults(options.transports!, nuxt)
     setAuthDefaults(options, nuxt)
     setValidatorFormatsDefaults(options.validator!, nuxt)
@@ -127,9 +128,7 @@ export default defineNuxtModule<ModuleOptions>({
       if (options.auth)
         addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
     }
-    await addServicesImports(options.servicesDirs!.map(
-      dir => resolver.resolve(nuxt.options.rootDir, dir),
-    ))
+    await addServicesImports(options.servicesDirs as ServicesDirs)
 
     for (const clientTemplate of clientTemplates) {
       addTemplate({ ...clientTemplate, options })

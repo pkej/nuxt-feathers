@@ -1,10 +1,11 @@
 import type { Import } from 'unimport'
 import type { DefaultAuthOptions } from '../../options/authentication'
+import type { ServicesDirs } from '../../options/directories'
 import type { RestTransportOptions } from '../../options/transports'
 import type { GetContentsDataType } from '../types'
 import path from 'node:path'
-import { createResolver } from '@nuxt/kit'
 
+import { createResolver } from '@nuxt/kit'
 import { scanDirExports } from 'unimport'
 import { put, puts } from '../utils'
 
@@ -13,13 +14,10 @@ const filterExports = ({ name, from, as }: Import) => name === 'default' || new 
 export async function getServerContents({ nuxt, options }: GetContentsDataType): Promise<string> {
   const resolver = createResolver(nuxt.options.rootDir)
 
-  const services = (await scanDirExports(
-    options.servicesDirs!.map(dir => resolver.resolve(dir)),
-    {
-      filePatterns: ['**/*.ts'],
-      types: false,
-    },
-  ))
+  const services = (await scanDirExports(options.servicesDirs as ServicesDirs, {
+    filePatterns: ['**/*.ts'],
+    types: false,
+  }))
     .filter(({ from }) => !/\w+\.\w+\.ts$/.test(from)) // / !path.matchesGlob(from, '**/*.*.ts'), // path.matchesGlob is experimental
     .filter(filterExports)
 
