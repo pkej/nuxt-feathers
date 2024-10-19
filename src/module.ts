@@ -56,7 +56,7 @@ function setAliases(nuxt: Nuxt) {
   })
 }
 
-function setTsIncludes(nuxt: Nuxt, options: ModuleOptions) {
+function setTsIncludes(options: ModuleOptions, nuxt: Nuxt) {
   const resolver = createResolver(import.meta.url)
   const servicesDirs = (options.servicesDirs as ServicesDirs).map(dir => resolver.resolve(dir, '**/*.ts'))
 
@@ -96,13 +96,15 @@ export default defineNuxtModule<ModuleOptions>({
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
 
-    // Prepare the options
+    // Prepare options
     setDirectoriesDefaults(options, nuxt)
     setTransportsDefaults(options.transports!, nuxt)
     setAuthDefaults(options, nuxt)
     setValidatorFormatsDefaults(options.validator!, nuxt)
+
+    // Prepare tsconfig
     setAliases(nuxt)
-    setTsIncludes(nuxt, options)
+    setTsIncludes(options, nuxt)
 
     if (options.transports!.websocket) {
       nuxt.hook('nitro:config', (nitroConfig) => {
