@@ -1,4 +1,5 @@
 import type { ClientApplication } from '../../declarations/client'
+import type { RestTransportOptions } from '../../options/transports'
 import { useRuntimeConfig } from '#app'
 import rest from '@feathersjs/rest-client'
 import socketioClient from '@feathersjs/socketio-client'
@@ -10,7 +11,7 @@ export function connection(client: ClientApplication) {
   const { transports } = useRuntimeConfig().public
 
   const connection = (import.meta.server || !transports?.websocket)
-    ? rest(`/feathers`).fetch($fetch, OFetch)
+    ? rest((transports.rest as RestTransportOptions).path).fetch($fetch, OFetch)
     : socketioClient(io({ transports: ['websocket'] }))
 
   client.configure(connection)
