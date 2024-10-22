@@ -16,17 +16,17 @@
       "import": "./dist/module.mjs",
       "require": "./dist/module.cjs"
     },
-    "./runtime/declarations/client": {
-      "types": "./dist/runtime/declarations/client.d.ts",
-      "import": "./dist/runtime/declarations/client.js",
-      "require": "./dist/runtime/declarations/client.js"
+    "./options": {
+      "types": "./dist/runtime/options/index.d.ts",
+      "import": "./dist/runtime/options/index.js",
+      "require": "./dist/runtime/options/index.js"
     }
   },
   "main": "./dist/module.cjs",
   "types": "./dist/types.d.ts",
   "files": [
     "dist",
-    "dist/runtime/declarations/*"
+    "dist/runtime/options/*"
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
@@ -49,6 +49,7 @@
     "@gabortorma/feathers-nitro-adapter": "^0.3.2",
     "@nuxt/kit": "^3.13.2",
     "@pinia/nuxt": "^0.5.5",
+    "consola": "^3.2.3",
     "defu": "^6.1.4",
     "feathers-pinia": "^4.5.4"
   },

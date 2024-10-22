@@ -1,10 +1,31 @@
+import type { ModuleOptions } from '../../../module'
 import type { Templates } from '../types'
-import { getServicesContents } from './services'
+import { getClientAuthenticationContents } from './authentication'
+import { getClientContents } from './client'
+import { getClientConnectionContents } from './connection'
 
-export const clientTemplates: Templates = [
-  {
-    filename: 'feathers/client/services.ts',
-    getContents: getServicesContents,
-    write: true,
-  },
-]
+export function getClientTemplates(options: ModuleOptions): Templates {
+  const templates: Templates = [
+    {
+      filename: 'feathers/client/client.ts',
+      getContents: getClientContents,
+      write: true,
+    },
+    {
+      filename: 'feathers/client/connection.ts',
+      getContents: getClientConnectionContents,
+      write: true,
+    },
+  ]
+
+  if (options.auth) {
+    templates.push({
+      filename: 'feathers/client/authentication.ts',
+      getContents: getClientAuthenticationContents,
+      write: true,
+    },
+    )
+  }
+
+  return templates
+}

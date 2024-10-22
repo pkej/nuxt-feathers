@@ -1,27 +1,23 @@
-import type { Message } from '#imports'
 import type { ClientApplication } from 'nuxt-feathers/client'
 import type { Socket } from 'socket.io-client'
+import type { Message } from '../services/messages/messages'
 import { fileURLToPath } from 'node:url'
+import { feathers } from '@feathersjs/feathers'
 import socketio from '@feathersjs/socketio-client'
-import { setup } from '@nuxt/test-utils/e2e'
-import ioc from 'socket.io-client'
+import { setup, url } from '@nuxt/test-utils/e2e'
+import { io } from 'socket.io-client'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { createClient } from '../src/runtime/client'
-
-const PORT = 3030
 
 describe('socket.io', async () => {
   await setup({
     rootDir: fileURLToPath(new URL('./fixtures/socket.io', import.meta.url)),
-    port: PORT,
   })
 
-  let feathersClient: ClientApplication
+  const feathersClient: ClientApplication = feathers()
 
   beforeAll(() => {
-    const io = ioc(`ws://localhost:${PORT}`, { transports: ['websocket'] })
-    const connection = socketio(io)
-    feathersClient = createClient(connection)
+    const connection = socketio(io(url('/'), { transports: ['websocket'] }))
+    feathersClient.configure(connection)
   })
 
   afterAll(async () => {

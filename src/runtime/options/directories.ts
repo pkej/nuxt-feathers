@@ -1,14 +1,6 @@
 import type { Nuxt } from '@nuxt/schema'
-import type { FormatName } from 'ajv-formats'
 import type { ModuleOptions } from '../../module'
 import { createResolver } from '@nuxt/kit'
-
-export type ValidatorFormatsOptions = Array<FormatName>
-
-export interface ValidatorOptions {
-  formats: ValidatorFormatsOptions
-  extendDefaults?: boolean
-}
 
 export type ServicesDir = string
 export type ServicesDirs = Array<ServicesDir>

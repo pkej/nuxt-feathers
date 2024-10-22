@@ -1,9 +1,7 @@
-import type { ClientApplication } from '../declarations/client'
+import type { ClientApplication } from 'nuxt-feathers/client'
 import { defineNuxtPlugin } from '#app'
-import { feathers } from '@feathersjs/feathers'
 import { createPiniaClient } from 'feathers-pinia'
-import { authentication } from './client/authentication'
-import { connection } from './client/connection'
+import { createClient } from 'nuxt-feathers/client'
 
 /**
  * Creates a Feathers Rest client for the SSR server and a Socket.io client for the browser.
@@ -11,11 +9,7 @@ import { connection } from './client/connection'
  */
 export default defineNuxtPlugin(async (nuxt) => {
   // create the feathers client
-  const feathersClient: ClientApplication = feathers()
-
-  feathersClient.configure(connection)
-  feathersClient.configure(authentication)
-  await nuxt.hooks.callHook('feathers:beforeCreate', feathersClient)
+  const feathersClient: ClientApplication = createClient()
 
   // wrap the feathers client
   const api = createPiniaClient(feathersClient, {
@@ -27,8 +21,6 @@ export default defineNuxtPlugin(async (nuxt) => {
     skipGetIfExists: true,
     customSiftOperators: {},
   })
-
-  await nuxt.hooks.callHook('feathers:afterCreate', feathersClient)
 
   return { provide: { api } }
 })

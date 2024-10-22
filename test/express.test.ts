@@ -1,6 +1,6 @@
 /* eslint-disable ts/no-unsafe-assignment */
 
-import type { MessageData } from '#imports'
+import type { MessageData } from '../services/messages/messages'
 import { fileURLToPath } from 'node:url'
 import { $fetch, setup } from '@nuxt/test-utils/e2e'
 import { describe, expect, it } from 'vitest'
@@ -22,6 +22,8 @@ describe('express', async () => {
   })
 
   it('get messages with $fetch', async () => {
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-ignore TS2321
     const messages: MessageData[] = await $fetch('/feathers/messages')
     expect(messages.length).greaterThan(1)
   })

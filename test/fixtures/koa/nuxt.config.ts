@@ -5,6 +5,7 @@ export default defineNuxtConfig({
   feathers: {
     servicesDirs: ['../../../services/messages'],
     auth: false,
+    client: false,
     transports: {
       websocket: false,
     },

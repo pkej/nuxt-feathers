@@ -1,4 +1,5 @@
-import { useAuth, useNuxtApp } from '#imports'
+import { useNuxtApp } from '#imports'
+import { useAuth } from 'feathers-pinia'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {

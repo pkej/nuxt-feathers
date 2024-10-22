@@ -1,5 +1,5 @@
 <template>
-  <h1>
+  <div>
     index
-  </h1>
+  </div>
 </template>

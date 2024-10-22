@@ -14,23 +14,23 @@ export type DefaultAuthOptions = Partial<Pick<AuthenticationConfiguration, 'enti
   authStrategies?: AuthStrategies
 }
 
-export type JwtOptions = Partial<SignOptions>
+export type AuthJwtOptions = Partial<SignOptions>
 
-export type LocalOptions = Partial<Required<AuthenticationConfiguration>['local']>
+export type AuthLocalOptions = Partial<Required<AuthenticationConfiguration>['local']>
 
-export type ClientOptions = Partial<Omit<AuthenticationClientOptions, 'Authentication' | 'storage'>>
+export type AuthClientOptions = Partial<Omit<AuthenticationClientOptions, 'Authentication' | 'storage'>>
 
 export type AuthOptions = (
   DefaultAuthOptions & {
-    jwtOptions?: JwtOptions
-    local?: LocalOptions
-    client?: ClientOptions
+    jwtOptions?: AuthJwtOptions
+    local?: AuthLocalOptions
+    client?: AuthClientOptions
   }
 )
 
 export interface PublicAuthOptions {
   authStrategies: AuthStrategies
-  client: ClientOptions
+  client: AuthClientOptions
 }
 
 export function authDefaultOptions(nuxt: Nuxt): DefaultAuthOptions {
@@ -43,7 +43,7 @@ export function authDefaultOptions(nuxt: Nuxt): DefaultAuthOptions {
 
 export const defaultAuthStrategies: AuthStrategies = ['local', 'jwt']
 
-export const jwtDefaultOptions: JwtOptions = {
+export const authJwtDefaultOptions: AuthJwtOptions = {
   header: {
     alg: 'HS256',
     typ: 'access',
@@ -53,12 +53,12 @@ export const jwtDefaultOptions: JwtOptions = {
   expiresIn: '1d',
 }
 
-export const localDefaultOptions: LocalOptions = {
+export const authLocalDefaultOptions: AuthLocalOptions = {
   usernameField: 'userId',
   passwordField: 'password',
 }
 
-export const clientDefaultOptions: ClientOptions = {
+export const authClientDefaultOptions: AuthClientOptions = {
   storageKey: 'feathers-jwt',
 }
 
@@ -67,10 +67,11 @@ export function setAuthDefaults(options: ModuleOptions, nuxt: Nuxt) {
     options.auth = {
       ...authDefaultOptions(nuxt),
       authStrategies: defaultAuthStrategies,
-      jwtOptions: jwtDefaultOptions,
-      local: localDefaultOptions,
-      client: clientDefaultOptions,
+      jwtOptions: authJwtDefaultOptions,
+      local: authLocalDefaultOptions,
     }
+    if (options.client)
+      options.auth.client = authClientDefaultOptions
   }
   else if (options.auth !== false) {
     const defaultOptions = authDefaultOptions(nuxt)
@@ -78,16 +79,22 @@ export function setAuthDefaults(options: ModuleOptions, nuxt: Nuxt) {
     options.auth.authStrategies ||= defaultAuthStrategies
 
     if (options.auth.authStrategies.includes('jwt'))
-      options.auth = defu(options.auth, { jwtOptions: jwtDefaultOptions })
+      options.auth = defu(options.auth, { jwtOptions: authJwtDefaultOptions })
     else
       delete options.auth.jwtOptions
 
     if (options.auth.authStrategies!.includes('local'))
-      options.auth = defu(options.auth, { local: localDefaultOptions })
+      options.auth = defu(options.auth, { local: authLocalDefaultOptions })
     else
       delete options.auth.jwtOptions
 
-    options.auth = defu(options.auth, { client: clientDefaultOptions })
+    if (options.client) {
+      if (options.auth.authStrategies!.includes('jwt'))
+        options.auth = defu(options.auth, { client: authClientDefaultOptions })
+    }
+    else {
+      delete options.auth.client
+    }
   }
   console.log(options.auth)
 
