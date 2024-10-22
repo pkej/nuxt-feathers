@@ -10,13 +10,15 @@ import { afterAll, assert, beforeAll, describe, it } from 'vitest'
 
 describe('authentication', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/socket.io', import.meta.url)),
+    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
     nuxtConfig: {
       feathers: {
-        servicesDirs: ['../../../services/users'],
         auth: {
           authStrategies: ['local'],
         },
+        servicesDirs: [
+          '../../../services/users',
+        ],
       },
     },
   })

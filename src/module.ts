@@ -3,8 +3,9 @@ import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver,
 import consola from 'consola'
 import defu from 'defu'
 import { type AuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
-import { type ClientOptions, setClientsDefaults } from './runtime/options/client'
+import { type ClientOptions, setClientDefaults } from './runtime/options/client'
 import { type ServicesDir, type ServicesDirs, setDirectoriesDefaults } from './runtime/options/directories'
+import { serverDefaultOptions, type ServerOptions, setServerDefaults } from './runtime/options/server'
 import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
 import { setValidatorFormatsDefaults, type ValidatorOptions } from './runtime/options/validator'
 import { addServicesImports } from './runtime/services'
@@ -15,7 +16,7 @@ import { getServerTemplates } from './runtime/templates/server'
 export interface ModuleOptions {
   transports: TransportsOptions
   servicesDirs: ServicesDir | ServicesDirs
-  feathersDir: string
+  server: ServerOptions
   auth: AuthOptions | boolean
   client: ClientOptions | boolean
   validator: ValidatorOptions
@@ -98,7 +99,7 @@ export default defineNuxtModule<ModuleOptions>({
         formats: [],
         extendDefaults: true,
       },
-      feathersDir: resolver.resolve(nuxt.options.serverDir, './feathers'),
+      server: serverDefaultOptions,
       servicesDirs: [],
       pinia: true,
       loadFeathersConfig: false,
@@ -110,10 +111,11 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Prepare options
     setDirectoriesDefaults(options, nuxt)
+    await setServerDefaults(options.server, nuxt)
     setTransportsDefaults(options.transports, nuxt)
     setAuthDefaults(options, nuxt)
     setValidatorFormatsDefaults(options.validator, nuxt)
-    setClientsDefaults(options, nuxt)
+    setClientDefaults(options, nuxt)
 
     // Prepare tsconfig
     setAliases(options, nuxt)

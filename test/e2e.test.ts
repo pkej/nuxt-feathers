@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 describe('app', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/koa', import.meta.url)),
+    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
   })
 
   it('test', async () => {

@@ -4,16 +4,12 @@ import type { ServicesDirs } from '../../options/directories'
 import type { RestTransportOptions } from '../../options/transports'
 import type { GetContentsDataType } from '../types'
 import path from 'node:path'
-
-import { createResolver } from '@nuxt/kit'
 import { scanDirExports } from 'unimport'
 import { put, puts } from '../utils'
 
 const filterExports = ({ name, from, as }: Import) => name === 'default' || new RegExp(`^${as}\w{0,2}`).test(path.basename(from, path.extname(from)))
 
 export async function getServerContents({ nuxt, options }: GetContentsDataType): Promise<string> {
-  const resolver = createResolver(nuxt.options.rootDir)
-
   const services = (await scanDirExports(options.servicesDirs as ServicesDirs, {
     filePatterns: ['**/*.ts'],
     types: false,
@@ -21,10 +17,8 @@ export async function getServerContents({ nuxt, options }: GetContentsDataType):
     .filter(({ from }) => !/\w+\.\w+\.ts$/.test(from)) // / !path.matchesGlob(from, '**/*.*.ts'), // path.matchesGlob is experimental
     .filter(filterExports)
 
-  const plugins = (await scanDirExports(resolver.resolve(options.feathersDir!), {
-    filePatterns: ['*.ts'],
-    types: false,
-  })).filter(filterExports)
+  const plugins = options.server!.plugins as Array<Import>
+
   const modules = [...services, ...plugins]
 
   const transports = options?.transports

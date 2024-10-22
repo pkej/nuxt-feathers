@@ -7,7 +7,20 @@ import { describe, expect, it } from 'vitest'
 
 describe('koa', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/koa', import.meta.url)),
+    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
+    nuxtConfig: {
+      feathers: {
+        auth: false,
+        transports: {
+          websocket: false,
+        },
+        server: {
+          plugins: [
+            '../plugins/koa.ts',
+          ],
+        },
+      },
+    },
   })
 
   it('renders the index page', async () => {
@@ -22,6 +35,8 @@ describe('koa', async () => {
   })
 
   it('get messages with $fetch', async () => {
+    // eslint-disable-next-line ts/ban-ts-comment
+    // @ts-ignore TS2321
     const messages: MessageData[] = await $fetch('/feathers/messages')
     expect(messages.length).greaterThan(1)
   })

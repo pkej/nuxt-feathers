@@ -4,12 +4,9 @@ export default defineNuxtConfig({
   ],
 
   feathers: {
+    client: false,
     servicesDirs: [
       '../../../services/messages',
-      '../../../services/users', // for auth
     ],
-    transports: {
-      rest: false,
-    },
   },
 })

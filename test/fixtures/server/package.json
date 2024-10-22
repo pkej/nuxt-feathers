@@ -1,5 +1,5 @@
 {
-  "name": "koa",
+  "name": "server",
   "type": "module",
   "private": true
 }

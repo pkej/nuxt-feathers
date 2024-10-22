@@ -7,7 +7,23 @@ import { describe, expect, it } from 'vitest'
 
 describe('express', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/express', import.meta.url)),
+    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
+    nuxtConfig: {
+      feathers: {
+        auth: false,
+        transports: {
+          rest: {
+            framework: 'express',
+          },
+          websocket: false,
+        },
+        server: {
+          plugins: [
+            '../plugins/express.ts',
+          ],
+        },
+      },
+    },
   })
 
   it('renders the index page', async () => {

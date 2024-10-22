@@ -16,7 +16,7 @@ export const clientDefaultOptions: ClientOptions = {
   pinia: piniaDefaultOptions,
 }
 
-export function setClientsDefaults(options: ModuleOptions, nuxt: Nuxt) {
+export function setClientDefaults(options: ModuleOptions, nuxt: Nuxt) {
   if (options.client === true || options.client === undefined) {
     options.client = clientDefaultOptions
   }

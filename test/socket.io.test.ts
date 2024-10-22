@@ -10,7 +10,20 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 describe('socket.io', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/socket.io', import.meta.url)),
+    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
+    nuxtConfig: {
+      feathers: {
+        auth: false,
+        transports: {
+          rest: false,
+        },
+        server: {
+          plugins: [
+            '../plugins/channels.ts',
+          ],
+        },
+      },
+    },
   })
 
   const feathersClient: ClientApplication = feathers()
