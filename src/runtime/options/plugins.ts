@@ -15,10 +15,13 @@ export interface PluginOptions {
   plugins?: Plugin | Plugins
 }
 
-const filterExports = ({ name, from, as }: Import) => name === 'default' || new RegExp(`^${as}\w{0,2}`).test(path.basename(from, path.extname(from)))
+function filterExports({ name, from, as }: Import) {
+  return name === 'default'
+    || new RegExp(`^${as}\w{0,2}`).test(path.basename(from, path.extname(from)))
+}
 
 export async function setPluginsDefaults(server: PluginOptions, nuxt: Nuxt, defaultDir: string) {
-  const resolver = createResolver(import.meta.url)
+  const resolver = createResolver(nuxt.options.rootDir)
 
   if (typeof server.pluginDirs === 'string' && server.pluginDirs)
     server.pluginDirs = [server.pluginDirs]
@@ -26,7 +29,7 @@ export async function setPluginsDefaults(server: PluginOptions, nuxt: Nuxt, defa
     server.pluginDirs = [defaultDir]
 
   server.pluginDirs = (server.pluginDirs as PluginDirs).map(dir =>
-    resolver.resolve(nuxt.options.rootDir, dir),
+    resolver.resolve(dir),
   )
 
   const plugins: Plugins = [...(await scanDirExports(server.pluginDirs, {
@@ -40,7 +43,7 @@ export async function setPluginsDefaults(server: PluginOptions, nuxt: Nuxt, defa
   }
   for (const plugin of server.plugins) {
     (typeof plugin === 'string')
-      ? plugins.push(...await scanExports(resolver.resolve(nuxt.options.rootDir, plugin), false))
+      ? plugins.push(...await scanExports(resolver.resolve(plugin), false))
       : plugins.push(plugin)
   }
   server.plugins = plugins

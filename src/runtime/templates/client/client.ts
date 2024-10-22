@@ -1,7 +1,7 @@
-import type { DefaultAuthOptions } from '../../options'
-import type { ServicesDirs } from '../../options/directories'
+import type { ClientOptions, DefaultAuthOptions } from '../../options'
+import type { ServicesDirs } from '../../options/services'
 import type { GetContentsDataType } from '../types'
-import { scanDirExports } from 'unimport'
+import { type Import, scanDirExports } from 'unimport'
 import { put } from '../utils'
 
 export async function getClientContents({ options }: GetContentsDataType): Promise<string> {
@@ -11,9 +11,9 @@ export async function getClientContents({ options }: GetContentsDataType): Promi
     types: false,
   })).filter(({ name }) => /Client|default$/.test(name))
 
-  // TODO: add client plugins support
+  const plugins = (options.client as ClientOptions).plugins as Array<Import>
 
-  const modules = [...services]
+  const modules = [...services, ...plugins]
 
   const auth = ((options?.auth as DefaultAuthOptions)?.authStrategies || []).length > 0
 
@@ -49,10 +49,15 @@ export function createClient(): ClientApplication {
 
   // Init connection
   feathersClient.configure(connection)
-${put(auth, `\n  // Init authentication
-  feathersClient.configure(authentication)`)}  
+
+  // Init authentication
+  ${put(auth, `feathersClient.configure(authentication)`)}
+
   // Init services
   ${services.map(service => `feathersClient.configure(${service.as})`).join('\n  ')}
+
+  // Init plugins
+  ${plugins.map(plugin => `feathersClient.configure(${plugin.as})`).join('\n  ')}
 
   return feathersClient
 }

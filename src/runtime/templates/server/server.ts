@@ -1,6 +1,6 @@
 import type { Import } from 'unimport'
 import type { DefaultAuthOptions } from '../../options/authentication'
-import type { ServicesDirs } from '../../options/directories'
+import type { ServicesDirs } from '../../options/services'
 import type { RestTransportOptions } from '../../options/transports'
 import type { GetContentsDataType } from '../types'
 import path from 'node:path'

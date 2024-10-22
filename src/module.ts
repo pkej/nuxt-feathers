@@ -4,8 +4,8 @@ import consola from 'consola'
 import defu from 'defu'
 import { type AuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
 import { type ClientOptions, setClientDefaults } from './runtime/options/client'
-import { type ServicesDir, type ServicesDirs, setDirectoriesDefaults } from './runtime/options/directories'
 import { serverDefaultOptions, type ServerOptions, setServerDefaults } from './runtime/options/server'
+import { type ServicesDir, type ServicesDirs, setServicesDirsDefaults } from './runtime/options/services'
 import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
 import { setValidatorFormatsDefaults, type ValidatorOptions } from './runtime/options/validator'
 import { addServicesImports } from './runtime/services'
@@ -110,12 +110,12 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     // Prepare options
-    setDirectoriesDefaults(options, nuxt)
+    setServicesDirsDefaults(options, nuxt)
     await setServerDefaults(options.server, nuxt)
+    await setClientDefaults(options, nuxt)
     setTransportsDefaults(options.transports, nuxt)
     setAuthDefaults(options, nuxt)
     setValidatorFormatsDefaults(options.validator, nuxt)
-    setClientDefaults(options, nuxt)
 
     // Prepare tsconfig
     setAliases(options, nuxt)

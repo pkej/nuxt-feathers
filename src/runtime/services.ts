@@ -1,4 +1,4 @@
-import type { ServicesDirs } from './options/directories'
+import type { ServicesDirs } from './options/services'
 import { addImports, addServerImports } from '@nuxt/kit'
 import { scanDirExports } from 'unimport'
 

@@ -7,8 +7,8 @@ export type ServicesDirs = Array<ServicesDir>
 
 export const servicesDirsDefaultOptions = ['services']
 
-export function setDirectoriesDefaults(options: ModuleOptions, nuxt: Nuxt) {
-  const resolver = createResolver(import.meta.url)
+export function setServicesDirsDefaults(options: ModuleOptions, nuxt: Nuxt) {
+  const resolver = createResolver(nuxt.options.rootDir)
 
   if (typeof options.servicesDirs === 'string' && options.servicesDirs)
     options.servicesDirs = [options.servicesDirs]
@@ -16,6 +16,6 @@ export function setDirectoriesDefaults(options: ModuleOptions, nuxt: Nuxt) {
     options.servicesDirs = servicesDirsDefaultOptions
 
   options.servicesDirs = (options.servicesDirs as ServicesDirs).map(dir =>
-    resolver.resolve(nuxt.options.rootDir, dir),
+    resolver.resolve(dir),
   )
 }

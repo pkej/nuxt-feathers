@@ -10,6 +10,6 @@ export const serverDefaultOptions: ServerOptions = {
 }
 
 export async function setServerDefaults(server: ServerOptions, nuxt: Nuxt) {
-  const resolver = createResolver(import.meta.url)
-  await setPluginsDefaults(server, nuxt, resolver.resolve(nuxt.options.serverDir, './feathers'))
+  const resolver = createResolver(nuxt.options.serverDir)
+  await setPluginsDefaults(server, nuxt, resolver.resolve('feathers'))
 }
