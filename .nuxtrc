@@ -1,2 +1,0 @@
-imports.autoImport = false
-typescript.tsConfig.include.0 = ../.release-it.ts

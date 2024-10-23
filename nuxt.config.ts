@@ -6,15 +6,15 @@ export default defineNuxtConfig({
     '@gabortorma/nuxt-eslint-layer',
   ],
 
-  modules: [
-    '../src/module',
-  ],
-
-  feathers: {
-    servicesDirs: '../services',
+  imports: {
+    autoImport: false,
   },
 
-  ssr: true,
-
-  devtools: { enabled: false },
+  typescript: {
+    tsConfig: {
+      include: [
+        '../release-it.ts',
+      ],
+    },
+  },
 })
