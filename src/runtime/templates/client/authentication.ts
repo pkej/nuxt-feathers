@@ -1,4 +1,4 @@
-import type { DefaultAuthOptions } from 'nuxt-feathers/options'
+import type { DefaultAuthOptions } from '../../options/authentication'
 import type { GetContentsDataType } from '../types'
 import { put } from '../utils'
 

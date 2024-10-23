@@ -1,9 +1,10 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/channels.html
 import type { RealTimeConnection } from '@feathersjs/feathers'
-import type { Application, HookContext } from 'nuxt-feathers/server'
+import type { HookContext } from 'nuxt-feathers/server'
+import { defineFeathersServerPlugin } from 'nuxt-feathers/server'
 import '@feathersjs/transport-commons'
 
-export default function channels(app: Application) {
+export default defineFeathersServerPlugin((app) => {
   app.on('connection', (connection: RealTimeConnection) => {
     // On a new real-time connection, add it to the anonymous channel
     app.channel('anonymous').join(connection)
@@ -17,4 +18,4 @@ export default function channels(app: Application) {
     // e.g. to publish all service events to all anonymous users use
     return app.channel('anonymous')
   })
-}
+})

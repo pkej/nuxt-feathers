@@ -1,6 +1,6 @@
-import type { Application, HookContext, NextFunction } from 'nuxt-feathers/server'
+import { defineFeathersServerPlugin, type HookContext, type NextFunction } from 'nuxt-feathers/server'
 
-export default function (app: Application) {
+export default defineFeathersServerPlugin((app) => {
   app.hooks({
     setup: [
       async (context: HookContext, next: NextFunction) => {
@@ -13,4 +13,4 @@ export default function (app: Application) {
       },
     ],
   })
-}
+})

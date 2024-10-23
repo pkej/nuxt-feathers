@@ -3,7 +3,7 @@ import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver,
 import consola from 'consola'
 import defu from 'defu'
 import { type AuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
-import { type ClientOptions, setClientDefaults } from './runtime/options/client'
+import { clientDefaultOptions, type ClientOptions, setClientDefaults } from './runtime/options/client'
 import { serverDefaultOptions, type ServerOptions, setServerDefaults } from './runtime/options/server'
 import { type ServicesDir, type ServicesDirs, setServicesDirsDefaults } from './runtime/options/services'
 import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
@@ -41,16 +41,16 @@ declare module '@nuxt/schema' {
 }
 
 function setAliases(options: ModuleOptions, nuxt: Nuxt) {
-  const resolver = createResolver(import.meta.url)
+  const resolver = createResolver(nuxt.options.buildDir)
   const aliases = {
-    'nuxt-feathers/server': resolver.resolve(nuxt.options.buildDir, './feathers/server/declarations'),
-    'nuxt-feathers/validators': resolver.resolve(nuxt.options.buildDir, './feathers/server/validators'),
+    'nuxt-feathers/server': resolver.resolve('./feathers/server/server'),
+    'nuxt-feathers/validators': resolver.resolve('./feathers/server/validators'),
     'nuxt-feathers/options': resolver.resolve('./runtime/options'),
   }
 
   nuxt.options.alias = defu(nuxt.options.alias, aliases)
   if (options.client)
-    nuxt.options.alias['nuxt-feathers/client'] = resolver.resolve(nuxt.options.buildDir, './feathers/client/client')
+    nuxt.options.alias['nuxt-feathers/client'] = resolver.resolve('./feathers/client/client')
 
   nuxt.hook('nitro:config', (nitroConfig) => {
     nitroConfig.alias = defu(nitroConfig.alias, aliases)
@@ -89,22 +89,19 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   // Default configuration options of the Nuxt module
-  defaults: (nuxt) => {
-    const resolver = createResolver(import.meta.url)
-    return {
-      transports: {
-        websocket: true,
-      },
-      validator: {
-        formats: [],
-        extendDefaults: true,
-      },
-      server: serverDefaultOptions,
-      servicesDirs: [],
-      pinia: true,
-      loadFeathersConfig: false,
-      auth: true,
-    }
+  defaults: {
+    transports: {
+      websocket: true,
+    },
+    server: serverDefaultOptions,
+    client: clientDefaultOptions,
+    servicesDirs: [],
+    validator: {
+      formats: [],
+      extendDefaults: true,
+    },
+    loadFeathersConfig: false,
+    auth: true,
   },
   async setup(options, nuxt) {
     const resolver = createResolver(import.meta.url)
@@ -139,23 +136,19 @@ export default defineNuxtModule<ModuleOptions>({
         if (options.auth)
           addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
       }
-      addPlugin({ order: 0, src: resolver.resolve(plugins, 'feathers-client') })
     }
     addImportsDir(resolver.resolve('./runtime/composables')) // TODO: separate feathers-pinia imports
 
     await addServicesImports(options.servicesDirs as ServicesDirs)
 
     if (options.client) {
-      for (const clientTemplate of getClientTemplates(options)) {
+      for (const clientTemplate of getClientTemplates(options))
         addTemplate({ ...clientTemplate, options })
-        if (clientTemplate.plugin)
-          addPlugin(resolver.resolve(nuxt.options.buildDir, clientTemplate.filename))
-      }
+      addPlugin({ order: 0, src: resolver.resolve(nuxt.options.buildDir, 'feathers/client/plugin.ts') })
     }
-    for (const serverTemplate of getServerTemplates(options)) {
+
+    for (const serverTemplate of getServerTemplates(options))
       addTemplate({ ...serverTemplate, options })
-      if (serverTemplate.plugin)
-        addServerPlugin(resolver.resolve(nuxt.options.buildDir, serverTemplate.filename))
-    }
+    addServerPlugin(resolver.resolve(nuxt.options.buildDir, 'feathers/server/plugin.ts'))
   },
 })

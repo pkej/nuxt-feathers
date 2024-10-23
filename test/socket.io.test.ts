@@ -1,6 +1,6 @@
+import type { Message } from '#imports'
 import type { ClientApplication } from 'nuxt-feathers/client'
 import type { Socket } from 'socket.io-client'
-import type { Message } from '../services/messages/messages'
 import { fileURLToPath } from 'node:url'
 import { feathers } from '@feathersjs/feathers'
 import socketio from '@feathersjs/socketio-client'

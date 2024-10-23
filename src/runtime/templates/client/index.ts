@@ -3,9 +3,10 @@ import type { Templates } from '../types'
 import { getClientAuthenticationContents } from './authentication'
 import { getClientContents } from './client'
 import { getClientConnectionContents } from './connection'
+import { getClientPluginContents } from './plugin'
 
 export function getClientTemplates(options: ModuleOptions): Templates {
-  const templates: Templates = [
+  const clientTemplates: Templates = [
     {
       filename: 'feathers/client/client.ts',
       getContents: getClientContents,
@@ -16,10 +17,15 @@ export function getClientTemplates(options: ModuleOptions): Templates {
       getContents: getClientConnectionContents,
       write: true,
     },
+    {
+      filename: 'feathers/client/plugin.ts',
+      getContents: getClientPluginContents,
+      write: true,
+    },
   ]
 
   if (options.auth) {
-    templates.push({
+    clientTemplates.push({
       filename: 'feathers/client/authentication.ts',
       getContents: getClientAuthenticationContents,
       write: true,
@@ -27,5 +33,5 @@ export function getClientTemplates(options: ModuleOptions): Templates {
     )
   }
 
-  return templates
+  return clientTemplates
 }

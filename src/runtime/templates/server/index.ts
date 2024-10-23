@@ -1,7 +1,7 @@
 import type { ModuleOptions } from '../../../module'
 import type { Templates } from '../types'
 import { getAuthContents } from './authentication'
-import { getServerDeclarationContents } from './declarations'
+import { getServerPluginContents } from './plugin'
 import { getServerContents } from './server'
 import { getServerValidatorContents } from './validators'
 
@@ -11,11 +11,10 @@ export function getServerTemplates(options: ModuleOptions): Templates {
       filename: 'feathers/server/server.ts',
       getContents: getServerContents,
       write: true,
-      plugin: true,
     },
     {
-      filename: 'feathers/server/declarations.ts',
-      getContents: getServerDeclarationContents,
+      filename: 'feathers/server/plugin.ts',
+      getContents: getServerPluginContents,
       write: true,
     },
     {
