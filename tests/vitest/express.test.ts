@@ -1,22 +1,25 @@
 /* eslint-disable ts/no-unsafe-assignment */
 
-import type { MessageData } from '#imports'
+import type { MessageData } from '../../services/messages/messages'
 import { fileURLToPath } from 'node:url'
 import { $fetch, setup } from '@nuxt/test-utils/e2e'
 import { describe, expect, it } from 'vitest'
 
-describe('koa', async () => {
+describe('express', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
+    rootDir: fileURLToPath(new URL('../fixtures/server', import.meta.url)),
     nuxtConfig: {
       feathers: {
         auth: false,
         transports: {
+          rest: {
+            framework: 'express',
+          },
           websocket: false,
         },
         server: {
           plugins: [
-            '../plugins/koa.ts',
+            '../plugins/express.ts',
           ],
         },
       },

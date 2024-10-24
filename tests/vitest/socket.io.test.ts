@@ -1,6 +1,6 @@
-import type { Message } from '#imports'
 import type { ClientApplication } from 'nuxt-feathers/client'
 import type { Socket } from 'socket.io-client'
+import type { Message } from '../../services/messages/messages'
 import { fileURLToPath } from 'node:url'
 import { feathers } from '@feathersjs/feathers'
 import socketio from '@feathersjs/socketio-client'
@@ -10,7 +10,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 describe('socket.io', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
+    rootDir: fileURLToPath(new URL('../fixtures/server', import.meta.url)),
     nuxtConfig: {
       feathers: {
         auth: false,

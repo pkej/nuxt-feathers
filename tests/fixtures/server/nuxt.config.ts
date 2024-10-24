@@ -3,6 +3,10 @@ export default defineNuxtConfig({
     '../../../src/module',
   ],
 
+  imports: {
+    autoImport: true,
+  },
+
   feathers: {
     client: false,
     servicesDirs: [

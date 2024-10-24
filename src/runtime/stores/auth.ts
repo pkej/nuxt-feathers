@@ -5,6 +5,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 export const useAuthStore = defineStore('auth', () => {
   const { $api } = useNuxtApp()
   const auth = useAuth({ api: $api, servicePath: 'users' }) // TODO: servicePath from config
+
   return auth
 })
 

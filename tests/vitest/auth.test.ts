@@ -1,5 +1,5 @@
-import type { User, UserData } from '#imports'
 import type { ClientApplication } from 'nuxt-feathers/client'
+import type { User, UserData } from '../../services/users/users'
 import { fileURLToPath } from 'node:url'
 import authenticationClient from '@feathersjs/authentication-client'
 import { feathers } from '@feathersjs/feathers'
@@ -10,7 +10,7 @@ import { afterAll, assert, beforeAll, describe, it } from 'vitest'
 
 describe('authentication', async () => {
   await setup({
-    rootDir: fileURLToPath(new URL('./fixtures/server', import.meta.url)),
+    rootDir: fileURLToPath(new URL('../fixtures/server', import.meta.url)),
     nuxtConfig: {
       feathers: {
         auth: {
