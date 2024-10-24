@@ -1,5 +1,3 @@
-/* eslint-disable ts/no-unsafe-assignment */
-
 import type { MessageData } from '../../services/messages/messages'
 import { fileURLToPath } from 'node:url'
 import { $fetch, setup } from '@nuxt/test-utils/e2e'
@@ -28,7 +26,7 @@ describe('express', async () => {
 
   it('renders the index page', async () => {
     // Get response to a server-rendered page with `$fetch`.
-    const html = await $fetch('/')
+    const html = await $fetch<string>('/')
     expect(html).toContain('index')
   })
 

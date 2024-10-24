@@ -41,7 +41,7 @@
     "test:e2e:ui": "playwright test --ui",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
     "test:all": "nr test:types && nr test && nr test:e2e",
-    "posttest": "nr prepare",
+
     "prerelease": "nr test:types && nr lint && nr test",
     "release": "dotenv release-it"
   },

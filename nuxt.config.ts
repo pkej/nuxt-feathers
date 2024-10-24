@@ -6,11 +6,16 @@ export default defineNuxtConfig({
     '@gabortorma/nuxt-eslint-layer',
   ],
 
+  modules: [
+    './src/module',
+  ],
+
   imports: {
     autoImport: false,
   },
 
   typescript: {
+    builder: 'shared',
     tsConfig: {
       include: [
         '../.release-it.ts',
