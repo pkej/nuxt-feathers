@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       include: [
-        '../release-it.ts',
+        '../.release-it.ts',
       ],
     },
   },
