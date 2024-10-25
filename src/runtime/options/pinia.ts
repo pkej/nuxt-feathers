@@ -36,8 +36,6 @@ export function setPiniaDefaults(options: ModuleOptions, nuxt: Nuxt) {
     client.pinia = defu(client.pinia, piniaDefaultOptions)
   }
 
-  if (client.pinia) {
-    nuxt.options.runtimeConfig.public.feathers = nuxt.options.runtimeConfig.public.feathers || {}
-    nuxt.options.runtimeConfig.public.feathers.pinia = client.pinia
-  }
+  if (client.pinia)
+    nuxt.options.runtimeConfig.public._feathers.pinia = client.pinia
 }

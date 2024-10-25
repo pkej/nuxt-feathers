@@ -12,8 +12,8 @@ import authenticationClient, { type AuthenticationClientOptions } from '@feather
 import defu from 'defu'
 
 export function authentication(client: ClientApplication) {
-  const { auth } = useRuntimeConfig().public
-  const authClientOptions = defu(auth!.client) as AuthenticationClientOptions
+  const clientOptions = useRuntimeConfig().public._feathers.auth?.client
+  const authClientOptions = defu(clientOptions) as AuthenticationClientOptions
  
   ${put(jwt, `// Store JWT in a cookie for SSR.
     const jwt = useCookie<string | null>(authClientOptions.storageKey)

@@ -98,9 +98,9 @@ export function setAuthDefaults(options: ModuleOptions, nuxt: Nuxt) {
   }
   console.log(options.auth)
 
-  nuxt.options.runtimeConfig.auth = options.auth!
+  nuxt.options.runtimeConfig._feathers.auth = options.auth
   if (options.auth) {
-    nuxt.options.runtimeConfig.public.auth = {
+    nuxt.options.runtimeConfig.public._feathers.auth = {
       authStrategies: (options.auth).authStrategies!,
       client: (options.auth).client!,
     }

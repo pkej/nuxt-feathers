@@ -32,14 +32,16 @@ declare module '@nuxt/schema' {
   }
 
   interface RuntimeConfig {
-    auth: AuthOptions | boolean
+    _feathers: {
+      auth?: AuthOptions | boolean
+    }
   }
 
   interface PublicRuntimeConfig {
-    transports: TransportsOptions
-    auth: PublicAuthOptions | undefined
-    feathers: {
-      pinia: PiniaOptions | undefined
+    _feathers: {
+      transports?: TransportsOptions
+      auth?: PublicAuthOptions
+      pinia?: PiniaOptions
     }
   }
 }
@@ -112,6 +114,8 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     // Prepare options
+    nuxt.options.runtimeConfig._feathers = {}
+    nuxt.options.runtimeConfig.public._feathers = {}
     setServicesDirsDefaults(options, nuxt)
     await setServerDefaults(options.server, nuxt)
     await setClientDefaults(options, nuxt)

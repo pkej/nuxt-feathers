@@ -14,7 +14,7 @@ import { AuthenticationService ${put(jwt, `, JWTStrategy `)}} from '@feathersjs/
 ${put(local, `import { LocalStrategy } from '@feathersjs/authentication-local'`)}
 
 export default function authentication(app: Application) {
-  const authOptions = useRuntimeConfig().auth
+  const authOptions = useRuntimeConfig()._feathers.auth
   const authentication = new AuthenticationService(app, 'authentication', authOptions)
 
 ${puts([

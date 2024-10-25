@@ -55,5 +55,5 @@ export function setTransportsDefaults(transports: TransportsOptions, nuxt: Nuxt)
     transports.websocket = defu(transports.websocket, websocketDefaultOptions)
   }
 
-  nuxt.options.runtimeConfig.public.transports = transports
+  nuxt.options.runtimeConfig.public._feathers.transports = transports
 }

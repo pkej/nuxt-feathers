@@ -70,12 +70,12 @@ export default defineNuxtPlugin(async (nuxt) => {
   // create the feathers client
   const feathersClient: ClientApplication = createFeathersClient()
   ${put(pinia, `
-  const { feathers: { pinia } } = useRuntimeConfig().public
+  const piniaOptions = useRuntimeConfig().public._feathers.pinia
   `)}
   // wrap the feathers client
   const api = ${put(pinia, `createPiniaClient(feathersClient, {
     ssr: !!import.meta.server,
-    ...pinia as CreatePiniaClientConfig,
+    ...piniaOptions as CreatePiniaClientConfig,
     pinia: nuxt.$pinia,
   })`, `feathersClient`)}
 
