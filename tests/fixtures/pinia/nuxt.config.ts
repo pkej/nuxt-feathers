@@ -11,13 +11,12 @@ export default defineNuxtConfig({
     server: {
       plugins: [
         '../plugins/dummy-messages.ts',
+        '../plugins/dummy-users.ts',
       ],
     },
     servicesDirs: [
       '../../../services/messages',
+      '../../../services/users',
     ],
-    client: {
-      plugins: './client2.ts',
-    },
   },
 })

@@ -8,6 +8,11 @@ export default defineNuxtConfig({
   },
 
   feathers: {
+    server: {
+      plugins: [
+        '../plugins/dummy-messages.ts',
+      ],
+    },
     client: false,
     servicesDirs: [
       '../../../services/messages',
