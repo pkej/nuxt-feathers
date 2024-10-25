@@ -1,8 +1,8 @@
 import type { Nuxt } from '@nuxt/schema'
 import type { Import } from 'unimport'
-import path from 'node:path'
 import { createResolver } from '@nuxt/kit'
 import { scanDirExports, scanExports } from 'unimport'
+import { filterExports } from '../templates/utils'
 
 export type PluginDir = string
 export type PluginDirs = Array<PluginDir>
@@ -13,11 +13,6 @@ export type Plugins = Array<Plugin>
 export interface PluginOptions {
   pluginDirs?: PluginDir | PluginDirs
   plugins?: Plugin | Plugins
-}
-
-function filterExports({ name, from, as }: Import) {
-  return name === 'default'
-    || new RegExp(`^${as}\w{0,2}`).test(path.basename(from, path.extname(from)))
 }
 
 export async function setPluginsDefaults(server: PluginOptions, nuxt: Nuxt, defaultDir: string) {

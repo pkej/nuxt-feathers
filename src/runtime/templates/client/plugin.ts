@@ -2,16 +2,21 @@ import type { ClientOptions, DefaultAuthOptions } from '../../options'
 import type { ServicesDirs } from '../../options/services'
 import type { GetContentsDataType } from '../types'
 import { type Import, scanDirExports } from 'unimport'
-import { put } from '../utils'
+import { put, setImportsMeta } from '../utils'
+
+async function getServices(servicesDirs: ServicesDirs): Promise<Import[]> {
+  const services = await scanDirExports(servicesDirs, {
+    filePatterns: ['**/*.shared.ts'],
+    fileFilter: file => /\.shared\.ts$/.test(file),
+    types: false,
+  })
+  return services.filter(({ name }) => /Client|default$/.test(name))
+}
 
 export async function getClientPluginContents({ options }: GetContentsDataType): Promise<string> {
-  const services = (await scanDirExports(options.servicesDirs as ServicesDirs, {
-    filePatterns: ['**/*.shared.ts'],
-    fileFilter: file => /shared.ts$/.test(file),
-    types: false,
-  })).filter(({ name }) => /Client|default$/.test(name))
+  const services = setImportsMeta(await getServices(options.servicesDirs as ServicesDirs))
 
-  const plugins = (options.client as ClientOptions).plugins as Array<Import>
+  const plugins = setImportsMeta((options.client as ClientOptions).plugins as Array<Import>)
 
   const modules = [...services, ...plugins]
 
@@ -25,10 +30,10 @@ import { feathers } from '@feathersjs/feathers'
 import { defineNuxtPlugin } from '#app'
 import { createPiniaClient } from 'feathers-pinia'
 
-${put(auth, `import { authentication } from './authentication'`)}
 import { connection } from './connection'
+${put(auth, `import { authentication } from './authentication'`)}
 
-${modules.map(module => `import ${module.name === 'default' ? module.as : `{ ${module.as} }`} from '${module.from.replace('.ts', '')}'`).join('\n')}
+${modules.map(module => module.meta.import).join('\n')}
 
 /**
  * Returns a typed client for the feathers-api app.
@@ -48,10 +53,10 @@ function createClient(): ClientApplication {
   ${put(auth, `feathersClient.configure(authentication)`)}
 
   // Init services
-  ${services.map(service => `feathersClient.configure(${service.as})`).join('\n  ')}
+  ${services.map(service => `feathersClient.configure(${service.meta.hash})`).join('\n  ')}
 
   // Init plugins
-  ${plugins.map(plugin => `feathersClient.configure(${plugin.as})`).join('\n  ')}
+  ${plugins.map(plugin => `feathersClient.configure(${plugin.meta.hash})`).join('\n  ')}
 
   return feathersClient
 }
