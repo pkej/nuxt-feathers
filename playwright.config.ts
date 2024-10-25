@@ -10,11 +10,9 @@ const devicesToTest = [
 export default defineConfig<ConfigOptions>({
   testDir: './tests/playwright',
   outputDir: './tests/playwright/results',
-  fullyParallel: true,
   quiet: true,
   projects: devicesToTest.map(p => ({
     name: p,
     use: devices[`Desktop ${p}`],
   })),
-  preserveOutput: 'never',
 })
