@@ -3,13 +3,13 @@ import type { PiniaModuleOptions, PiniaOptions } from './runtime/options/pinia'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import consola from 'consola'
 import defu from 'defu'
-import { type AuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
+import { type AuthOptions, type DefaultAuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
 import { clientDefaultOptions, type ClientOptions, setClientDefaults } from './runtime/options/client'
 import { serverDefaultOptions, type ServerOptions, setServerDefaults } from './runtime/options/server'
 import { type ServicesDir, type ServicesDirs, setServicesDirsDefaults } from './runtime/options/services'
 import { setTransportsDefaults, type TransportsOptions } from './runtime/options/transports'
 import { setValidatorFormatsDefaults, type ValidatorOptions } from './runtime/options/validator'
-import { addServicesImports } from './runtime/services'
+import { addServicesImports, getServicesImports } from './runtime/services'
 import { getClientTemplates } from './runtime/templates/client'
 import { getServerTemplates } from './runtime/templates/server'
 
@@ -24,7 +24,9 @@ export interface ModuleOptions {
   loadFeathersConfig: boolean
 }
 
-export type ModuleConfig = Partial<ModuleOptions>
+export type ModuleConfig = Partial<Omit<ModuleOptions, 'auth'> & {
+  auth: Omit<AuthOptions, 'entityImport'> | boolean
+}>
 
 declare module '@nuxt/schema' {
   interface NuxtConfig {
@@ -120,12 +122,23 @@ export default defineNuxtModule<ModuleOptions>({
     await setServerDefaults(options.server, nuxt)
     await setClientDefaults(options, nuxt)
     setTransportsDefaults(options.transports, nuxt)
-    setAuthDefaults(options, nuxt)
     setValidatorFormatsDefaults(options.validator, nuxt)
+
+    const servicesImports = await getServicesImports(options.servicesDirs as ServicesDirs)
+    await addServicesImports(servicesImports)
+
+    setAuthDefaults(options, servicesImports, nuxt)
 
     // Prepare tsconfig
     setAliases(options, nuxt)
     setTsIncludes(options, nuxt)
+
+    if (options.auth) {
+      const entityImport = servicesImports.find(i => i.as === (options.auth as DefaultAuthOptions).entityClass)
+      if (entityImport)
+        (options.auth as DefaultAuthOptions).entityImport = entityImport
+      console.log(entityImport)
+    }
 
     if (options.transports.websocket) {
       nuxt.hook('nitro:config', (nitroConfig) => {
@@ -133,9 +146,14 @@ export default defineNuxtModule<ModuleOptions>({
       })
     }
 
+    addImportsDir(resolver.resolve('./runtime/composables')) // TODO: separate feathers-pinia imports
+
+    for (const serverTemplate of getServerTemplates(options))
+      addTemplate({ ...serverTemplate, options })
+    addServerPlugin(resolver.resolve(nuxt.options.buildDir, 'feathers/server/plugin.ts'))
+
     if (options.client) {
       const clientOptions = options.client as ClientOptions
-      const plugins = resolver.resolve('./runtime/plugins')
       if (clientOptions.pinia) {
         await loadPinia(clientOptions)
         addImportsDir(resolver.resolve('./runtime/stores/*.ts'))
@@ -143,21 +161,11 @@ export default defineNuxtModule<ModuleOptions>({
           config.optimizeDeps?.include?.push('feathers-pinia')
         })
         if (options.auth)
-          addPlugin({ order: 1, src: resolver.resolve(plugins, 'feathers-auth') })
+          addPlugin({ order: 1, src: resolver.resolve('./runtime/plugins/feathers-auth') })
       }
-    }
-    addImportsDir(resolver.resolve('./runtime/composables')) // TODO: separate feathers-pinia imports
-
-    await addServicesImports(options.servicesDirs as ServicesDirs)
-
-    if (options.client) {
       for (const clientTemplate of getClientTemplates(options))
         addTemplate({ ...clientTemplate, options })
       addPlugin({ order: 0, src: resolver.resolve(nuxt.options.buildDir, 'feathers/client/plugin.ts') })
     }
-
-    for (const serverTemplate of getServerTemplates(options))
-      addTemplate({ ...serverTemplate, options })
-    addServerPlugin(resolver.resolve(nuxt.options.buildDir, 'feathers/server/plugin.ts'))
   },
 })

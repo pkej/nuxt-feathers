@@ -26,10 +26,3 @@ declare module 'nuxt-feathers/client' {
     [userPath]: UserClientService
   }
 }
-
-// Add the user as an optional property to all params
-declare module '@feathersjs/feathers' {
-  interface Params {
-    user?: User
-  }
-}
