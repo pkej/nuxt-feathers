@@ -28,8 +28,8 @@ export async function getClientPluginContents({ options }: GetContentsDataType):
 
 import type { ClientApplication } from './client'
 import { feathers } from '@feathersjs/feathers'
-import { defineNuxtPlugin } from '#app'
-import { createPiniaClient } from 'feathers-pinia'
+import { defineNuxtPlugin${put(pinia, `, useRuntimeConfig`)} } from '#app'
+${put(pinia, `import { createPiniaClient, type CreatePiniaClientConfig } from 'feathers-pinia'`)}
 
 import { connection } from './connection'
 ${put(auth, `import { authentication } from './authentication'`)}
@@ -69,16 +69,14 @@ function createFeathersClient(): ClientApplication {
 export default defineNuxtPlugin(async (nuxt) => {
   // create the feathers client
   const feathersClient: ClientApplication = createFeathersClient()
-
+  ${put(pinia, `
+  const { feathers: { pinia } } = useRuntimeConfig().public
+  `)}
   // wrap the feathers client
   const api = ${put(pinia, `createPiniaClient(feathersClient, {
-    pinia: nuxt.$pinia,
     ssr: !!import.meta.server,
-    idField: 'id', // use _id for mongoDB
-    whitelist: [],
-    paramsForServer: [],
-    skipGetIfExists: true,
-    customSiftOperators: {},
+    ...pinia as CreatePiniaClientConfig,
+    pinia: nuxt.$pinia,
   })`, `feathersClient`)}
 
   return { provide: { api } }

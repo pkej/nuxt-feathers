@@ -1,7 +1,7 @@
 import type { Nuxt } from '@nuxt/schema'
 import type { ModuleOptions } from '../../module'
 import { createResolver } from '@nuxt/kit'
-import { piniaDefaultOptions, type PiniaOptions, setPiniaDefaults } from './pinia'
+import { type PiniaOptions, setPiniaDefaults } from './pinia'
 import { type PluginOptions, setPluginsDefaults } from './plugins'
 
 export interface ClientOptions extends PluginOptions {
@@ -9,7 +9,7 @@ export interface ClientOptions extends PluginOptions {
 }
 
 export const clientDefaultOptions: ClientOptions = {
-  pinia: piniaDefaultOptions,
+  pinia: true,
   pluginDirs: [],
   plugins: [],
 }
@@ -21,7 +21,7 @@ export async function setClientDefaults(options: ModuleOptions, nuxt: Nuxt) {
     options.client = clientDefaultOptions
   }
   if (options.client !== false) {
-    setPiniaDefaults(options.client, nuxt)
+    setPiniaDefaults(options, nuxt)
     await setPluginsDefaults(options.client, nuxt, resolver.resolve('feathers'))
   }
 }

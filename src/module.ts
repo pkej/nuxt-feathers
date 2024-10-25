@@ -1,4 +1,5 @@
 import type { Nuxt } from '@nuxt/schema'
+import type { PiniaModuleOptions, PiniaOptions } from './runtime/options/pinia'
 import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import consola from 'consola'
 import defu from 'defu'
@@ -37,6 +38,9 @@ declare module '@nuxt/schema' {
   interface PublicRuntimeConfig {
     transports: TransportsOptions
     auth: PublicAuthOptions | undefined
+    feathers: {
+      pinia: PiniaOptions | undefined
+    }
   }
 }
 
@@ -71,10 +75,11 @@ function setTsIncludes(options: ModuleOptions, nuxt: Nuxt) {
 }
 
 async function loadPinia(client: ClientOptions) {
-  if (typeof client.pinia === 'object') {
+  const storesDirs = (client.pinia as PiniaModuleOptions)?.storesDirs
+  if (storesDirs?.length) {
     if (hasNuxtModule('@pinia/nuxt'))
       return consola.warn('Pinia is already loaded, skipping your configuration')
-    await installModule('@pinia/nuxt', client.pinia)
+    await installModule('@pinia/nuxt', { storesDirs })
   }
   if (!hasNuxtModule('@pinia/nuxt'))
     await installModule('@pinia/nuxt')
