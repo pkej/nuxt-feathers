@@ -1,17 +1,11 @@
 import type { Nuxt } from '@nuxt/schema'
-import type { ModuleOptions as PiniaModuleOptions } from '@pinia/nuxt'
 import type { ModuleOptions } from '../../module'
 import { createResolver } from '@nuxt/kit'
+import { piniaDefaultOptions, type PiniaOptions, setPiniaDefaults } from './pinia'
 import { type PluginOptions, setPluginsDefaults } from './plugins'
-
-export type PiniaOptions = Pick<PiniaModuleOptions, 'storesDirs'>
 
 export interface ClientOptions extends PluginOptions {
   pinia?: boolean | PiniaOptions
-}
-
-export const piniaDefaultOptions: PiniaOptions = {
-  storesDirs: ['stores'],
 }
 
 export const clientDefaultOptions: ClientOptions = {
@@ -27,10 +21,7 @@ export async function setClientDefaults(options: ModuleOptions, nuxt: Nuxt) {
     options.client = clientDefaultOptions
   }
   if (options.client !== false) {
-    if (options.client.pinia === true || options.client.pinia === undefined)
-      options.client.pinia = piniaDefaultOptions
-    else if (options.client.pinia !== false)
-      options.client.pinia.storesDirs = piniaDefaultOptions.storesDirs
+    setPiniaDefaults(options.client, nuxt)
     await setPluginsDefaults(options.client, nuxt, resolver.resolve('feathers'))
   }
 }
