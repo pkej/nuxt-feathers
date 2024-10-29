@@ -41,5 +41,7 @@ export async function setPluginsDefaults(server: PluginOptions, nuxt: Nuxt, defa
       ? plugins.push(...await scanExports(resolver.resolve(plugin), false))
       : plugins.push(plugin)
   }
-  server.plugins = plugins
+  server.plugins = plugins.filter(
+    (obj, index) => plugins.findIndex(plugin => (plugin as Import).from === (obj as Import).from) === index,
+  )
 }
