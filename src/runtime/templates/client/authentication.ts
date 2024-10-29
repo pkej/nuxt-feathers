@@ -15,15 +15,15 @@ export function authentication(client: ClientApplication) {
   const clientOptions = useRuntimeConfig().public._feathers.auth?.client
   const authClientOptions = defu(clientOptions) as AuthenticationClientOptions
  
-  ${put(jwt, `// Store JWT in a cookie for SSR.
-    const jwt = useCookie<string | null>(authClientOptions.storageKey)
-    const storage = {
-      getItem: () => jwt.value,
-      setItem: (key: string, val: string) => (jwt.value = val),
-      removeItem: () => (jwt.value = null),
-    }
-    authClientOptions.storage = storage
-  `)}
+${put(jwt, `  // Store JWT in a cookie for SSR.
+  const jwt = useCookie<string | null>(authClientOptions.storageKey)
+  const storage = {
+    getItem: () => jwt.value,
+    setItem: (key: string, val: string) => (jwt.value = val),
+    removeItem: () => (jwt.value = null),
+  }
+  authClientOptions.storage = storage
+`)}
   client.configure(authenticationClient(authClientOptions))
 }
 `
