@@ -9,7 +9,6 @@ export default defineNuxtConfig({
         '../../plugins/dummy-messages.ts',
       ],
     },
-    client: false,
     servicesDirs: [
       '../../../services/messages',
     ],

@@ -21,7 +21,7 @@ export type AuthJwtOptions = Partial<SignOptions>
 
 export type AuthLocalOptions = Partial<Required<AuthenticationConfiguration>['local']>
 
-export type AuthClientOptions = Partial<Omit<AuthenticationClientOptions, 'Authentication' | 'storage'>>
+export type AuthClientOptions = Partial<Omit<AuthenticationClientOptions, 'Authentication' | 'storage' | 'path'>>
 
 export type AuthOptions = (
   DefaultAuthOptions & {

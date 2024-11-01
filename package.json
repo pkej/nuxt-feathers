@@ -20,6 +20,11 @@
       "types": "./dist/runtime/options/index.d.ts",
       "import": "./dist/runtime/options/index.js",
       "require": "./dist/runtime/options/index.js"
+    },
+    "./ofetch-adapter": {
+      "types": "./dist/runtime/adapters/ofetch.d.ts",
+      "import": "./dist/runtime/adapters/ofetch.js",
+      "require": "./dist/runtime/adapters/ofetch.js"
     }
   },
   "main": "./dist/module.cjs",
@@ -49,7 +54,7 @@
     "@feathersjs/authentication-client": "^5.0.30",
     "@feathersjs/authentication-local": "^5.0.30",
     "@feathersjs/generators": "^5.0.30",
-    "@gabortorma/feathers-nitro-adapter": "^0.3.2",
+    "@gabortorma/feathers-nitro-adapter": "^0.4.2",
     "@nuxt/kit": "^3.13.2",
     "@pinia/nuxt": "^0.5.5",
     "consola": "^3.2.3",

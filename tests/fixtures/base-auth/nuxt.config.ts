@@ -6,12 +6,11 @@ export default defineNuxtConfig({
   feathers: {
     server: {
       plugins: [
-        '../../plugins/dummy-messages.ts',
+        '../../plugins/dummy-users.ts',
       ],
     },
-    client: false,
     servicesDirs: [
-      '../../../services/messages',
+      '../../../services/users',
     ],
   },
 })

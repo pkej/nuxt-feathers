@@ -14,7 +14,7 @@ describe('koa', async () => {
         },
         server: {
           plugins: [
-            '../plugins/koa.ts',
+            '../../plugins/koa.ts',
           ],
         },
       },

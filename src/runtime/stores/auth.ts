@@ -1,13 +1,14 @@
-import { useNuxtApp, useRuntimeConfig } from '#app'
+import { useRuntimeConfig } from '#app'
 import { useAuth } from 'feathers-pinia'
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import { useFeathers } from '../composables/feathers'
 
 export const useAuthStore = defineStore('auth', () => {
-  const { $api } = useNuxtApp()
+  const { api } = useFeathers()
 
   const { servicePath, entityKey } = useRuntimeConfig().public._feathers.auth!
 
-  const auth = useAuth({ api: $api, servicePath, entityKey })
+  const auth = useAuth({ api, servicePath, entityKey })
 
   return auth
 })

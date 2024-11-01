@@ -1,3 +1,4 @@
+import type { Resolver } from '@nuxt/kit'
 import type { ModuleOptions } from '../../../module'
 import type { Templates } from '../types'
 import { getClientAuthenticationContents } from './authentication'
@@ -5,7 +6,7 @@ import { getClientContents } from './client'
 import { getClientConnectionContents } from './connection'
 import { getClientPluginContents } from './plugin'
 
-export function getClientTemplates(options: ModuleOptions): Templates {
+export function getClientTemplates(options: ModuleOptions, resolver: Resolver): Templates {
   const clientTemplates: Templates = [
     {
       filename: 'feathers/client/client.ts',
@@ -14,7 +15,7 @@ export function getClientTemplates(options: ModuleOptions): Templates {
     },
     {
       filename: 'feathers/client/connection.ts',
-      getContents: getClientConnectionContents,
+      getContents: getClientConnectionContents(resolver),
       write: true,
     },
     {

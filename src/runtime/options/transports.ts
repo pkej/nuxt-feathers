@@ -5,8 +5,10 @@ export interface CommonTransportOptions {
   path?: string
 }
 
+export type Framework = 'koa' | 'express'
+
 export type RestTransportOptions = CommonTransportOptions & {
-  framework?: 'koa' | 'express'
+  framework?: Framework
 }
 
 export type WebsocketTransportOptions = CommonTransportOptions & {

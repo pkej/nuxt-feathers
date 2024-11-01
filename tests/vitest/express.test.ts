@@ -17,7 +17,7 @@ describe('express', async () => {
         },
         server: {
           plugins: [
-            '../plugins/express.ts',
+            '../../plugins/express.ts',
           ],
         },
       },

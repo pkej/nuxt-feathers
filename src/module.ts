@@ -1,6 +1,6 @@
 import type { Nuxt } from '@nuxt/schema'
 import type { PiniaModuleOptions, PiniaOptions } from './runtime/options/pinia'
-import { addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
+import { addImports, addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule, type Resolver } from '@nuxt/kit'
 import consola from 'consola'
 import defu from 'defu'
 import { type AuthOptions, type DefaultAuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'
@@ -156,14 +156,15 @@ export default defineNuxtModule<ModuleOptions>({
       const clientOptions = options.client as ClientOptions
       if (clientOptions.pinia) {
         await loadPinia(clientOptions)
-        addImportsDir(resolver.resolve('./runtime/stores/*.ts'))
         nuxt.hook('vite:extendConfig', (config) => {
           config.optimizeDeps?.include?.push('feathers-pinia')
         })
-        if (options.auth)
+        if (options.auth) {
+          addImports({ from: resolver.resolve('./runtime/stores/auth'), name: 'useAuthStore' })
           addPlugin({ order: 1, src: resolver.resolve('./runtime/plugins/feathers-auth') })
+        }
       }
-      for (const clientTemplate of getClientTemplates(options))
+      for (const clientTemplate of getClientTemplates(options, resolver))
         addTemplate({ ...clientTemplate, options })
       addPlugin({ order: 0, src: resolver.resolve(nuxt.options.buildDir, 'feathers/client/plugin.ts') })
     }

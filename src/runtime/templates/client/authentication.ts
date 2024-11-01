@@ -9,11 +9,11 @@ export async function getClientAuthenticationContents({ options }: GetContentsDa
 import type { ClientApplication } from './client'
 import {${put(jwt, `useCookie,`)} useRuntimeConfig } from '#app'
 import authenticationClient, { type AuthenticationClientOptions } from '@feathersjs/authentication-client'
-import defu from 'defu'
+import { klona } from 'klona'
 
 export function authentication(client: ClientApplication) {
   const clientOptions = useRuntimeConfig().public._feathers.auth?.client
-  const authClientOptions = defu(clientOptions) as AuthenticationClientOptions
+  const authClientOptions = klona(clientOptions) as AuthenticationClientOptions
  
 ${put(jwt, `  // Store JWT in a cookie for SSR.
   const jwt = useCookie<string | null>(authClientOptions.storageKey)

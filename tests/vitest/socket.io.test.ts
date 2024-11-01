@@ -19,7 +19,7 @@ describe('socket.io', async () => {
         },
         server: {
           plugins: [
-            '../plugins/channels.ts',
+            '../../plugins/channels.ts',
           ],
         },
       },
