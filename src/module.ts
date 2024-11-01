@@ -1,6 +1,6 @@
 import type { Nuxt } from '@nuxt/schema'
 import type { PiniaModuleOptions, PiniaOptions } from './runtime/options/pinia'
-import { addImports, addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule, type Resolver } from '@nuxt/kit'
+import { addImports, addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
 import consola from 'consola'
 import defu from 'defu'
 import { type AuthOptions, type DefaultAuthOptions, type PublicAuthOptions, setAuthDefaults } from './runtime/options/authentication'

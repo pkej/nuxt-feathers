@@ -1,5 +1,4 @@
 import type { ConfigOptions } from '@nuxt/test-utils/playwright'
-import type { devices } from '@playwright/test'
 import type { TransportsOptions } from './src/runtime/options'
 import { defineConfig } from '@playwright/test'
 
