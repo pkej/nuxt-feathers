@@ -46,7 +46,7 @@ export default defineConfig<ConfigOptions>({
             },
           },
         }
-      })).flat(2),
+      }).filter(({ name }) => !/\+/.test(name) || ssr)).flat(2),
     {
       name: 'plugins',
       testMatch: /plugins/,
