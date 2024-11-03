@@ -1,4 +1,4 @@
-import type { ConfigOptions } from '@nuxt/test-utils/playwright'
+import type { ConfigOptions } from './playwright-defaults'
 import type { TransportsOptions } from './src/runtime/options'
 import { defineConfig } from '@playwright/test'
 
@@ -23,6 +23,10 @@ const transportsOptions: Record<string, TransportsOptions> = {
     rest: { framework: 'express' },
     websocket: true,
   },
+  'path': {
+    rest: { path: '/rest-path' },
+    websocket: { path: '/websocket-path' },
+  },
 }
 
 export default defineConfig<ConfigOptions>({
@@ -36,12 +40,14 @@ export default defineConfig<ConfigOptions>({
           name: ssr ? `ssr:${k}` : k,
           testMatch: /client|pinia/,
           use: {
-            nuxt: {
-              nuxtConfig: {
-                feathers: {
-                  transports,
+            defaults: {
+              nuxt: {
+                nuxtConfig: {
+                  feathers: {
+                    transports,
+                  },
+                  ssr,
                 },
-                ssr,
               },
             },
           },
