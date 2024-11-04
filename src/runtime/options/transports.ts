@@ -39,6 +39,13 @@ export const restDefaultOptions: RestTransportOptions = {
   framework: 'koa',
 }
 
+function checkPath(transport: string, path?: string) {
+  if (!path?.startsWith('/'))
+    throw new Error(`feathers.transports.${transport}.path option must start with /!`)
+  if (!/^[\w\-/.]+$/.test(path))
+    throw new Error(`feathers.transports.${transport}.path option must be a valid URL path! ${path} is not valid.`)
+}
+
 export function setTransportsDefaults(transports: TransportsOptions, nuxt: Nuxt) {
   if (transports.rest === true || transports.rest === undefined) {
     if (nuxt.options.ssr || transports.websocket === false)
@@ -48,6 +55,7 @@ export function setTransportsDefaults(transports: TransportsOptions, nuxt: Nuxt)
   }
   else if (transports.rest !== false) {
     transports.rest = defu(transports.rest, restDefaultOptions)
+    checkPath('rest', transports.rest.path)
   }
 
   if (transports.websocket === true || transports.websocket === undefined) {
@@ -55,6 +63,7 @@ export function setTransportsDefaults(transports: TransportsOptions, nuxt: Nuxt)
   }
   else if (transports.websocket !== false) {
     transports.websocket = defu(transports.websocket, websocketDefaultOptions)
+    checkPath('websocket', transports.websocket.path)
   }
 
   nuxt.options.runtimeConfig.public._feathers.transports = transports
