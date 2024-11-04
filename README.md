@@ -12,7 +12,7 @@ Feathers API integration for Nuxt
 ## Install
 
 ```bash
-pnpm install add -D @gabortorma/nuxt-feathers
+pnpm install add -D nuxt-feathers
 ```
 
 ## Usage
@@ -24,21 +24,13 @@ Add the plugin to your `nuxt.config.js`:
 ```ts
 export default defineNuxtConfig({
   modules: [
-    '@gabortorma/nuxt-feathers'
+    'nuxt-feathers'
   ],
 
   feathers: {
     // your module options
   }
 })
-```
-
-## Release
-
-Add your `GITHUB_TOKEN` to `.env` file or use web based login:
-
-```bash
-GITHUB_TOKEN=your_token
 ```
 
 <!-- Badges -->
