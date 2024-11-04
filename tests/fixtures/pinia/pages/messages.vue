@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, type Message, useFeathers } from '#imports'
+import { computed, type Message, useService } from '#imports'
 
 const params = computed(() => ({ query: { $limit: 20 } }))
-const messages = useFeathers().api.service('messages').useFind<Message>(params, { paginateOn: 'hybrid' })
+const messages = useService('messages').useFind<Message>(params, { paginateOn: 'hybrid' })
 </script>
 
 <template>

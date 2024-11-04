@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useFeathers } from '#imports'
+import { useService } from '#imports'
 
-const messages = await useFeathers().api.service('messages').find({ paginate: false })
+const messages = await useService('messages').find({ paginate: false })
 </script>
 
 <template>

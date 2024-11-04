@@ -1,19 +1,17 @@
 <script setup lang="ts">
-const { api } = useFeathers()
-
 // create message
 const text = import.meta.server ? 'Hello, world! (server)' : 'Hello, world! (client)'
-await api.service('messages').create({ text })
+await useService('messages').create({ text })
 
 // get messages
 const params = computed(() => ({ query: { $limit: 20 } }))
-const messages = api.service('messages').useFind<Message>(params, { paginateOn: 'hybrid' })
+const messages = useService('messages').useFind<Message>(params, { paginateOn: 'hybrid' })
 
 // add message
 const newMessage = ref('')
 async function addMessage() {
   console.log('newMessage.value:', newMessage.value)
-  await api.service('messages').create({ text: newMessage.value })
+  await useService('messages').create({ text: newMessage.value })
 }
 
 const user = useAuthStore().user
