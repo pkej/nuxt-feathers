@@ -1,15 +1,20 @@
-import type { Nuxt } from '@nuxt/schema'
+import type { ModuleOptions } from '.'
 import { createResolver } from '@nuxt/kit'
-import { type PluginOptions, setPluginsDefaults } from './plugins'
+import { type PluginOptions, type ResolvedPluginOptions, resolvePluginsOptions } from './plugins'
 
-export interface ServerOptions extends PluginOptions {}
+export type ServerOptions = PluginOptions
 
-export const serverDefaultOptions: ServerOptions = {
+export type ResolvedServerOptions = ResolvedPluginOptions
+
+export const serverDefaults: ServerOptions = {
   pluginDirs: [],
   plugins: [],
 }
 
-export async function setServerDefaults(server: ServerOptions, nuxt: Nuxt) {
-  const resolver = createResolver(nuxt.options.serverDir)
-  await setPluginsDefaults(server, nuxt, resolver.resolve('feathers'))
+export const serverDirDefault = 'feathers'
+
+export async function resolveServerOptions(server: ModuleOptions['server'], rootDir: string, serverDir: string): Promise<ResolvedServerOptions> {
+  const serverResolver = createResolver(serverDir)
+
+  return resolvePluginsOptions(server, rootDir, serverResolver.resolve(serverDirDefault))
 }

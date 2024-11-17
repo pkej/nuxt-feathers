@@ -1,25 +1,25 @@
-import type { ModuleOptions } from '../../../module'
+import type { ResolvedOptions } from '../../../runtime/options'
 import type { Templates } from '../types'
 import { getAuthContents } from './authentication'
 import { getServerPluginContents } from './plugin'
 import { getServerContents } from './server'
 import { getServerValidatorContents } from './validators'
 
-export function getServerTemplates(options: ModuleOptions): Templates {
+export function getServerTemplates(options: ResolvedOptions): Templates {
   const serverTemplates: Templates = [
     {
       filename: 'feathers/server/server.ts',
-      getContents: getServerContents,
+      getContents: getServerContents(options),
       write: true,
     },
     {
       filename: 'feathers/server/plugin.ts',
-      getContents: getServerPluginContents,
+      getContents: getServerPluginContents(options),
       write: true,
     },
     {
       filename: 'feathers/server/validators.ts',
-      getContents: getServerValidatorContents,
+      getContents: getServerValidatorContents(options),
       write: true,
     },
   ]
@@ -27,7 +27,7 @@ export function getServerTemplates(options: ModuleOptions): Templates {
   if (options.auth) {
     serverTemplates.push({
       filename: 'feathers/server/authentication.ts',
-      getContents: getAuthContents,
+      getContents: getAuthContents(options),
       write: true,
     })
   }

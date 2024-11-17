@@ -1,5 +1,5 @@
 import type { NuxtTemplate } from 'nuxt/schema'
-import type { ModuleConfig } from '../../module'
+import type { ModuleConfig } from '../options'
 
 export type GetContentsType = Required<NuxtTemplate<ModuleConfig>>['getContents']
 

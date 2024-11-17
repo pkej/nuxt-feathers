@@ -1,26 +1,26 @@
 import type { Resolver } from '@nuxt/kit'
-import type { ModuleOptions } from '../../../module'
+import type { ResolvedOptions } from '../../options'
 import type { Templates } from '../types'
-import { getClientAuthenticationContents } from './authentication'
+import { getClientAuthContents } from './authentication'
 import { getClientContents } from './client'
 import { getClientConnectionContents } from './connection'
 import { getClientPluginContents } from './plugin'
 
-export function getClientTemplates(options: ModuleOptions, resolver: Resolver): Templates {
+export function getClientTemplates(options: ResolvedOptions, resolver: Resolver): Templates {
   const clientTemplates: Templates = [
     {
       filename: 'feathers/client/client.ts',
-      getContents: getClientContents,
+      getContents: getClientContents(options),
       write: true,
     },
     {
       filename: 'feathers/client/connection.ts',
-      getContents: getClientConnectionContents(resolver),
+      getContents: getClientConnectionContents(options, resolver),
       write: true,
     },
     {
       filename: 'feathers/client/plugin.ts',
-      getContents: getClientPluginContents,
+      getContents: getClientPluginContents(options),
       write: true,
     },
   ]
@@ -28,7 +28,7 @@ export function getClientTemplates(options: ModuleOptions, resolver: Resolver): 
   if (options.auth) {
     clientTemplates.push({
       filename: 'feathers/client/authentication.ts',
-      getContents: getClientAuthenticationContents,
+      getContents: getClientAuthContents(options),
       write: true,
     },
     )

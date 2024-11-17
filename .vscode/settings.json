@@ -57,6 +57,8 @@
     "postcss"
   ],
   "cSpell.words": [
+    "jwtid",
+    "keyid",
     "websockets"
   ]
 }

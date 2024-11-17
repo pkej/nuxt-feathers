@@ -1,17 +1,19 @@
 import type { Resolver } from '@nuxt/kit'
-import type { ClientOptions, RestTransportOptions, WebsocketTransportOptions } from '../../options'
-import type { GetContentsDataType } from '../types'
+import type { ResolvedOptions } from '../../options'
+import type { ClientOptions } from '../../options/client'
+import type { RestOptions } from '../../options/transports/rest'
+import type { WebsocketOptions } from '../../options/transports/websocket'
 import { put, puts } from '../utils'
 
-export function getClientConnectionContents(resolver: Resolver) {
-  return async ({ options }: GetContentsDataType): Promise<string> => {
+export function getClientConnectionContents(options: ResolvedOptions, resolver: Resolver) {
+  return (): string => {
     const pinia = !!(options.client as ClientOptions)?.pinia
     const transports = options?.transports
     const rest = !!transports?.rest
     const sio = !!transports?.websocket
 
-    const restPath = (transports?.rest as RestTransportOptions)?.path
-    const sioPath = (transports?.websocket as WebsocketTransportOptions)?.path
+    const restPath = (transports?.rest as RestOptions)?.path
+    const sioPath = (transports?.websocket as WebsocketOptions)?.path
 
     const restConnection = `rest(new URL('${restPath}', origin).href).fetch($fetch, OFetch)`
     const sioConnection = `socketioClient(io(origin, { path: '${sioPath}', transports: ['websocket'] }))`

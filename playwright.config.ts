@@ -1,5 +1,5 @@
 import type { ConfigOptions } from './playwright-defaults'
-import type { TransportsOptions } from './src/runtime/options'
+import type { TransportsOptions } from './src/runtime/options/transports'
 import { defineConfig } from '@playwright/test'
 
 const transportsOptions: Record<string, TransportsOptions> = {
