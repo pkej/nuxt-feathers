@@ -1,9 +1,10 @@
 import type { ResolvedOptions } from '../../options'
 import type { DefaultAuthOptions } from '../../options/authentication'
-import type { ClientOptions } from '../../options/client'
+import type { ClientOptions, ResolvedClientOptions } from '../../options/client'
 import type { ServicesDirs } from '../../options/services'
 import { type Import, scanDirExports } from 'unimport'
-import { put, setImportsMeta } from '../utils'
+import { setImportsMeta } from '../../options/utils'
+import { put } from '../utils'
 
 async function getServices(servicesDirs: ServicesDirs): Promise<Import[]> {
   const services = await scanDirExports(servicesDirs, {
@@ -18,7 +19,7 @@ export function getClientPluginContents(options: ResolvedOptions) {
   return async (): Promise<string> => {
     const services = setImportsMeta(await getServices(options.servicesDirs))
 
-    const plugins = setImportsMeta((options.client as ClientOptions).plugins as Array<Import>)
+    const plugins = (options.client as ResolvedClientOptions).plugins
 
     const modules = [...services, ...plugins]
 

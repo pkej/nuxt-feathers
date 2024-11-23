@@ -1,7 +1,7 @@
 import type { Import } from 'unimport'
 import { createResolver } from '@nuxt/kit'
 import { scanDirExports, scanExports } from 'unimport'
-import { filterExports } from '../templates/utils'
+import { filterExports, type ModuleImport, setImportsMeta } from './utils'
 
 export type PluginDir = string
 export type PluginDirs = Array<PluginDir>
@@ -9,7 +9,9 @@ export type PluginDirs = Array<PluginDir>
 export type Plugin = string | Import
 export type Plugins = Array<Plugin>
 
-export type ResolvedPlugins = Array<Import>
+export type Imports = Array<Import>
+
+export type ResolvedPlugins = Array<ModuleImport>
 
 export interface PluginOptions {
   pluginDirs?: PluginDir | PluginDirs
@@ -59,8 +61,8 @@ export async function resolvePluginsFromPluginDirs(pluginDirs: PluginDirs): Prom
     types: false,
   })
 
-  const resolvedPlugins = imports.filter(filterExports)
-
+  const filteredImports = imports.filter(filterExports)
+  const resolvedPlugins = setImportsMeta(filteredImports)
   return resolvedPlugins
 }
 
@@ -70,37 +72,38 @@ export async function resolvePlugins(plugins: Plugin | Plugins | undefined, root
 
   const rootResolver = createResolver(rootDir)
 
-  const resolvedPlugins: ResolvedPlugins = []
-
+  const filteredImports: Imports = []
   for (const plugin of Array.isArray(plugins) ? plugins : [plugins]) {
     if (typeof plugin === 'string') {
       const imports = await scanExports(rootResolver.resolve(plugin), false)
-      resolvedPlugins.push(...imports.filter(filterExports))
+      filteredImports.push(...imports.filter(filterExports))
     }
     else {
-      resolvedPlugins.push(plugin)
+      filteredImports.push(plugin)
     }
   }
 
+  const resolvedPlugins = setImportsMeta(filteredImports)
   return resolvedPlugins
+}
+
+function removeDuplicates(plugins: ResolvedPlugins): ResolvedPlugins {
+  return plugins.filter((plugin, index, self) =>
+    index === self.findIndex(p => p.from === plugin.from),
+  )
 }
 
 export async function resolvePluginsOptions(pluginOptions: PluginOptions, rootDir: string, defaultDir: string): Promise<ResolvedPluginOptions> {
   const pluginDirs = resolvePluginDirs(pluginOptions.pluginDirs, rootDir, defaultDir)
-  const pluginsFromPluginDirs = await resolvePluginsFromPluginDirs(pluginDirs)
 
-  const resolvedPlugins = await resolvePlugins(pluginOptions.plugins, rootDir)
+  const resolvedPlugins: ResolvedPlugins = [
+    ...await resolvePluginsFromPluginDirs(pluginDirs),
+    ...await resolvePlugins(pluginOptions.plugins, rootDir),
+  ]
 
   const resolvedPluginOptions: ResolvedPluginOptions = {
-    plugins: [
-      ...pluginsFromPluginDirs,
-      ...resolvedPlugins,
-    ],
+    plugins: removeDuplicates(resolvedPlugins),
   }
-
-  resolvedPluginOptions.plugins = resolvedPluginOptions.plugins.filter((plugin, index, self) =>
-    index === self.findIndex(p => p.from === plugin.from),
-  )
 
   return resolvedPluginOptions
 }

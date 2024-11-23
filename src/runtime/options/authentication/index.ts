@@ -1,5 +1,6 @@
 import type { Import } from 'unimport'
 import type { ModuleOptions } from '..'
+import { capitalCase } from 'change-case'
 import defu from 'defu'
 import { klona } from 'klona'
 import { sha256base64 } from 'ohash'
@@ -7,7 +8,6 @@ import { NuxtFeathersError } from '../../errors'
 import { type AuthClientOptions, resolveAuthClientOptions } from './client'
 import { type AuthJwtOptions, getAuthJwtDefaults } from './jwt'
 import { type AuthLocalOptions, getAuthLocalDefaults } from './local'
-import { capitalize } from './utils'
 
 export type AuthStrategy = 'jwt' | 'local' // TODO: support oauth
 
@@ -81,7 +81,7 @@ export function getAuthDefaults(appDir: string, authStrategies?: AuthStrategies)
 }
 
 function getEntityClass(authOptions: AuthOptions): string {
-  return authOptions.entityClass || capitalize(authOptions.entity) || authStaticDefaults.entityClass
+  return authOptions.entityClass || capitalCase(authOptions.entity || '') || authStaticDefaults.entityClass
 }
 
 export const authClientDefaultOptions: AuthClientOptions = {

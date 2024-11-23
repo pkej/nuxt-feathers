@@ -57,6 +57,7 @@
     "@gabortorma/feathers-nitro-adapter": "^0.4.4",
     "@nuxt/kit": "^3.14.159",
     "@pinia/nuxt": "^0.7.0",
+    "change-case": "^5.4.4",
     "consola": "^3.2.3",
     "defu": "^6.1.4",
     "feathers-pinia": "^4.5.4"

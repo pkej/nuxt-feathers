@@ -1,4 +1,5 @@
 import { createResolver } from '@nuxt/kit'
+import { hash } from 'ohash'
 import { describe, expect, it } from 'vitest'
 import { resolvePluginDirs, resolvePlugins, resolvePluginsFromPluginDirs, resolvePluginsOptions } from './plugins'
 
@@ -25,22 +26,40 @@ const testRootDir = createResolver(import.meta.url).resolve('../../../tests')
 
 const resolver = createResolver(testRootDir)
 
+const channelsFrom = resolver.resolve('plugins', 'channels.ts')
+const channelsHash = `_${hash(channelsFrom)}`
 const resolvedChannelsPlugin = {
   as: 'channels',
-  from: resolver.resolve('plugins', 'channels.ts'),
+  from: channelsFrom,
   name: 'default',
+  meta: {
+    hash: channelsHash,
+    import: `import ${channelsHash} from '${channelsFrom.replace(/.ts$/, '')}'`,
+  },
 }
 
+const expressFrom = resolver.resolve('plugins', 'express.ts')
+const expressHash = `_${hash(expressFrom)}`
 const resolvedExpressPlugin = {
   as: 'express',
-  from: resolver.resolve('plugins', 'express.ts'),
+  from: expressFrom,
   name: 'default',
+  meta: {
+    hash: expressHash,
+    import: `import ${expressHash} from '${expressFrom.replace(/.ts$/, '')}'`,
+  },
 }
 
+const dummyFrom = resolver.resolve('fixtures', 'dummy-server-plugin.ts')
+const dummyHash = `_${hash(dummyFrom)}`
 const resolvedDummyServerPlugin = {
   as: 'dummyServerPlugin',
-  from: resolver.resolve('fixtures', 'dummy-server-plugin.ts'),
-  name: 'default',
+  from: dummyFrom,
+  name: 'dummyServerPlugin',
+  meta: {
+    hash: dummyHash,
+    import: `import { dummyServerPlugin as ${dummyHash} } from '${dummyFrom.replace(/.ts$/, '')}'`,
+  },
 }
 
 describe('resolvePluginsFromPluginDirs', () => {

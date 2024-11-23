@@ -5,7 +5,8 @@ import type { ServicesDirs } from '../../options/services'
 import type { RestOptions } from '../../options/transports/rest'
 import type { WebsocketOptions } from '../../options/transports/websocket'
 import { scanDirExports } from 'unimport'
-import { filterExports, put, puts, setImportsMeta } from '../utils'
+import { filterExports, setImportsMeta } from '../../options/utils'
+import { put, puts } from '../utils'
 
 async function getServices(servicesDirs: ServicesDirs): Promise<Import[]> {
   const services = await scanDirExports(servicesDirs, {
@@ -21,7 +22,7 @@ export function getServerPluginContents(options: ResolvedOptions) {
   return async (): Promise<string> => {
     const services = setImportsMeta(await getServices(options.servicesDirs))
 
-    const plugins = setImportsMeta(options.server.plugins as Array<Import>)
+    const plugins = options.server.plugins
 
     const modules = [...services, ...plugins]
 

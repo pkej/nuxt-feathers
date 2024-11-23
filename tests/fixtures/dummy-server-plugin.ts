@@ -1,5 +1,5 @@
 import { defineFeathersServerPlugin } from 'nuxt-feathers/server'
 
-export default defineFeathersServerPlugin(() => {
+export const dummyServerPlugin = defineFeathersServerPlugin(() => {
   console.log('Dummy feathers plugin for test')
 })
