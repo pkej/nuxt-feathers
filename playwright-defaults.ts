@@ -10,7 +10,7 @@ export interface ConfigOptions extends NuxtConfigOptions {
 }
 
 export const test = nuxt.extend<TestOptions, WorkerOptions & ConfigOptions>({
-  defaults: [{ nuxt: undefined }, { option: true, scope: 'worker' }],
+  defaults: [{ nuxt: undefined }, { scope: 'worker' }],
   _nuxtHooks: [
     async ({ defaults, nuxt }, use) => {
       const hooks = createTest(defu(nuxt || {}, defaults.nuxt || {}))
