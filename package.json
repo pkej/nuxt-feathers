@@ -2,7 +2,7 @@
   "name": "nuxt-feathers",
   "type": "module",
   "version": "0.0.1",
-  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
+  "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
   "description": "Feathers API integration for Nuxt",
   "author": "GaborTorma",
   "license": "MIT",
@@ -71,20 +71,28 @@
     "@feathersjs/socketio-client": "^5.0.32",
     "@feathersjs/typebox": "^5.0.32",
     "@gabortorma/mwm": "^0.8.12",
-    "@gabortorma/nuxt-eslint-layer": "^0.4.1",
-    "@nuxt/devtools": "^2.0.0",
+    "@gabortorma/nuxt-eslint-layer": "^0.5.0",
+    "@nuxt/devtools": "^2.1.0",
     "@nuxt/module-builder": "^0.8.4",
     "@nuxt/schema": "^3.15.4",
-    "@nuxt/test-utils": "^3.15.4",
+    "@nuxt/test-utils": "^3.17.0",
     "@playwright/test": "^1.50.1",
-    "@types/node": "^22.13.4",
+    "@types/node": "^22.13.5",
     "dotenv-cli": "^8.0.0",
-    "nuxi": "^3.21.1",
+    "ioredis": "5.5.0",
+    "nuxi": "^3.22.2",
     "nuxt": "^3.15.4",
-    "pinia": "2.3.0",
+    "pinia": "2.3.1",
     "release-it": "^18.1.2",
     "socket.io-client": "^4.8.1",
-    "typescript": "^5.6.3",
-    "vitest": "^3.0.5"
+    "typescript": "5.6.3",
+    "vitest": "^3.0.6"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "vue-demi"
+    ]
   }
 }
