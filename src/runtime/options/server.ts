@@ -1,6 +1,7 @@
 import type { ModuleOptions } from '.'
+import type { PluginOptions, ResolvedPluginOptions } from './plugins'
 import { createResolver } from '@nuxt/kit'
-import { type PluginOptions, type ResolvedPluginOptions, resolvePluginsOptions } from './plugins'
+import { resolvePluginsOptions } from './plugins'
 
 export type ServerOptions = PluginOptions
 

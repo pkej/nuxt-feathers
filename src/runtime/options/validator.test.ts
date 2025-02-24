@@ -1,5 +1,6 @@
+import type { ValidatorOptions } from './validator'
 import { describe, expect, it } from 'vitest'
-import { getValidatorDefaults, resolveValidatorOptions, validatorFormatsDefaults, type ValidatorOptions } from './validator'
+import { getValidatorDefaults, resolveValidatorOptions, validatorFormatsDefaults } from './validator'
 
 describe('getValidatorDefaults', () => {
   it('should return default validator formats', () => {

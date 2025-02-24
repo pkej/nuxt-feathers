@@ -1,6 +1,7 @@
 import type { TestOptions as SetupOptions, TestOptions } from '@nuxt/test-utils/e2e'
+import type { ConfigOptions as NuxtConfigOptions } from '@nuxt/test-utils/playwright'
 import { createTest } from '@nuxt/test-utils/e2e'
-import { test as nuxt, type ConfigOptions as NuxtConfigOptions } from '@nuxt/test-utils/playwright'
+import { test as nuxt } from '@nuxt/test-utils/playwright'
 import defu from 'defu'
 
 export interface ConfigOptions extends NuxtConfigOptions {

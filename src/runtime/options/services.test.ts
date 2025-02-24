@@ -1,5 +1,6 @@
+import type { ServicesDir, ServicesDirs } from './services'
 import { describe, expect, it } from 'vitest'
-import { resolveServicesDirs, type ServicesDir, servicesDirDefault, type ServicesDirs } from './services'
+import { resolveServicesDirs, servicesDirDefault } from './services'
 
 describe('resolveServicesDirs', () => {
   const rootDir = '/nuxt/root-dir'

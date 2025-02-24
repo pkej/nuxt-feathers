@@ -1,7 +1,8 @@
 import type { Import } from 'unimport'
+import type { ModuleImport } from './utils'
 import { createResolver } from '@nuxt/kit'
 import { scanDirExports, scanExports } from 'unimport'
-import { filterExports, type ModuleImport, setImportsMeta } from './utils'
+import { filterExports, setImportsMeta } from './utils'
 
 export type PluginDir = string
 export type PluginDirs = Array<PluginDir>

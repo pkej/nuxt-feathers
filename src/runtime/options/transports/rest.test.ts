@@ -1,5 +1,6 @@
+import type { RestOptions } from './rest'
 import { describe, expect, it, vi } from 'vitest'
-import { resolveRestTransportsOptions, restDefaults, type RestOptions } from './rest'
+import { resolveRestTransportsOptions, restDefaults } from './rest'
 import { checkPath } from './utils'
 
 vi.mock('./utils', () => ({

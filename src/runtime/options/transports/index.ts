@@ -1,6 +1,8 @@
+import type { ResolvedRestOptionsOrDisabled, RestOptions } from './rest'
+import type { ResolvedWebsocketOptionsOrDisabled, WebsocketOptions } from './websocket'
 import { NuxtFeathersError } from '../../errors'
-import { type ResolvedRestOptionsOrDisabled, resolveRestTransportsOptions, type RestOptions } from './rest'
-import { type ResolvedWebsocketOptionsOrDisabled, resolveWebsocketTransportsOptions, type WebsocketOptions } from './websocket'
+import { resolveRestTransportsOptions } from './rest'
+import { resolveWebsocketTransportsOptions } from './websocket'
 
 export interface CommonTransportOptions {
   path?: string

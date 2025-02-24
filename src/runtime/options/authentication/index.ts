@@ -1,13 +1,16 @@
 import type { Import } from 'unimport'
 import type { ModuleOptions } from '..'
+import type { AuthClientOptions } from './client'
+import type { AuthJwtOptions } from './jwt'
+import type { AuthLocalOptions } from './local'
 import { capitalCase } from 'change-case'
 import defu from 'defu'
 import { klona } from 'klona'
 import { sha256base64 } from 'ohash'
 import { NuxtFeathersError } from '../../errors'
-import { type AuthClientOptions, resolveAuthClientOptions } from './client'
-import { type AuthJwtOptions, getAuthJwtDefaults } from './jwt'
-import { type AuthLocalOptions, getAuthLocalDefaults } from './local'
+import { resolveAuthClientOptions } from './client'
+import { getAuthJwtDefaults } from './jwt'
+import { getAuthLocalDefaults } from './local'
 
 export type AuthStrategy = 'jwt' | 'local' // TODO: support oauth
 

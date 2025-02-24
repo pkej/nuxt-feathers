@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, type Message, useService } from '#imports'
+import type { Message } from '#imports'
+import { computed, useService } from '#imports'
 
 const params = computed(() => ({ query: { $limit: 20 } }))
 const messages = useService('messages').useFind<Message>(params, { paginateOn: 'hybrid' })

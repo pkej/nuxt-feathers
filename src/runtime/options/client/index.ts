@@ -1,10 +1,12 @@
 import type { ModuleOptions } from '..'
+import type { PluginOptions, ResolvedPluginOptions } from '../plugins'
+import type { PiniaOptions } from './pinia'
 import { createResolver } from '@nuxt/kit'
 import defu from 'defu'
 import { klona } from 'klona'
 import { NuxtFeathersError } from '../../errors'
-import { type PluginOptions, preparePluginOptions, type ResolvedPluginOptions, resolvePluginsOptions } from '../plugins'
-import { type PiniaOptions, resolvePiniaOptions } from './pinia'
+import { preparePluginOptions, resolvePluginsOptions } from '../plugins'
+import { resolvePiniaOptions } from './pinia'
 
 export interface ClientOptions extends PluginOptions {
   pinia?: PiniaOptions | boolean

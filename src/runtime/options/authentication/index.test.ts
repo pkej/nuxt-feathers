@@ -1,9 +1,10 @@
 import type { Import } from 'unimport'
+import type { AuthStrategies } from './index'
 import { createResolver } from '@nuxt/kit'
 import { sha256base64 } from 'ohash'
 import { describe, expect, it } from 'vitest'
 import { getAuthClientDefaults } from './client'
-import { type AuthStrategies, getAuthDefaults, resolveAuthOptions } from './index'
+import { getAuthDefaults, resolveAuthOptions } from './index'
 import { authJwtDefaults } from './jwt'
 import { authLocalDefaults } from './local'
 

@@ -1,8 +1,9 @@
+import type { Import } from 'unimport'
 import type { ResolvedOptions } from '../../options'
 import type { DefaultAuthOptions } from '../../options/authentication'
 import type { ClientOptions, ResolvedClientOptions } from '../../options/client'
 import type { ServicesDirs } from '../../options/services'
-import { type Import, scanDirExports } from 'unimport'
+import { scanDirExports } from 'unimport'
 import { setImportsMeta } from '../../options/utils'
 import { put } from '../utils'
 
