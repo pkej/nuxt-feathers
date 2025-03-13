@@ -60,10 +60,10 @@ function createFeathersClient(): ClientApplication {
   ${put(auth, `feathersClient.configure(authentication)`)}
 
   // Init services
-  ${services.map(service => `feathersClient.configure(${service.meta.hash})`).join('\n  ')}
+  ${services.map(service => `feathersClient.configure(${service.meta.importId})`).join('\n  ')}
 
   // Init plugins
-  ${plugins.map(plugin => `feathersClient.configure(${plugin.meta.hash})`).join('\n  ')}
+  ${plugins.map(plugin => `feathersClient.configure(${plugin.meta.importId})`).join('\n  ')}
 
   return feathersClient
 }

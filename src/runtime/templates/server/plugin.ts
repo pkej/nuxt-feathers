@@ -93,10 +93,10 @@ ${put(exp, `  // Set up Express middleware
   app.configure(authentication)`)}
 
   // Init services
-  ${services.map(service => `app.configure(${service.meta.hash})`).join('\n  ')}
+  ${services.map(service => `app.configure(${service.meta.importId})`).join('\n  ')}
 
   // Init plugins
-  ${plugins.map(plugin => `app.configure(${plugin.meta.hash})`).join('\n  ')}
+  ${plugins.map(plugin => `app.configure(${plugin.meta.importId})`).join('\n  ')}
 ${put(exp, `
   // Set up Express middleware for 404s and the error handler
   app.configure(expressErrorHandler)

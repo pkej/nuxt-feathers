@@ -27,14 +27,14 @@ describe('setImportMeta', () => {
   it('should set meta for default export', () => {
     const module = { name: 'default', from: 'module.ts', as: 'default' }
     const result = setImportMeta(module)
-    expect(result.meta).toHaveProperty('hash')
+    expect(result.meta).toHaveProperty('importId')
     expect(result.meta).toHaveProperty('import')
   })
 
   it('should set meta for named export', () => {
     const module = { name: 'named', from: 'module.ts', as: 'named' }
     const result = setImportMeta(module)
-    expect(result.meta).toHaveProperty('hash')
+    expect(result.meta).toHaveProperty('importId')
     expect(result.meta).toHaveProperty('import')
   })
 
@@ -46,7 +46,7 @@ describe('setImportMeta', () => {
     const result = setImportsMeta(modules)
     expect(result).toHaveLength(2)
     result.forEach((module) => {
-      expect(module.meta).toHaveProperty('hash')
+      expect(module.meta).toHaveProperty('importId')
       expect(module.meta).toHaveProperty('import')
     })
   })

@@ -1,7 +1,7 @@
 import { createResolver } from '@nuxt/kit'
 import { describe, expect, it } from 'vitest'
-import { safeHash } from '../utils'
 import { resolvePluginDirs, resolvePlugins, resolvePluginsFromPluginDirs, resolvePluginsOptions } from './plugins'
+import { getImportId } from './utils'
 
 describe('resolvePluginDirs', () => {
   const rootDir = '/root'
@@ -27,38 +27,38 @@ export const testRootDir = createResolver(import.meta.url).resolve('../../../tes
 const resolver = createResolver(testRootDir)
 
 const channelsFrom = resolver.resolve('plugins', 'channels.ts')
-const channelsHash = `_${safeHash(channelsFrom)}`
+const channelsImportId = getImportId(channelsFrom)
 const resolvedChannelsPlugin = {
   as: 'channels',
   from: channelsFrom,
   name: 'default',
   meta: {
-    hash: channelsHash,
-    import: `import ${channelsHash} from '${channelsFrom.replace(/.ts$/, '')}'`,
+    importId: channelsImportId,
+    import: `import ${channelsImportId} from '${channelsFrom.replace(/.ts$/, '')}'`,
   },
 }
 
 const expressFrom = resolver.resolve('plugins', 'express.ts')
-const expressHash = `_${safeHash(expressFrom)}`
+const expressImportId = getImportId(expressFrom)
 const resolvedExpressPlugin = {
   as: 'express',
   from: expressFrom,
   name: 'default',
   meta: {
-    hash: expressHash,
-    import: `import ${expressHash} from '${expressFrom.replace(/.ts$/, '')}'`,
+    importId: expressImportId,
+    import: `import ${expressImportId} from '${expressFrom.replace(/.ts$/, '')}'`,
   },
 }
 
 const dummyFrom = resolver.resolve('fixtures', 'dummy-server-plugin.ts')
-const dummyHash = `_${safeHash(dummyFrom)}`
+const dummyImportId = getImportId(dummyFrom)
 const resolvedDummyServerPlugin = {
   as: 'dummyServerPlugin',
   from: dummyFrom,
   name: 'dummyServerPlugin',
   meta: {
-    hash: dummyHash,
-    import: `import { dummyServerPlugin as ${dummyHash} } from '${dummyFrom.replace(/.ts$/, '')}'`,
+    importId: dummyImportId,
+    import: `import { dummyServerPlugin as ${dummyImportId} } from '${dummyFrom.replace(/.ts$/, '')}'`,
   },
 }
 
