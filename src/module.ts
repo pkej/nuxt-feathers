@@ -37,8 +37,18 @@ function setAliases(options: ResolvedOptions, nuxt: Nuxt) {
   if (options.client)
     nuxt.options.alias['nuxt-feathers/client'] = resolver.resolve('./feathers/client/client')
 
-  nuxt.hook('nitro:config', (nitroConfig) => {
-    nitroConfig.alias = defu(nitroConfig.alias, aliases)
+  nuxt.hook('nitro:config', async (nitroConfig) => {
+    // nitroConfig.alias = defu(nitroConfig.alias, aliases)
+    // workaround for this issue: https://github.com/nitrojs/nitro/pull/2964
+    // earlier it worked with nitroConfig.alias
+    nitroConfig.typescript!.tsConfig!.compilerOptions!.paths = defu(
+      {
+        'nuxt-feathers/server': [resolver.resolve('./feathers/server/server')],
+        'nuxt-feathers/validators': [resolver.resolve('./feathers/server/validators')],
+        'nuxt-feathers/options': [resolver.resolve('./runtime/options')],
+      },
+      nitroConfig.typescript!.tsConfig!.compilerOptions!.paths,
+    )
   })
 }
 
