@@ -1,7 +1,7 @@
 import type { Import } from 'unimport'
 import type { AuthStrategies } from './index'
 import { createResolver } from '@nuxt/kit'
-import { sha256base64 } from 'ohash'
+import { digest } from 'ohash'
 import { describe, expect, it } from 'vitest'
 import { getAuthClientDefaults } from './client'
 import { getAuthDefaults, resolveAuthOptions } from './index'
@@ -21,7 +21,7 @@ describe('resolveAuthOptions', () => {
 
   const appDir = import.meta.url
   const servicesImports = [UserImport]
-  const secret = sha256base64(appDir)
+  const secret = digest(appDir)
 
   it('should resolve authDefaults with client if auth and client are true', () => {
     const auth = true

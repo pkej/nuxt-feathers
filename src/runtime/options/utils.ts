@@ -1,7 +1,7 @@
 import type { Import } from 'unimport'
 import path from 'node:path'
 import { camelCase } from 'change-case'
-import { hash } from 'ohash'
+import { safeHash } from '../utils'
 
 export function filterExports({ name, from, as }: Import) {
   return name === 'default'
@@ -16,7 +16,7 @@ export interface ModuleImport extends Import {
 }
 
 export function setImportMeta(module: Import): ModuleImport {
-  const _hash = `_${hash(module.from)}`
+  const _hash = `_${safeHash(module.from)}`
   const _import = module.name === 'default' ? _hash : `{ ${module.as} as ${_hash} }`
   const _from = module.from.replace(/.ts$/, '')
 

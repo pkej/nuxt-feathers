@@ -6,7 +6,7 @@ import type { AuthLocalOptions } from './local'
 import { capitalCase } from 'change-case'
 import defu from 'defu'
 import { klona } from 'klona'
-import { sha256base64 } from 'ohash'
+import { digest } from 'ohash'
 import { NuxtFeathersError } from '../../errors'
 import { resolveAuthClientOptions } from './client'
 import { getAuthJwtDefaults } from './jwt'
@@ -72,7 +72,7 @@ export function getAuthDefaults(appDir: string, authStrategies?: AuthStrategies)
   authStrategies ||= getDefaultAuthStrategies()
   const authOptions: ResolvedAuthOptionsWithOutEntityImport = {
     ...getAuthStaticDefaults(),
-    secret: sha256base64(appDir),
+    secret: digest(appDir),
     authStrategies,
   }
   if (authStrategies.includes('jwt'))

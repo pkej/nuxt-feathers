@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest'
+import { testRootDir } from './../plugins.test'
 import { clientDefaults, resolveClientOptions } from './index'
 import { piniaDefaults } from './pinia'
 
-const rootDir = '/not-tested' // tested in plugins.test.ts
-const srcDir = '/not-tested' // tested in plugins.test.ts
+const rootDir = testRootDir
+const srcDir = rootDir
 
 describe('resolveClientOptions', () => {
   it('should return clientDefaults and piniaDefaults if client is true', async () => {
