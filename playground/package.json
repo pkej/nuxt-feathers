@@ -15,17 +15,18 @@
     "@feathersjs/feathers": "^5.0.32",
     "@feathersjs/rest-client": "^5.0.32",
     "@feathersjs/socketio-client": "^5.0.32",
-    "@pinia/nuxt": "0.9.0",
+    "@pinia/nuxt": "~0.9.0",
     "feathers-pinia": "^4.5.4",
     "nuxt": "^3.16.0",
     "nuxt-feathers-pinia": "^0.1.0",
-    "pinia": "2.3.1",
+    "pinia": "~2.3.1",
     "socket.io-client": "^4.8.1",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@gabortorma/nuxt-eslint-layer": "^0.5.0",
-    "ofetch": "^1.4.1"
+    "ofetch": "^1.4.1",
+    "typescript": "~5.6.3"
   }
 }
