@@ -11,10 +11,10 @@
     "test:types": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@feathersjs/authentication-client": "^5.0.32",
-    "@feathersjs/feathers": "^5.0.32",
-    "@feathersjs/rest-client": "^5.0.32",
-    "@feathersjs/socketio-client": "^5.0.32",
+    "@feathersjs/authentication-client": "^5.0.33",
+    "@feathersjs/feathers": "^5.0.33",
+    "@feathersjs/rest-client": "^5.0.33",
+    "@feathersjs/socketio-client": "^5.0.33",
     "@pinia/nuxt": "~0.9.0",
     "feathers-pinia": "^4.5.4",
     "nuxt": "^3.16.0",
