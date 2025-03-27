@@ -3,7 +3,7 @@ import type { FeathersPublicRuntimeConfig, FeathersRuntimeConfig, ModuleConfig, 
 import type { ClientOptions } from './runtime/options/client'
 import type { PiniaModuleOptions } from './runtime/options/client/pinia'
 import { addImports, addImportsDir, addPlugin, addServerPlugin, addTemplate, createResolver, defineNuxtModule, hasNuxtModule, installModule } from '@nuxt/kit'
-import consola from 'consola'
+import { consola } from 'consola'
 import defu from 'defu'
 import { resolveOptions, resolvePublicRuntimeConfig, resolveRuntimeConfig } from './runtime/options'
 import { serverDefaults } from './runtime/options/server'
