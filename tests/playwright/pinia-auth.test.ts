@@ -1,6 +1,5 @@
 import { fileURLToPath } from 'node:url'
-import { expect } from '@nuxt/test-utils/playwright'
-import { test } from '../../playwright-defaults'
+import { expect, test } from '@nuxt/test-utils/playwright'
 
 test.use({
   nuxt: {

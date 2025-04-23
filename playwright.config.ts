@@ -1,4 +1,4 @@
-import type { ConfigOptions } from './playwright-defaults'
+import type { ConfigOptions } from '@nuxt/test-utils/playwright'
 import type { TransportsOptions } from './src/runtime/options/transports'
 import { defineConfig } from '@playwright/test'
 
