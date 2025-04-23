@@ -8,4 +8,4 @@ export {
   useDataStore,
   useInstanceDefaults,
   useServiceInstance,
-} from 'feathers-pinia'
+} from '@gabortorma/feathers-pinia'

@@ -1,5 +1,5 @@
 import { useRuntimeConfig } from '#app'
-import { useAuth } from 'feathers-pinia'
+import { useAuth } from '@gabortorma/feathers-pinia'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useFeathers } from '../composables/feathers'
 

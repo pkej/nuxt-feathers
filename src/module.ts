@@ -135,7 +135,7 @@ export default defineNuxtModule<ModuleOptions>({
       if (clientOptions.pinia) {
         await loadPinia(clientOptions)
         nuxt.hook('vite:extendConfig', (config) => {
-          config.optimizeDeps?.include?.push('feathers-pinia')
+          config.optimizeDeps?.include?.push('@gabortorma/feathers-pinia')
         })
         if (resolvedOptions.auth) {
           addImports({ from: resolver.resolve('./runtime/stores/auth'), name: 'useAuthStore' })

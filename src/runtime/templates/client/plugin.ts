@@ -34,7 +34,7 @@ import { useRequestURL } from "#imports"
 import type { ClientApplication } from './client'
 import { feathers } from '@feathersjs/feathers'
 import { defineNuxtPlugin${put(pinia, `, useRuntimeConfig`)} } from '#app'
-${put(pinia, `import { createPiniaClient, type CreatePiniaClientConfig } from 'feathers-pinia'`)}
+${put(pinia, `import { createPiniaClient, type CreatePiniaClientConfig } from '@gabortorma/feathers-pinia'`)}
 
 import { connection } from './connection'
 ${put(auth, `import { authentication } from './authentication'`)}

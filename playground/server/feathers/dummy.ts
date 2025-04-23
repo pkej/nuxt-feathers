@@ -11,7 +11,6 @@ export default defineFeathersServerPlugin((app) => {
           { text: 'Second hello from the dummy setup hook!' },
         ])
         await context.app.service('users').create([
-          { userId: 'dummy', password: 'dummy' }, // workaround for this issue: https://github.com/marshallswain/feathers-pinia/pull/176
           { userId: 'test', password: '12345' },
         ])
         await next()

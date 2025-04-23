@@ -24,7 +24,7 @@ import type { ClientApplication } from './client'
 ${puts([
   [rest, `import rest from '@feathersjs/rest-client'\nimport { $fetch } from 'ofetch'`],
   [sio, `import socketioClient from '@feathersjs/socketio-client'\nimport { io } from 'socket.io-client'`],
-  [rest, `import { OFetch } from '${put(pinia, 'feathers-pinia', resolver.resolve('./runtime/adapters/ofetch'))}'`],
+  [rest, `import { OFetch } from '${put(pinia, '@gabortorma/feathers-pinia', resolver.resolve('./runtime/adapters/ofetch'))}'`],
 ])}
 
 export function connection(origin?: string) {

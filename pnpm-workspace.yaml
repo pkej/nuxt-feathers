@@ -1,2 +1,7 @@
 packages:
   - playground
+
+onlyBuiltDependencies:
+  - esbuild
+  - '@parcel/watcher'
+  - vue-demi
