@@ -10,7 +10,7 @@ describe('resolveClientOptions', () => {
   it('should return clientDefaults and piniaDefaults if client is true', async () => {
     const client = true
 
-    const result = await resolveClientOptions(client, rootDir, srcDir)
+    const result = await resolveClientOptions(client, false, rootDir, srcDir)
 
     expect(result).toEqual({
       ...clientDefaults,
@@ -22,7 +22,7 @@ describe('resolveClientOptions', () => {
     const client = undefined
 
     // @ts-expect-error - test wrong client options
-    const result = await resolveClientOptions(client, rootDir, srcDir)
+    const result = await resolveClientOptions(client, false, rootDir, srcDir)
 
     expect(result).toEqual({
       ...clientDefaults,
@@ -33,7 +33,7 @@ describe('resolveClientOptions', () => {
   it('should return false when client is false', async () => {
     const client = false
 
-    const result = await resolveClientOptions(client, rootDir, srcDir)
+    const result = await resolveClientOptions(client, false, rootDir, srcDir)
 
     expect(result).toEqual(false)
   })
@@ -45,7 +45,7 @@ describe('resolveClientOptions', () => {
       },
     }
 
-    const result = await resolveClientOptions(client, rootDir, srcDir)
+    const result = await resolveClientOptions(client, false, rootDir, srcDir)
 
     expect(result).toEqual({
       ...clientDefaults,

@@ -14,11 +14,20 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
+  feathers: {
+    database: {
+      mongo: {
+        url: 'dummy',
+      },
+    },
+  },
+
   typescript: {
     builder: 'shared',
     tsConfig: {
       include: [
         '../.release-it.ts',
+        '../.global.d.ts',
       ],
     },
   },

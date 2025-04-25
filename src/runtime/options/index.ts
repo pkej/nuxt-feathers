@@ -2,6 +2,7 @@ import type { Nuxt } from '@nuxt/schema'
 import type { AuthOptions, PublicAuthOptions, ResolvedAuthOptions, ResolvedAuthOptionsOrDisabled } from './authentication'
 import type { ClientOptions, ResolvedClientOptions, ResolvedClientOptionsOrDisabled } from './client'
 import type { PiniaOptions } from './client/pinia'
+import type { DataBaseOptions, ResolvedDataBaseOptions } from './database'
 import type { ResolvedServerOptions, ServerOptions } from './server'
 import type { ServicesDir, ServicesDirs } from './services'
 import type { ResolvedTransportsOptions, TransportsOptions } from './transports'
@@ -9,6 +10,7 @@ import type { ResolvedValidatorOptions, ValidatorOptions } from './validator'
 import { getServicesImports } from '../services'
 import { resolveAuthOptions } from './authentication'
 import { resolveClientOptions } from './client'
+import { resolveDataBaseOptions } from './database'
 import { resolveServerOptions } from './server'
 import { resolveServicesDirs } from './services'
 import { resolveTransportsOptions } from './transports'
@@ -17,6 +19,7 @@ import { resolveValidatorOptions } from './validator'
 // Module options TypeScript interface definition
 export interface ModuleOptions {
   transports: TransportsOptions
+  database: DataBaseOptions
   servicesDirs: ServicesDir | ServicesDirs
   server: ServerOptions
   auth: AuthOptions | boolean
@@ -27,6 +30,7 @@ export interface ModuleOptions {
 
 export interface ResolvedOptions {
   transports: ResolvedTransportsOptions
+  database: ResolvedDataBaseOptions
   servicesDirs: ServicesDirs
   server: ResolvedServerOptions
   auth: ResolvedAuthOptionsOrDisabled
@@ -50,17 +54,21 @@ export type ModuleConfig = Partial<Omit<ModuleOptions, 'auth'> & {
 }>
 
 export async function resolveOptions(options: ModuleOptions, nuxt: Nuxt): Promise<ResolvedOptions> {
-  const transports = resolveTransportsOptions(options.transports, nuxt.options.ssr)
-  const servicesDirs = resolveServicesDirs(options.servicesDirs, nuxt.options.rootDir)
-  const server = await resolveServerOptions(options.server, nuxt.options.rootDir, nuxt.options.serverDir)
-  const client = await resolveClientOptions(options.client, nuxt.options.rootDir, nuxt.options.srcDir)
+  const { rootDir, srcDir, serverDir, appDir, ssr } = nuxt.options
+
+  const transports = resolveTransportsOptions(options.transports, ssr)
+  const database = resolveDataBaseOptions(options.database)
+  const servicesDirs = resolveServicesDirs(options.servicesDirs, rootDir)
+  const server = await resolveServerOptions(options.server, rootDir, serverDir)
+  const client = await resolveClientOptions(options.client, !!database.mongo, rootDir, srcDir)
   const validator = resolveValidatorOptions(options.validator)
   const servicesImports = await getServicesImports(servicesDirs) // TODO move
-  const auth = resolveAuthOptions(options.auth, !!client, servicesImports, nuxt.options.appDir)
+  const auth = resolveAuthOptions(options.auth, !!client, servicesImports, appDir)
   const loadFeathersConfig = options.loadFeathersConfig
 
   const resolvedOptions = {
     transports,
+    database,
     servicesDirs,
     server,
     client,

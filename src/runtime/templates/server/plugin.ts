@@ -33,6 +33,7 @@ export function getServerPluginContents(options: ResolvedOptions) {
     const koa = framework === 'koa'
     const sio = !!transports?.websocket
     const routers = [exp && 'createExpressRouter', koa && 'createKoaRouter', sio && 'createSocketIoRouter'].filter(Boolean)
+    const mongo = !!options.database?.mongo
     const authStrategies = (options?.auth as DefaultAuthOptions)?.authStrategies
     const auth = (authStrategies || []).length > 0
     const authService = (options?.auth as DefaultAuthOptions)?.service
@@ -53,6 +54,7 @@ ${put(rest, `import { ${framework}ErrorHandler } from '@gabortorma/feathers-nitr
 ${put(auth, `import authentication from './authentication'`)}
 import { ${routers.join(', ')} } from '@gabortorma/feathers-nitro-adapter/routers'
 import { defineNitroPlugin } from 'nitropack/dist/runtime/plugin'
+${put(mongo, `import mongodb from './mongodb'`)}
 ${modules.map(module => module.meta.import).join('\n')}
 
 export default defineNitroPlugin((nitroApp: NitroApp) => {
@@ -90,8 +92,11 @@ ${put(exp, `  // Set up Express middleware
   }))`)}  
 
   ${put(auth, `// Init auth
-  app.configure(authentication)`)}
-
+  app.configure(authentication)
+`)}
+  ${put(mongo, `// Init mongodb
+  app.configure(mongodb)
+`)}
   // Init services
   ${services.map(service => `app.configure(${service.meta.importId})`).join('\n  ')}
 

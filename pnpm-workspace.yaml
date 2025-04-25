@@ -4,5 +4,6 @@ packages:
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
+  - mongodb-memory-server
   - unrs-resolver
   - vue-demi

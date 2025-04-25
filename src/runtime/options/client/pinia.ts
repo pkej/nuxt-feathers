@@ -23,14 +23,18 @@ export const piniaDefaults: ResolvedPiniaOptions = {
   idField: 'id', // use _id for mongoDB
 }
 
-export function getPiniaDefaults(): ResolvedPiniaOptions {
-  return klona(piniaDefaults)
+export function getPiniaDefaults(mongodb: boolean): ResolvedPiniaOptions {
+  const resolvedPiniaDefaults: ResolvedPiniaOptions = klona(piniaDefaults)
+  if (mongodb) {
+    resolvedPiniaDefaults.idField = '_id'
+  }
+  return resolvedPiniaDefaults
 }
 
-export function resolvePiniaOptions(piniaOptions: PiniaOptions | boolean | undefined): ResolvedPiniaOptionsOrDisabled {
+export function resolvePiniaOptions(piniaOptions: PiniaOptions | boolean | undefined, mongodb: boolean): ResolvedPiniaOptionsOrDisabled {
   let pinia: ResolvedPiniaOptionsOrDisabled = false
 
-  const piniaDefaultOptions = getPiniaDefaults()
+  const piniaDefaultOptions = getPiniaDefaults(mongodb)
 
   if (piniaOptions === true || piniaOptions === undefined)
     pinia = piniaDefaultOptions

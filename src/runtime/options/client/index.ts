@@ -28,7 +28,7 @@ export function getClientDefaults(): ResolvedClientOnlyOptions {
   return klona(clientDefaults)
 }
 
-export async function resolveClientOptions(client: ModuleOptions['client'], rootDir: string, srcDir: string): Promise<ResolvedClientOptionsOrDisabled> {
+export async function resolveClientOptions(client: ModuleOptions['client'], mongodb: boolean, rootDir: string, srcDir: string): Promise<ResolvedClientOptionsOrDisabled> {
   if (client === false)
     return false
 
@@ -48,7 +48,7 @@ export async function resolveClientOptions(client: ModuleOptions['client'], root
   const srcResolver = createResolver(srcDir)
   const resolvedPlugins = await resolvePluginsOptions(clientOptions, rootDir, srcResolver.resolve('feathers'))
 
-  const pinia = resolvePiniaOptions(clientOptions.pinia)
+  const pinia = resolvePiniaOptions(clientOptions.pinia, mongodb)
 
   const resolvedClient: ResolvedClientOptions = {
     pinia,
