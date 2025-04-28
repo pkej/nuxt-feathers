@@ -55,6 +55,7 @@
     "@feathersjs/authentication": "^5.0.33",
     "@feathersjs/authentication-client": "^5.0.33",
     "@feathersjs/authentication-local": "^5.0.33",
+    "@feathersjs/feathers": "^5.0.33",
     "@feathersjs/generators": "^5.0.33",
     "@gabortorma/feathers-nitro-adapter": "^0.6.0",
     "@gabortorma/feathers-pinia": "^5.0.1",
