@@ -121,6 +121,7 @@ export function resolveAuthOptions(auth: ModuleOptions['auth'], client: boolean,
   if (!entityImport)
     throw new NuxtFeathersError(`Entity class ${entityClass} not found in services imports`)
 
+  entityImport.from = entityImport.from.replace(/\.ts$/, '')
   const resolvedAuth: ResolvedAuthOptions = {
     ...authOptions,
     entityClass,
