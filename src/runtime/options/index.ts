@@ -7,6 +7,7 @@ import type { ResolvedServerOptions, ServerOptions } from './server'
 import type { ServicesDir, ServicesDirs } from './services'
 import type { ResolvedTransportsOptions, TransportsOptions } from './transports'
 import type { ResolvedValidatorOptions, ValidatorOptions } from './validator'
+import { createResolver } from '@nuxt/kit'
 import { getServicesImports } from '../services'
 import { resolveAuthOptions } from './authentication'
 import { resolveClientOptions } from './client'
@@ -29,6 +30,7 @@ export interface ModuleOptions {
 }
 
 export interface ResolvedOptions {
+  templateDir: string
   transports: ResolvedTransportsOptions
   database: ResolvedDataBaseOptions
   servicesDirs: ServicesDirs
@@ -54,7 +56,19 @@ export type ModuleConfig = Partial<Omit<ModuleOptions, 'auth'> & {
 }>
 
 export async function resolveOptions(options: ModuleOptions, nuxt: Nuxt): Promise<ResolvedOptions> {
-  const { rootDir, srcDir, serverDir, appDir, ssr } = nuxt.options
+  const { rootDir, srcDir, serverDir, appDir, buildDir, ssr } = nuxt.options
+
+  /**
+   * nuxt issue: https://github.com/nuxt/nuxt/issues/28995#issuecomment-2843183972
+   *
+   * WORKAROUND:
+   * Ha a compatibilityVersion: 4, akkor a buildDir a node_modules/.cache/nuxt/.nuxt könyvtárba kerül, ahonnan nem tudja betölteni a ts fájlokat.
+   * Ezért itt manuálisan felülirom a régi (.nuxt) könyvtárra.   *
+   */
+  const resolver = createResolver(import.meta.url)
+  // if (nuxt.options.test || nuxt.options.dev) {
+
+  const templateDir = /node_modules/.test(buildDir) ? resolver.resolve(rootDir, '.nuxt/feathers') : resolver.resolve(buildDir, 'feathers')
 
   const transports = resolveTransportsOptions(options.transports, ssr)
   const database = resolveDataBaseOptions(options.database)
@@ -67,6 +81,7 @@ export async function resolveOptions(options: ModuleOptions, nuxt: Nuxt): Promis
   const loadFeathersConfig = options.loadFeathersConfig
 
   const resolvedOptions = {
+    templateDir,
     transports,
     database,
     servicesDirs,

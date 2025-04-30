@@ -26,29 +26,19 @@ declare module '@nuxt/schema' {
 }
 
 function setAliases(options: ResolvedOptions, nuxt: Nuxt) {
-  const resolver = createResolver(nuxt.options.buildDir)
+  const resolver = createResolver(import.meta.url)
   const aliases = {
-    'nuxt-feathers/server': resolver.resolve('./feathers/server/server'),
-    'nuxt-feathers/validators': resolver.resolve('./feathers/server/validators'),
-    'nuxt-feathers/options': resolver.resolve('./runtime/options'),
+    'nuxt-feathers/server': resolver.resolve(options.templateDir, 'server/server'),
+    'nuxt-feathers/validators': resolver.resolve(options.templateDir, 'server/validators'),
+    'nuxt-feathers/options': resolver.resolve('runtime/options'),
   }
 
   nuxt.options.alias = defu(nuxt.options.alias, aliases)
   if (options.client)
-    nuxt.options.alias['nuxt-feathers/client'] = resolver.resolve('./feathers/client/client')
+    nuxt.options.alias['nuxt-feathers/client'] = resolver.resolve(options.templateDir, 'client/client')
 
   nuxt.hook('nitro:config', async (nitroConfig) => {
-    // nitroConfig.alias = defu(nitroConfig.alias, aliases)
-    // workaround for this issue: https://github.com/nitrojs/nitro/pull/2964
-    // earlier it worked with nitroConfig.alias
-    nitroConfig.typescript!.tsConfig!.compilerOptions!.paths = defu(
-      {
-        'nuxt-feathers/server': [resolver.resolve('./feathers/server/server')],
-        'nuxt-feathers/validators': [resolver.resolve('./feathers/server/validators')],
-        'nuxt-feathers/options': [resolver.resolve('./runtime/options')],
-      },
-      nitroConfig.typescript!.tsConfig!.compilerOptions!.paths,
-    )
+    nitroConfig.alias = defu(nitroConfig.alias, aliases)
   })
 }
 
@@ -128,7 +118,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     for (const serverTemplate of getServerTemplates(resolvedOptions))
       addTemplate({ ...serverTemplate, options: resolvedOptions })
-    addServerPlugin(resolver.resolve(nuxt.options.buildDir, 'feathers/server/plugin.ts'))
+    addServerPlugin(resolver.resolve(resolvedOptions.templateDir, 'server/plugin'))
 
     if (resolvedOptions.client) {
       const clientOptions = resolvedOptions.client as ClientOptions
@@ -144,7 +134,7 @@ export default defineNuxtModule<ModuleOptions>({
       }
       for (const clientTemplate of getClientTemplates(resolvedOptions, resolver))
         addTemplate({ ...clientTemplate, options: resolvedOptions })
-      addPlugin({ order: 0, src: resolver.resolve(nuxt.options.buildDir, 'feathers/client/plugin.ts') })
+      addPlugin({ order: 0, src: resolver.resolve(resolvedOptions.templateDir, 'client/plugin') })
     }
   },
 })
