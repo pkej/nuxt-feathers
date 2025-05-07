@@ -22,7 +22,16 @@ export default defineNuxtConfig({
       })
     },
     './src/module',
+    '@nuxtjs/i18n',
   ],
+  i18n: {
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', name: 'English', file: 'en.json' },
+      { code: 'nb', name: 'Bokmål', file: 'nb.json' },
+      { code: 'nn', name: 'Nynorsk', file: 'nn.json' },
+    ]
+  },
   vite: {
     vue: {
       template: {
