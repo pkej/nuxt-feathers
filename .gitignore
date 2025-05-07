@@ -3,6 +3,8 @@ node_modules
 
 # Logs
 *.log*
+logs
+*.log
 
 # Temp directories
 .temp
@@ -24,9 +26,13 @@ dist
 .vercel_build_output
 .build-*
 .netlify
+.nitro
+.cache
 
 # Env
 .env
+.env.*
+!.env.example
 
 # Testing
 reports
@@ -57,3 +63,4 @@ test-results
 Network Trash Folder
 Temporary Items
 .apdisk
+.fleet

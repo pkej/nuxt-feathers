@@ -37,8 +37,9 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "nuxi dev playground",
-    "build": "nuxi build playground",
+    "dev": "nuxi dev ",
+    "dev-tunnel": "nuxi dev --tunnel ",
+    "build": "nuxi build ",
     "prepare": "nuxt-module-build prepare && nuxt-module-build build",
     "lint": "eslint . && nr -r lint",
     "lint:fix": "eslint . --fix && nr -r lint:fix",
@@ -46,10 +47,12 @@
     "test:watch": "vitest watch",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit",
+    "test:types": "vue-tsc --noEmit",
     "test:all": "nr test:types && nr test && playwright test",
     "prerelease": "nr test:types && nr lint && nr test && nr test:e2e",
-    "release": "dotenv release-it"
+    "release": "dotenv release-it",
+    "generate": "nuxt generate",
+    "preview": "nuxi preview"
   },
   "peerDependencies": {
     "nuxt": "^3.12.0"
@@ -75,7 +78,10 @@
     "consola": "^3.4.2",
     "defu": "^6.1.4",
     "pinia": "^3.0.2",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "nuxt": "^3.17.2",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@antfu/ni": "^24.3.0",
@@ -93,6 +99,7 @@
     "release-it": "^19.0.2",
     "typescript": "^5.8.3",
     "vitest": "^3.1.2",
-    "vitest-mongodb": "^1.0.1"
+    "vitest-mongodb": "^1.0.1",
+    "ofetch": "^1.4.1"
   }
 }

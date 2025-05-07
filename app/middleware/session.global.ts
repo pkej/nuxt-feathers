@@ -1,7 +1,7 @@
 export default defineNuxtRouteMiddleware(async (to, _from) => {
   const auth = useAuthStore()
 
-  await auth.getPromise()
+  void await auth.getPromise()
 
   // Allow 404 page to show
   if (!to.matched.length)
